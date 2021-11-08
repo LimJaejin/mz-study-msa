@@ -24,7 +24,7 @@ public class LogInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
         String requestUri = request.getRequestURI();
         String queryString = request.getQueryString();
-        String uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString().substring(24);
 
         MDC.put("traceId", uuid);
 
