@@ -47,6 +47,6 @@ spring:
 ####  Logging
 logging:
   level:
-    root: info
+    root: INFO
   pattern:
     level: "%5p [%X{traceId}]"
