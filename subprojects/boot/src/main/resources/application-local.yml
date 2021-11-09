@@ -2,16 +2,17 @@
 #### Server
 server:
   port: 8080
-  servlet:
-    encoding:
-      charset: UTF-8
-      force: true
 
 
 
 ############################################
 ####  Spring
 spring:
+  #### Open Tracing
+  zipkin:
+    baseUrl:http://localhost:9411/
+
+  #### Data Source
   datasource:
     writer:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
@@ -26,6 +27,7 @@ spring:
       minimum-idle: 10
       maximum-pool-size: 10
 
+  #### JPA
   jpa:
     database: postgresql
     hibernate:
@@ -51,15 +53,9 @@ spring:
     port: 6379
     database: 0
 
-  ## Message - Kafka
+  ## Message Stream - Kafka
   kafka:
     bootstrap-servers: [localhost:9092]
-    consumer:
-      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
-      enable-auto-commit: true
-      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
-      auto-offset-reset: latest
-      #max-poll-records: 1000
 
 
 
@@ -72,6 +68,8 @@ logging:
       SQL: DEBUG
 #      type: DEBUG
 #      type.descriptor.sql: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name}][%X{saId:-}][%X{stbMac:-}]"
 
 
 
@@ -82,3 +80,13 @@ service:
     url: http://vodlookup.fleta.com
   programming:
     url: http://programming.fleta.com
+
+
+
+############################################
+## FeignClient
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC

@@ -1,17 +1,22 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.5.6'
+    id 'org.springframework.boot' version '2.5.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.adarshr.test-logger' version '3.0.0'
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
+ext {
+    set('springCloudVersion', "2020.0.4")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
-subprojects {
+
+allprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
@@ -21,6 +26,12 @@ subprojects {
     version = '0.1.0'
     sourceCompatibility = '11'
 
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
     configurations {
         compileOnly {
             extendsFrom annotationProcessor
@@ -28,15 +39,17 @@ subprojects {
     }
 
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.6'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.apache.commons:commons-lang3:3.11'
         implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
+        implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.0.4'
+        implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin:3.0.4'
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
-        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
@@ -169,8 +182,7 @@ project(':boot') {
         implementation project(':domain')
         implementation project(':infrastructure')
     }
-    bootJar { enabled = true }
-    jar { enabled = true }
+    jar { enabled = false }
 
     test {
         exclude '**/*'
@@ -184,8 +196,6 @@ project(':presentation') {
         implementation project(':domain')
         //implementation project(':infrastructure-di')
     }
-    bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 project(':application') {
@@ -193,16 +203,12 @@ project(':application') {
         implementation project(':domain')
         implementation project(':infrastructure-di')
     }
-    bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 project(':domain') {
     dependencies {
         testImplementation project(':boot')
     }
-    bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 project(':infrastructure') {
@@ -210,15 +216,11 @@ project(':infrastructure') {
         implementation project(':domain')
         implementation project(':infrastructure-di')
     }
-    bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 project(':infrastructure-di') {
     dependencies {
     }
-    bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 task printVersion {
