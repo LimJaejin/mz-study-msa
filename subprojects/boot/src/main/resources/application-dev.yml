@@ -13,10 +13,19 @@ server:
 ####  Spring
 spring:
   datasource:
-    hikari:
+    writer:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>/<<postgres.msa-template.write.db.mylgdb>>
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
+      minimum-idle: 10
+      maximum-pool-size: 10
+    reader:
+      jdbc-url: jdbc:postgresql://<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.read.db.mylgdb>>
+      username: <<postgres.msa-template.read.username>>
+      password: <<postgres.msa-template.read.password>>
+      minimum-idle: 20
+      maximum-pool-size: 20
+
   jpa:
     database: postgresql
     hibernate:
@@ -32,16 +41,30 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-    show-sql: true
+    show-sql: false
 
   ## Cache - Redis
   cache:
     type: redis
   redis:
-    database: 0
-    host: <<redis.host>>
-    port: <<redis.port>>
-    password:
+    cluster:
+      nodes: <<redis.cluster.nodes>>
+    consumer:
+      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
+      enable-auto-commit: true
+      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
+      auto-offset-reset: latest
+      #max-poll-records: 1000
+
+  ## Message - Kafka
+  kafka:
+    bootstrap-servers: <<kafka.bootstrap-servers>>
+    consumer:
+      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
+      enable-auto-commit: true
+      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
+      auto-offset-reset: latest
+      #max-poll-records: 1000
 
 
 

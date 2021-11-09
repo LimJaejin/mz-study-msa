@@ -10,6 +10,6 @@ public class MessageStreamListenerImpl implements MessageStreamListener {
 
     @Override
     public void procMessageStream(String message) {
-        log.debug("===> message : {}", message);
+        log.debug(">>> message : {}", message);
     }
 }
