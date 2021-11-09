@@ -52,7 +52,7 @@ public enum InnerResponseErrorType {
             for (InnerResponseErrorType type: EnumSet.allOf(InnerResponseErrorType.class)) {
                 String code = getMessage("code", type.name());
                 String message = getMessage("message", type.name());
-                log.trace("===> MessageSource : {}.{} : {}, {}",
+                log.trace(">>> MessageSource : {}.{} : {}, {}",
                     MESSAGE_CODE_PREFIX, type.name(), code, message);
                 type.setProperties(code, message);
             }

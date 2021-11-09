@@ -18,7 +18,7 @@ public class KafkaMessageConsumer {
 
     @KafkaListener(topics = KafkaMessageConsumer.TOPIC, groupId = KafkaMessageConsumer.GROUP_ID)
     public void listen(String message) {
-        log.debug("===> message : {}", message);
+        log.debug(">>> message : {}", message);
         procMessageStream.procMessageStream(message);
     }
 }

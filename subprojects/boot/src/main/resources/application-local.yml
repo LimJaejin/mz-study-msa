@@ -13,10 +13,19 @@ server:
 ####  Spring
 spring:
   datasource:
-    hikari:
+    writer:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
       username: postgres
       password: postgres
+      minimum-idle: 5
+      maximum-pool-size: 5
+    reader:
+      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: postgres
+      minimum-idle: 10
+      maximum-pool-size: 10
+
   jpa:
     database: postgresql
     hibernate:
@@ -38,9 +47,15 @@ spring:
   cache:
     type: redis
   redis:
-    database: 0
     host: localhost
     port: 6379
+    database: 0
+    consumer:
+      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
+      enable-auto-commit: true
+      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
+      auto-offset-reset: latest
+      #max-poll-records: 1000
 
   ## Message - Kafka
   kafka:

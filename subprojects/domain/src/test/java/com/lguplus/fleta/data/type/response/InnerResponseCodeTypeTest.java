@@ -80,7 +80,7 @@ class InnerResponseCodeTypeTest {
         String code = getMessage(codeName, typeName);
         String message = getMessage(messageName, typeName);
         String httpStatus = getMessage(httpStatusName, DEFAULT_HTTP_STATUS);
-        System.out.println("===> " + typeName + " = " + code + " / " + message + " / " + httpStatus);
+        System.out.println(">>> " + typeName + " = " + code + " / " + message + " / " + httpStatus);
 
         assertThat(type.code()).isEqualTo(code);
         assertThat(type.message()).isEqualTo(message);

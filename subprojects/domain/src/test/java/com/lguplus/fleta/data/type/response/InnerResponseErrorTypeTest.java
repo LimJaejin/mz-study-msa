@@ -52,7 +52,7 @@ class InnerResponseErrorTypeTest {
         String messageName = MESSAGE_SOURCE_PREFIX + typeName + MESSAGE_SOURCE_SUFFIX_MESSAGE;
         String code = getMessage(codeName, typeName);
         String message = getMessage(messageName, typeName);
-        System.out.println("===> " + typeName + " = " + code + " / " + message);
+        System.out.println(">>> " + typeName + " = " + code + " / " + message);
 
         assertThat(type.code()).isEqualTo(code);
         assertThat(type.message()).isEqualTo(message);

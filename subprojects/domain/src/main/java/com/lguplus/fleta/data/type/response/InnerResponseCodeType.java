@@ -67,7 +67,7 @@ public enum InnerResponseCodeType {
                 String code = getMessage("code", type.name());
                 String message = getMessage("message", type.name());
                 String httpStatus = getMessage("httpStatus", type.name());
-                log.trace("===> MessageSource : {}.{} : {}, {}, {}",
+                log.trace(">>> MessageSource : {}.{} : {}, {}, {}",
                     MESSAGE_CODE_PREFIX, type.name(), code, message, httpStatus);
                 type.setProperties(code, message, httpStatus);
             }

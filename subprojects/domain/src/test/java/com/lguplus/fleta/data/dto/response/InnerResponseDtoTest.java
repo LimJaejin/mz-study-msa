@@ -51,7 +51,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("code");
         assertThat(json).contains("0000");
         assertThat(json).contains("message");
@@ -76,7 +76,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("code");
         assertThat(json).contains("0000");
         assertThat(json).contains("message");
@@ -102,7 +102,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("code");
         assertThat(json).contains("0204");
         assertThat(json).contains("message");
@@ -127,7 +127,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("headers");
         assertThat(json).contains("body");
         assertThat(json).contains("statusCode");
@@ -159,7 +159,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("headers");
         assertThat(json).contains("body");
         assertThat(json).contains("statusCode");
@@ -195,7 +195,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).isNotNull();
 
         assertThat(json).contains("headers");
@@ -233,7 +233,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> responseDtoMapping = " + responseDtoMapping);
+        System.out.println(">>> responseDtoMapping = " + responseDtoMapping);
         assertThat(responseDtoMapping).isNotNull();
 
         assertThat(responseDtoMapping.getCode()).isEqualTo("0000");
@@ -260,7 +260,7 @@ class InnerResponseDtoTest {
         boolean hasResponseError = responseDto.hasResponseError();
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("headers");
         assertThat(json).contains("body");
         assertThat(json).contains("statusCode");
@@ -296,7 +296,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> responseDtoMapping = " + responseDtoMapping);
+        System.out.println(">>> responseDtoMapping = " + responseDtoMapping);
         assertThat(responseDtoMapping).isNotNull();
 
         assertThat(responseDtoMapping.getCode()).isEqualTo("0400");
@@ -324,7 +324,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("headers");
         assertThat(json).contains("body");
         assertThat(json).contains("statusCode");
@@ -364,7 +364,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> json = " + json);
+        System.out.println(">>> json = " + json);
         assertThat(json).contains("headers");
         assertThat(json).contains("body");
         assertThat(json).contains("statusCode");
@@ -400,7 +400,7 @@ class InnerResponseDtoTest {
         int rowSize = 30;
         int pageCount = 15;
         responseDto.getResult().setDataPage(page, rowSize, pageCount);
-        System.out.println("===> responseDto = " + responseDto);
+        System.out.println(">>> responseDto = " + responseDto);
 
         InnerResponseDto<List<TestDto>> responseDtoMapping = null;
         try {
@@ -411,7 +411,7 @@ class InnerResponseDtoTest {
         }
 
         //then
-        System.out.println("===> responseDtoMapping = " + responseDtoMapping);
+        System.out.println(">>> responseDtoMapping = " + responseDtoMapping);
         assertThat(responseDtoMapping).isNotNull();
 
         assertThat(responseDtoMapping.getCode()).isEqualTo("0000");

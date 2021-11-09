@@ -14,12 +14,12 @@ public class KafkaMessageProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void send(String message) {
-        log.debug("===> message : {}", message);
+        log.debug(">>> message : {}", message);
         this.kafkaTemplate.send(TOPIC, "", message);
     }
 
     public void send(String message, String key) {
-        log.debug("===> message : {} : {}", message, key);
+        log.debug(">>> message : {} : {}", message, key);
         this.kafkaTemplate.send(TOPIC, key, message);
     }
 }
