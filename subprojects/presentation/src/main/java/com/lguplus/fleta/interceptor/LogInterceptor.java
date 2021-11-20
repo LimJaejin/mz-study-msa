@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,9 +23,6 @@ public class LogInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
         String requestUri = request.getRequestURI();
         String queryString = request.getQueryString();
-        String uuid = UUID.randomUUID().toString().substring(24);
-
-        MDC.put("traceId", uuid);
 
         log.info("[{}][{}][{}] Request", method, requestUri, queryString);
         return true;

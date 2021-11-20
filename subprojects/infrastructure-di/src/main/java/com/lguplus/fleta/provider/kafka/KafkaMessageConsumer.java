@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaMessageConsumer {
 
-    private static final String TOPIC = "MSA_BOILERPLATE_TEST";
-    private static final String GROUP_ID = "MSA_BOILERPLATE_GROUP";
+    private static final String TOPIC = "MSA_BOILERPLATE";     // TODO : Topic 이름 지정
+    private static final String GROUP_ID = "MSA_BOILERPLATE_GROUP"; // TODO : ConsumerGroupID 이름 지정
 
     private final MessageStreamListener procMessageStream;
 

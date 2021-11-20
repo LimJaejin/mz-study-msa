@@ -2,16 +2,17 @@
 #### Server
 server:
   port: 8080
-  servlet:
-    encoding:
-      charset: UTF-8
-      force: true
 
 
 
 ############################################
 ####  Spring
 spring:
+  #### Open Tracing
+  zipkin:
+    baseUrl: <<zipkin.host>>
+
+  #### Data Source
   datasource:
     writer:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>/<<postgres.msa-template.write.db.mylgdb>>
@@ -26,6 +27,7 @@ spring:
       minimum-idle: 20
       maximum-pool-size: 20
 
+  #### JPA
   jpa:
     database: postgresql
     hibernate:
@@ -50,15 +52,9 @@ spring:
     cluster:
       nodes: [<<redis.cluster.nodes>>]
 
-  ## Message - Kafka
+  ## Message Stream - Kafka
   kafka:
     bootstrap-servers: [<<kafka.msa.plaintext.bootstrapservers>>]
-    consumer:
-      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
-      enable-auto-commit: true
-      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
-      auto-offset-reset: latest
-      #max-poll-records: 1000
 
 
 
@@ -81,3 +77,13 @@ service:
     url: http://vodlookup:8080
   programming:
     url: http://programming:8080
+
+
+
+############################################
+## FeignClient
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC

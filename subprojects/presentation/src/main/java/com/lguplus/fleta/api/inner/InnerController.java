@@ -1,10 +1,7 @@
 package com.lguplus.fleta.api.inner;
 
-import com.lguplus.fleta.service.message.MessageStreamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,12 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/msa-boilerplate")
 public class InnerController {
-
-    private final MessageStreamService messageStreamService;
-
-    @PostMapping("/sendMessage")
-    public String sendMessage(@RequestBody String message) {
-        messageStreamService.sendMessage(message);
-        return "Ok!";
-    }
 }

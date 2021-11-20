@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaMessageProducer {
 
-    private static final String TOPIC = "MSA_BOILERPLATE";
+    private static final String TOPIC = "MSA_BOILERPLATE"; // TODO : Topic 이름 지정
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void send(String message) {
