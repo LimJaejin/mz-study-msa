@@ -1,4 +1,4 @@
-package com.lguplus.fleta.service.message;
+package com.lguplus.fleta.service.sample.message;
 
 import com.lguplus.fleta.message.MessageStreamSender;
 import lombok.RequiredArgsConstructor;
