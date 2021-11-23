@@ -1,4 +1,4 @@
-package com.lguplus.fleta.service.message;
+package com.lguplus.fleta.service.sample.message;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

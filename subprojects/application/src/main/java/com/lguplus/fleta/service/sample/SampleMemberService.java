@@ -1,4 +1,4 @@
-package com.lguplus.fleta.service;
+package com.lguplus.fleta.service.sample;
 
 import com.lguplus.fleta.data.dto.sample.SampleMemberDomainDto;
 
