@@ -1,4 +1,4 @@
-package com.lguplus.fleta.entity.sample;
+package com.lguplus.fleta.data.entity.sample;
 
 import lombok.Getter;
 import lombok.Setter;
