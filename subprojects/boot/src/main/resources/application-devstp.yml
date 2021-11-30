@@ -39,11 +39,9 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
-        format_sql: false
         jdbc:
           lob:
             non_contextual_creation: true
-    show-sql: false
 
   ## Cache - Redis
   cache:

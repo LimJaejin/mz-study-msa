@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -41,7 +41,10 @@ public class DataSourceConfig {
     @Bean
     @Primary
     @DependsOn({WDS, RDS})
-    public DataSource routingDataSource(@Qualifier(WDS) DataSource writerDataSource, @Qualifier(RDS) DataSource readerDataSource) {
+    public DataSource routingDataSource(
+        @Qualifier(WDS) DataSource writerDataSource,
+        @Qualifier(RDS) DataSource readerDataSource
+    ) {
         Map<Object, Object> dataSourceMap = new HashMap<>();
         dataSourceMap.put("writer", writerDataSource);
         dataSourceMap.put("reader", readerDataSource);
@@ -60,8 +63,10 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(@Qualifier("lazyConnectionDataSource") DataSource lazyConnectionDataSource) {
-        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+    public PlatformTransactionManager transactionManager(
+        @Qualifier("lazyConnectionDataSource") DataSource lazyConnectionDataSource
+    ) {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setDataSource(lazyConnectionDataSource);
         return transactionManager;
     }

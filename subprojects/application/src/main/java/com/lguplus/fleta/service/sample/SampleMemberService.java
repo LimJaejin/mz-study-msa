@@ -1,8 +1,25 @@
 package com.lguplus.fleta.service.sample;
 
-import com.lguplus.fleta.data.dto.sample.SampleMemberDomainDto;
+import com.lguplus.fleta.data.dto.sample.SampleCustomMemberDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface SampleMemberService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class SampleMemberService {
 
-    void searchMemberByNameAndEmail(SampleMemberDomainDto memberDto);
+    private final SampleMemberDomainService memberDomainService;
+
+    @Transactional
+    public void initServiceData() {
+        memberDomainService.initData();
+    }
+
+    public SampleCustomMemberDto getMember(int memberId) {
+        return memberDomainService.getMember(memberId);
+    }
 }
