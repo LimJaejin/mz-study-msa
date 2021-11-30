@@ -13,6 +13,6 @@ public interface SampleRepository {
 
     SampleMemberMapp create(SampleMemberMapp entity);
 
-    List<SampleEntityDto> findSamples(SampleQueryConditonDto queryConditonDto);
+    List<SampleEntityDto> getSamples(SampleQueryConditonDto queryConditonDto);
 
 }

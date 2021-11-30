@@ -34,7 +34,7 @@ public class SampleRepositoryImpl implements SampleRepository {
     }
 
     @Override
-    public List<SampleEntityDto> findSamples(SampleQueryConditonDto queryConditonDto) {
+    public List<SampleEntityDto> getSamples(SampleQueryConditonDto queryConditonDto) {
         return this.sampleEmRepository.findSamples(queryConditonDto);
     }
 

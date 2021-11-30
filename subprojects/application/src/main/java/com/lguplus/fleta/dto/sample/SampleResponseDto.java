@@ -50,8 +50,8 @@ public class SampleResponseDto implements CommonResponseDto<String> {
         StringBuilder sb = new StringBuilder();
 
         if (responseDto.getSampleHeaderDto() != null) {
-            sb.append(StringUtils.defaultString(responseDto.getSampleHeaderDto().getFlag(), "")).append(COLSEP);
-            sb.append(StringUtils.defaultString(responseDto.getSampleHeaderDto().getMessage(), "")).append(COLSEP);
+            sb.append(StringUtils.defaultString(responseDto.getSampleHeaderDto().getFlag(), StringUtils.EMPTY)).append(COLSEP);
+            sb.append(StringUtils.defaultString(responseDto.getSampleHeaderDto().getMessage(), StringUtils.EMPTY)).append(COLSEP);
             sb.append(ROWSEP); // 행분리자
         }
 
@@ -72,8 +72,9 @@ public class SampleResponseDto implements CommonResponseDto<String> {
 
         if (samples != null && !samples.isEmpty()) {
             samples.forEach(s -> {
-                sb.append(StringUtils.defaultString(s.getName(), "")).append(COLSEP);
-                sb.append(StringUtils.defaultString(s.getEmail(), "")).append(COLSEP);
+                sb.append(StringUtils.defaultString(s.getName(), StringUtils.EMPTY)).append(COLSEP);
+                sb.append(StringUtils.defaultString(s.getEmail(), StringUtils.EMPTY)).append(COLSEP);
+                sb.append(StringUtils.defaultString(s.getRegWeekday(), StringUtils.EMPTY)).append(COLSEP);
                 sb.append(ROWSEP); // 행분리자
             });
         }

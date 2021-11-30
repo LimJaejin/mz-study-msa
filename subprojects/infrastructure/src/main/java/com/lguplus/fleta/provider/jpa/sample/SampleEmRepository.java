@@ -29,7 +29,7 @@ public class SampleEmRepository {
             "FROM imcsuser.sample_member SM JOIN imcsuser.sample_member_mapp SMM ON SM.id = SMM.sample_member_id " + CR;
 
     /**
-     * 샘플멤버 & 샘플멤버맵 조인 조회
+     * 샘플멤버 & 샘플멤버맵 조인 조회(db view를 일반 join문으로 변경)
      *
      * @param queryConditonDto
      * @return

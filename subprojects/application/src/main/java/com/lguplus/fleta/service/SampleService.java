@@ -55,7 +55,7 @@ public class SampleService {
      */
     public String findSamples(SampleQueryConditonDto queryConditonDto) {
         try {
-            List<SampleDto> samples = this.sampleDomainService.findSamplesByCondition(queryConditonDto);
+            List<SampleDto> samples = this.sampleDomainService.getSamplesByCondition(queryConditonDto);
 
             return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
         }
@@ -69,7 +69,7 @@ public class SampleService {
             // 4 test
             queryConditonDto.setName("나쁜쿼리");
 
-            List<SampleDto> samples = this.sampleDomainService.findSamplesByCondition(queryConditonDto);
+            List<SampleDto> samples = this.sampleDomainService.getSamplesByCondition(queryConditonDto);
 
             return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
         }
@@ -83,7 +83,7 @@ public class SampleService {
             // 4 test
             queryConditonDto.setName("나쁜쿼리");
 
-            List<SampleDto> samples = this.sampleDomainService.findSamplesByCondition(queryConditonDto);
+            List<SampleDto> samples = this.sampleDomainService.getSamplesByCondition(queryConditonDto);
 
             return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
         }

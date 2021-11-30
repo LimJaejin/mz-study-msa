@@ -18,6 +18,8 @@ public class SampleDto implements Serializable {
 
     private LocalDateTime regDate;
 
+    private String regWeekday;
+
     private LocalDateTime updDate;
 
     private String mappId;

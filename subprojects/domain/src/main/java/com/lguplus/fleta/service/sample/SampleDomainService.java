@@ -17,8 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -85,21 +89,17 @@ public class SampleDomainService {
      * @param queryConditonDto 쿼리 검색 조건 Dto
      * @return List<SampleDto>
      */
-    public List<SampleDto> findSamplesByCondition(SampleQueryConditonDto queryConditonDto) {
+    public List<SampleDto> getSamplesByCondition(SampleQueryConditonDto queryConditonDto) {
         try {
             // 검색 조건 체크
-            this.checkQueryCondition(queryConditonDto);
+//            this.checkQueryCondition(queryConditonDto);
 
             // entity -> dto 변환 및 dto 속성 값 변환 처리
-            return this.sampleRepository.findSamples(queryConditonDto).stream()
+            return this.sampleRepository.getSamples(queryConditonDto).stream()
                     .map(this.sampleMapper::toDto)
                     .peek(s -> {
-                        String name = s.getName();
-                        s.setName(StringUtils.left(name, 2) + "X");
-
-                        String email = s.getEmail();
-                        String[] arr = email.split("@", -1);
-                        s.setEmail(StringUtils.left(arr[0], 3) + "XXX@" + arr[1]);
+                        s.setRegWeekday(this.extractWeekday(s.getRegDate()));
+                        this.changeNameAndEmail(s);
                     })
                     .collect(Collectors.toList());
         }
@@ -124,6 +124,37 @@ public class SampleDomainService {
         ) {
             throw new ServiceException("검색 조건없는 조회는 불가합니다. 검색 조건을 입력해주세요.");
         }
+    }
+
+    /**
+     * 등록일시의 요일 추출(db function을 메소드로 변경한 부분)
+     *
+     * @param datetime LocalDateTime
+     * @return String 월/화/수/목/금/토/일 중 하나
+     */
+    private String extractWeekday(LocalDateTime datetime) {
+        if (Objects.isNull(datetime)) {
+            return null;
+        }
+
+        LocalDate date = datetime.toLocalDate();
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+
+        return dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN);
+    }
+
+    /**
+     * 이름 및 이메일 마스킹 처리
+     *
+     * @param dto SampleDto
+     */
+    private void changeNameAndEmail(SampleDto dto) {
+        String name = dto.getName();
+        dto.setName(StringUtils.left(name, 2) + "X");
+
+        String email = dto.getEmail();
+        String[] arr = email.split("@", -1);
+        dto.setEmail(StringUtils.left(arr[0], 3) + "XXX@" + arr[1]);
     }
 
 }
