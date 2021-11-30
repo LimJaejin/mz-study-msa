@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @RequiredArgsConstructor
-@Component
+//@Component
 public class KafkaMessageConsumer {
 
     private static final String TOPIC = "MSA_BOILERPLATE";     // TODO : Topic 이름 지정

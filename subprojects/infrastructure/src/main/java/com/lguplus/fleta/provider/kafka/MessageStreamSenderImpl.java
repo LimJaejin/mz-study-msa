@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @RequiredArgsConstructor
-@Component
+//@Component
 public class MessageStreamSenderImpl implements MessageStreamSender {
 
     private final KafkaMessageProducer kafkaMessageProducer;

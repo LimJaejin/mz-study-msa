@@ -7,17 +7,18 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @Slf4j
 public class CustomRoutingDataSource extends AbstractRoutingDataSource {
 
+    /**
+     * Determine the current lookup key. This will typically be
+     * implemented to check a thread-bound transaction context.
+     * <p>Allows for arbitrary keys. The returned key needs
+     * to match the stored lookup key type, as resolved by the
+     * {@link #resolveSpecifiedLookupKey} method.
+     */
     @Override
     protected Object determineCurrentLookupKey() {
-        // return (TransactionSynchronizationManager.isCurrentTransactionReadOnly()) ? "reader" : "writer";
-
-        if (TransactionSynchronizationManager.isCurrentTransactionReadOnly()) {
-            log.debug(">>> Reader");
-            return "reader";
-        } else {
-            log.debug(">>> Writer");
-            return "writer";
-        }
+        boolean readOnly = TransactionSynchronizationManager.isCurrentTransactionReadOnly();
+        log.debug(">>> readOnly: {}", readOnly);
+        return (readOnly) ? "read" : "write";
     }
 
 }

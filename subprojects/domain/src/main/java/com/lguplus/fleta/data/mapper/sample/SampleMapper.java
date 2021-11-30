@@ -1,4 +1,4 @@
-package com.lguplus.fleta.mapper.sample;
+package com.lguplus.fleta.data.mapper.sample;
 
 import com.lguplus.fleta.config.MapStructConfig;
 import com.lguplus.fleta.data.dto.sample.SampleDto;

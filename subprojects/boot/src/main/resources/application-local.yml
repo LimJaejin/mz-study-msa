@@ -1,30 +1,43 @@
 ############################################
 #### Server
 server:
-  port: 8080
+  port: 8282
 
 
 
 ############################################
 #### Spring
 spring:
-  #### Open Tracing
+#  #### Open Tracing
   zipkin:
-    baseUrl: http://localhost:9411/
+#    baseUrl: http://localhost:9411/
+    enabled: false
 
   #### Data Source
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    writer:
+#      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+#      username: postgres
+#      password: postgres
+#      minimum-idle: 5
+#      maximum-pool-size: 5
+#    reader:
+#      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+#      username: postgres
+#      password: postgres
+#      minimum-idle: 5
+#      maximum-pool-size: 5
     writer:
-      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      jdbc-url: jdbc:log4jdbc:postgresql://bmt-vodprogramming-cluster.cluster-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com:5432/mylgdb
       username: postgres
-      password: postgres
+      password: BmtAdmin1!
       minimum-idle: 5
       maximum-pool-size: 5
     reader:
-      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      jdbc-url: jdbc:log4jdbc:postgresql://bmt-vodprogramming-cluster.cluster-ro-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com:5432/mylgdb
       username: postgres
-      password: postgres
+      password: BmtAdmin1!
       minimum-idle: 5
       maximum-pool-size: 5
 
@@ -32,8 +45,7 @@ spring:
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: create-drop # FIXME : 반드시 제거
-      use-new-id-generator-mappings: true # FIXME : false로 변경
+      use-new-id-generator-mappings: false
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -56,8 +68,8 @@ spring:
     database: 0
 
   ## Message Stream - Kafka
-  kafka:
-    bootstrap-servers: [ localhost:9092 ]
+#  kafka:
+#    bootstrap-servers: [ localhost:9092 ]
 
 
 

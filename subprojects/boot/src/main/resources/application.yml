@@ -51,14 +51,14 @@ spring:
     timeout: 500  # Redis read timeout
     connect-timeout: 100
 
-  ## Message Stream - Kafka
-  kafka:
-    consumer:
-      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
-      enable-auto-commit: true
-      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
-      auto-offset-reset: latest
-      #max-poll-records: 1000
+#  ## Message Stream - Kafka
+#  kafka:
+#    consumer:
+#      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
+#      enable-auto-commit: true
+#      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
+#      auto-offset-reset: latest
+#      #max-poll-records: 1000
 
 
 
