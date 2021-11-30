@@ -18,14 +18,14 @@ spring:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>/<<postgres.msa-template.write.db.mylgdb>>
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
-      minimum-idle: 10
-      maximum-pool-size: 10
+      minimum-idle: 25
+      maximum-pool-size: 25
     reader:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.read.db.mylgdb>>
       username: <<postgres.msa-template.read.username>>
       password: <<postgres.msa-template.read.password>>
-      minimum-idle: 20
-      maximum-pool-size: 20
+      minimum-idle: 25
+      maximum-pool-size: 25
 
   #### JPA
   jpa:
@@ -73,6 +73,9 @@ logging:
 ############################################
 #### Other Domain Application Service
 service:
+  subscriber:
+    base-url: http://subscriber:8080
+    enable: true
   vodlookup:
     url: http://vodlookup:8080
   programming:
