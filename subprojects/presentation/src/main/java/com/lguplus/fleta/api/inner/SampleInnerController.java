@@ -1,15 +1,13 @@
 package com.lguplus.fleta.api.inner;
 
-import com.lguplus.fleta.data.dto.sample.SampleMemberDomainDto;
+import com.lguplus.fleta.data.dto.sample.SampleCustomMemberDto;
 import com.lguplus.fleta.data.mapper.SampleMemberMapper;
-import com.lguplus.fleta.data.vo.SampleMemberVo;
 import com.lguplus.fleta.service.sample.SampleMemberService;
 import com.lguplus.fleta.service.sample.message.SampleMessageStreamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,23 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/msa-boilerplate")
-public class InnerSampleController {
+public class SampleInnerController {
 
     private final SampleMemberMapper memberMapper;
     private final SampleMemberService memberService;
     private final SampleMessageStreamService messageStreamService;
 
-    @GetMapping("/members/search")
-    public String searchMember(
-        @ModelAttribute SampleMemberVo memberVo,
-        BindingResult bindingResult
+    @GetMapping("/init")
+    public void init() {
+        memberService.initServiceData();
+    }
+
+    @GetMapping("/members/{memberId}")
+    public SampleCustomMemberDto getMember(
+        @PathVariable int memberId
     ) {
-        log.debug(">>> memberVo : {}", memberVo);
-        SampleMemberDomainDto memberDto = memberMapper.toDto(memberVo);
-        memberService.searchMemberByNameAndEmail(memberDto);
-        SampleMemberVo memberVoResult = memberMapper.toVo(memberDto);
-        log.debug(">>> memberVoResult : {}", memberVoResult);
-        return "Ok!";
+        log.debug(">>> memberId : {}", memberId);
+        return memberService.getMember(memberId);
     }
 
     @PostMapping("/sendMessage")

@@ -6,8 +6,9 @@ import lombok.ToString;
 
 @Getter @Setter
 @ToString
-public class SampleMemberDomainDto {
+public class SampleCustomMemberDto {
 
-    private String userName;
-    private String userEmail;
+    private int memberId;
+    private String memberName;
+    private String teamName;
 }
