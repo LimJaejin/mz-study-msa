@@ -22,10 +22,12 @@ public class SampleEmRepository {
 
     private static final String CR = "\n";
 
-    private static final String SAMPLE_QUERY = CR + "SELECT SM.*, SMM.* " + CR +
+    private static final String SAMPLE_QUERY = "/* SVC.MsaBoilerplate.SampleEmRepository.findSamples.01 */" + CR + CR +
+            "SELECT SM.*, SMM.* " + CR +
             "FROM imcsuser.sample_member SM JOIN imcsuser.sample_member_mapp SMM ON SM.id = SMM.sample_member_id " + CR;
 
-    private static final String BAD_SAMPLE_QUERY = CR + "SELECT bad_column, SM.*, SMM.* " + CR +
+    private static final String BAD_SAMPLE_QUERY = "/* SVC.MsaBoilerplate.SampleEmRepository.findSamples.02 */" + CR + CR +
+            "SELECT bad_column, SM.*, SMM.* " + CR +
             "FROM imcsuser.sample_member SM JOIN imcsuser.sample_member_mapp SMM ON SM.id = SMM.sample_member_id " + CR;
 
     /**
