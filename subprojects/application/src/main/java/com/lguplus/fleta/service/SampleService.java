@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,13 @@ public class SampleService {
 
             SampleMemberDto sampleMemberDto = this.sampleDomainService.create(dto);
             this.sampleDomainService.create(sampleMemberDto.getId(), mappDto);
+
+//            // EntityManager 사용
+//            SampleQueryConditonDto queryConditonDto = new SampleQueryConditonDto();
+//            queryConditonDto.setName("전강욱");
+//            List<SampleDto> samples = this.sampleDomainService.getSamplesByCondition(queryConditonDto);
+//
+//            return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
 
             return SampleResponseDto.serialize(OuterResponseType.SUCCESS);
         }
@@ -119,6 +127,8 @@ public class SampleService {
     public String complexEx(SampleQueryConditonDto queryConditonDto) {
         List<SampleDto> samples = new ArrayList<>();
 
+        log.debug(">>> 트랜잭션 활성 상태: {}", TransactionSynchronizationManager.isActualTransactionActive());
+
         try {
             // sql 문법 오류가 발생하는 쿼리
             queryConditonDto.setName("나쁜쿼리");
@@ -128,6 +138,8 @@ public class SampleService {
             // 오류는 꼭 로그로 남긴다.
             log.error(e.getMessage());
         }
+
+        log.debug(">>> 트랜잭션 활성 상태: {}", TransactionSynchronizationManager.isActualTransactionActive());
 
         try {
             // 정상적으로 수행되는 쿼리
@@ -140,6 +152,18 @@ public class SampleService {
         }
 
         return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
+    }
+
+    @Transactional
+    public String getAllMembers() {
+        try {
+            this.sampleDomainService.getAllMembers();
+
+            return SampleResponseDto.serialize(OuterResponseType.SUCCESS);
+        }
+        catch (ServiceException e) {
+            throw new ServiceException(new SampleResponseDto(e.getOuterResponseType()), e);
+        }
     }
 
 }

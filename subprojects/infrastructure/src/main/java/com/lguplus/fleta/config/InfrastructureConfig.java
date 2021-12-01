@@ -8,7 +8,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-@EnableTransactionManagement
 @ComponentScan(basePackages = "com.lguplus.fleta")
 @EnableFeignClients(basePackages = "com.lguplus.fleta")
 public class InfrastructureConfig {

@@ -15,4 +15,6 @@ public interface SampleRepository {
 
     List<SampleEntityDto> getSamples(SampleQueryConditonDto queryConditonDto);
 
+    List<SampleMember> getAllMembers();
+
 }

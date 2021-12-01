@@ -38,4 +38,9 @@ public class SampleRepositoryImpl implements SampleRepository {
         return this.sampleEmRepository.findSamples(queryConditonDto);
     }
 
+    @Override
+    public List<SampleMember> getAllMembers() {
+        return this.sampleMemberJpaRepository.findAll();
+    }
+
 }

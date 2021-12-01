@@ -109,6 +109,30 @@ public class SampleDomainService {
     }
 
     /**
+     * entity를 직접 set하면 안되는 이유
+     *
+     * @return
+     */
+    public List<SampleMemberDto> getAllMembers() {
+        try {
+            List<SampleMember> sampleMembers = this.sampleRepository.getAllMembers();
+            // sampleMembers.clear(); // 전체 삭제안됨.
+            // sampleMembers.remove(0); // 개별 삭제 안됨.
+
+            // entity -> dto 변환 및 dto 속성 값 변환 처리
+            return sampleMembers.stream()
+                    .peek(s -> {
+                        s.setUpdDate(LocalDateTime.now());
+                    })
+                    .map(this.sampleMemberMapper::toDto)
+                    .collect(Collectors.toList());
+        }
+        catch (Exception e) {
+            throw new ServiceException(OuterResponseType.FAIL_004, e);
+        }
+    }
+
+    /**
      * 검색 조건 체크
      *
      * @param queryConditonDto

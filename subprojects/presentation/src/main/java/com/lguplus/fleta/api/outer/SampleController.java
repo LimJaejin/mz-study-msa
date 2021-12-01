@@ -78,4 +78,13 @@ public class SampleController {
         return ResponseEntity.ok(this.sampleService.complexEx(param.toDto()));
     }
 
+    @ApiOperation(value="샘플 멤버 전체 조회 - entity를 직접 set하면 안되는 이유", notes = "샘플 멤버 전체 조회 - entity를 직접 set하면 안되는 이유를 테스트한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공 시 응답 메시지 문자열 반환", response = Object.class)
+    })
+    @GetMapping(value = "/members")
+    public ResponseEntity<String> getAllMembers() {
+        return ResponseEntity.ok(this.sampleService.getAllMembers());
+    }
+
 }

@@ -92,7 +92,6 @@ logging:
           jpa: DEBUG
         transaction:
           interceptor: TRACE
-          support: DEBUG
     jdbc:
       audit: OFF
       sqltiming: DEBUG
