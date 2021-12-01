@@ -69,7 +69,7 @@ public class SampleController {
         return ResponseEntity.ok(this.sampleService.badQueryCatchEx(param.toDto()));
     }
 
-    @ApiOperation(value="복합 오류 상황", notes = "복합 오류 상황을 테스트한다.")
+    @ApiOperation(value="sql 문법 오류가 발생하는 쿼리와 정상 쿼리를 함께 수행", notes = "sql 문법 오류가 발생하는 쿼리와 정상 쿼리를 함께 수행하는 상황에서 하나라도 성공하면 성공 결과를 응답한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공 시 응답 메시지 문자열 반환", response = Object.class)
     })

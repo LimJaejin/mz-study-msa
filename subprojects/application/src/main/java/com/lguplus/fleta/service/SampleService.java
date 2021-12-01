@@ -39,8 +39,6 @@ public class SampleService {
             SampleMemberDto sampleMemberDto = this.sampleDomainService.create(dto);
             this.sampleDomainService.create(sampleMemberDto.getId(), mappDto);
 
-//            this.throwException(true);
-
             return SampleResponseDto.serialize(OuterResponseType.SUCCESS);
         }
         catch (ServiceException e) {
@@ -112,51 +110,36 @@ public class SampleService {
     }
 
     /**
-     * 복합 오류 상황 테스트
+     * sql 문법 오류가 발생하는 쿼리와 정상 쿼리를 함께 수행하는 상황
      *
      * @param queryConditonDto
      * @return
      */
     @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
     public String complexEx(SampleQueryConditonDto queryConditonDto) {
-        List<SampleDto> samples = this.getSampleWithBadQuery(queryConditonDto);
-        samples.addAll(this.getSampleWithGoodQuery(queryConditonDto));
-
-        return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
-    }
-
-    protected List<SampleDto> getSampleWithBadQuery(SampleQueryConditonDto queryConditonDto) {
         List<SampleDto> samples = new ArrayList<>();
 
         try {
+            // sql 문법 오류가 발생하는 쿼리
             queryConditonDto.setName("나쁜쿼리");
             samples.addAll(this.sampleDomainService.getSamplesByCondition(queryConditonDto));
         }
         catch (Exception e) {
+            // 오류는 꼭 로그로 남긴다.
             log.error(e.getMessage());
         }
 
-        return samples;
-    }
-
-    protected List<SampleDto> getSampleWithGoodQuery(SampleQueryConditonDto queryConditonDto) {
-        List<SampleDto> samples = new ArrayList<>();
-
         try {
+            // 정상적으로 수행되는 쿼리
             queryConditonDto.setName(null);
             samples.addAll(this.sampleDomainService.getSamplesByCondition(queryConditonDto));
         }
         catch (Exception e) {
+            // 오류는 꼭 로그로 남긴다.
             log.error(e.getMessage());
         }
 
-        return samples;
-    }
-
-    private void throwException(boolean tf) {
-        if (tf) {
-            throw new ServiceException(OuterResponseType.FAIL_001);
-        }
+        return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
     }
 
 }
