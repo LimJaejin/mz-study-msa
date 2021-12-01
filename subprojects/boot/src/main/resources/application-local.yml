@@ -81,7 +81,7 @@ logging:
       lguplus:
         fleta: DEBUG
       zaxxer:
-        hikari: FATAL
+        hikari: DEBUG
     org:
 #      hibernate:
 #        SQL: DEBUG
@@ -90,11 +90,13 @@ logging:
         cache: TRACE
         orm:
           jpa: DEBUG
+        transaction:
+          interceptor: TRACE
     jdbc:
       audit: OFF
       sqltiming: DEBUG
       resultsettable: DEBUG
-      connection: OFF
+      connection: DEBUG
       resultset: OFF
       sqlonly: OFF
   pattern:

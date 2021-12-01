@@ -47,8 +47,8 @@ public class SampleController {
             @ApiResponse(code = 200, message = "성공 시 응답 메시지 문자열 반환", response = Object.class)
     })
     @GetMapping(value = "")
-    public ResponseEntity<String> findSamples(SampleQueryParamsVo param) {
-        return ResponseEntity.ok(this.sampleService.findSamples(param.toDto()));
+    public ResponseEntity<String> getSamples(SampleQueryParamsVo param) {
+        return ResponseEntity.ok(this.sampleService.getSamples(param.toDto()));
     }
 
     @ApiOperation(value="배드 쿼리 테스트 - 오류 throw", notes = "오류를 throw하는 배드 쿼리를 테스트한다.")
@@ -67,6 +67,15 @@ public class SampleController {
     @GetMapping(value = "/bad-query/catch-ex")
     public ResponseEntity<String> badQueryCatchEx(SampleQueryParamsVo param) {
         return ResponseEntity.ok(this.sampleService.badQueryCatchEx(param.toDto()));
+    }
+
+    @ApiOperation(value="복합 오류 상황", notes = "복합 오류 상황을 테스트한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공 시 응답 메시지 문자열 반환", response = Object.class)
+    })
+    @GetMapping(value = "/complex-ex")
+    public ResponseEntity<String> complexEx(SampleQueryParamsVo param) {
+        return ResponseEntity.ok(this.sampleService.complexEx(param.toDto()));
     }
 
 }
