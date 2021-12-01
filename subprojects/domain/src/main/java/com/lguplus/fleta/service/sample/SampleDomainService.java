@@ -121,9 +121,7 @@ public class SampleDomainService {
 
             // entity -> dto 변환 및 dto 속성 값 변환 처리
             return sampleMembers.stream()
-                    .peek(s -> {
-                        s.setUpdDate(LocalDateTime.now());
-                    })
+                    .peek(s -> s.setUpdDate(LocalDateTime.now()))
                     .map(this.sampleMemberMapper::toDto)
                     .collect(Collectors.toList());
         }
