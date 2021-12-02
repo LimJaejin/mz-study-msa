@@ -1,8 +1,2 @@
-![](docs/doc-slide-01.png)
-![](docs/doc-slide-02.png)
-![](docs/doc-slide-03.png)
-![](docs/doc-slide-04.png)
-![](docs/doc-slide-05.png)
-![](docs/doc-slide-06.png)
-![](docs/doc-slide-07.png)
-![](docs/doc-slide-08.png)
+### 개발 가이드
+[개발 가이드 컨플루언스](https://lguplus-msa-dev.atlassian.net/wiki/spaces/LGUPLUSMSA/pages/1028784196)

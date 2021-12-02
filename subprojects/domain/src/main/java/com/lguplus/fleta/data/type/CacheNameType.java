@@ -2,7 +2,9 @@ package com.lguplus.fleta.data.type;
 
 public class CacheNameType {
 
-    public final static String TTS_15 = "TTS_15";
-    public final static String TTS_30 = "TTS_30";
-    public final static String TTS_60 = "TTS_60";
+    public final static String TTL_1 = "TTL1";
+    public final static String TTL_10 = "TTL10";
+    public final static String TTL_15 = "TTL15";
+    public final static String TTL_30 = "TTL30";
+    public final static String TTL_60 = "TTL60";
 }
