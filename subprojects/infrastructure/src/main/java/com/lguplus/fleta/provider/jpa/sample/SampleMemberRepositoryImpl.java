@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -22,6 +23,11 @@ public class SampleMemberRepositoryImpl implements SampleMemberRepository {
         // Optional<SampleMember> member = memberJpaEmRepository.findById(memberId);
         member.ifPresent(m -> log.debug(">>> member : {}", m));
         return member;
+    }
+
+    @Override
+    public List<SampleMember> getAllMemberList() {
+        return memberJpaRepository.findAll();
     }
 
     @Override

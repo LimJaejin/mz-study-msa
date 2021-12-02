@@ -1,7 +1,6 @@
 package com.lguplus.fleta.api.inner;
 
 import com.lguplus.fleta.data.dto.sample.SampleCustomMemberDto;
-import com.lguplus.fleta.data.mapper.SampleMemberMapper;
 import com.lguplus.fleta.service.sample.SampleMemberService;
 import com.lguplus.fleta.service.sample.message.SampleMessageStreamService;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/msa-boilerplate")
 public class SampleInnerController {
 
-    private final SampleMemberMapper memberMapper;
     private final SampleMemberService memberService;
     private final SampleMessageStreamService messageStreamService;
 
@@ -32,8 +32,17 @@ public class SampleInnerController {
     public SampleCustomMemberDto getMember(
         @PathVariable int memberId
     ) {
-        log.debug(">>> memberId : {}", memberId);
         return memberService.getMember(memberId);
+    }
+
+    @GetMapping("/members")
+    public List<SampleCustomMemberDto> getAllMemberList() {
+        return memberService.getAllMemberList();
+    }
+
+    @GetMapping("/main-logic")
+    public String doMainLogic() {
+        return memberService.doMainLogic();
     }
 
     @PostMapping("/sendMessage")
