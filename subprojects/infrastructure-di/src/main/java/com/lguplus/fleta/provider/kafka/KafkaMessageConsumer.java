@@ -3,9 +3,10 @@ package com.lguplus.fleta.provider.kafka;
 import com.lguplus.fleta.service.MessageStreamListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
+//import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Slf4j
 @RequiredArgsConstructor
 //@Component
@@ -16,7 +17,7 @@ public class KafkaMessageConsumer {
 
     private final MessageStreamListener procMessageStream;
 
-    @KafkaListener(topics = KafkaMessageConsumer.TOPIC, groupId = KafkaMessageConsumer.GROUP_ID)
+//    @KafkaListener(topics = KafkaMessageConsumer.TOPIC, groupId = KafkaMessageConsumer.GROUP_ID)
     public void listen(String message) {
         log.debug(">>> message : {}", message);
         procMessageStream.procMessageStream(message);

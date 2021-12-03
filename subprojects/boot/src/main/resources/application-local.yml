@@ -8,26 +8,13 @@ server:
 ############################################
 #### Spring
 spring:
-#  #### Open Tracing
+  #### Open Tracing
   zipkin:
-#    baseUrl: http://localhost:9411/
     enabled: false
 
   #### Data Source
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-#    writer:
-#      jdbc-url: jdbc:postgresql://localhost:5432/postgres
-#      username: postgres
-#      password: postgres
-#      minimum-idle: 5
-#      maximum-pool-size: 5
-#    reader:
-#      jdbc-url: jdbc:postgresql://localhost:5432/postgres
-#      username: postgres
-#      password: postgres
-#      minimum-idle: 5
-#      maximum-pool-size: 5
     writer:
       jdbc-url: jdbc:log4jdbc:postgresql://bmt-vodprogramming-cluster.cluster-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com:5432/mylgdb
       username: postgres
@@ -57,7 +44,6 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-    #show-sql: true
 
   ## Cache - Redis
   cache:
@@ -65,11 +51,27 @@ spring:
   redis:
     host: localhost
     port: 6379
-    database: 0
 
-  ## Message Stream - Kafka
-#  kafka:
-#    bootstrap-servers: [ localhost:9092 ]
+  ## cloud stream
+  cloud:
+    stream:
+      bindings:
+        function:
+          destination: sampleUpdated;sampleDeleted;
+        # 수신 채널명: <빈 이름> + in + index
+        sampleUpdated-in-0:
+          destination: topic-sample-updated
+        sampleDeleted-in-0:
+          destination: topic-sample-deleted
+        # 송신 채널명:
+        sampleUpdated:
+          destination: topic-sample-updated
+        sampleDeleted:
+          destination: topic-sample-deleted
+        # kafka, rabbitmq, aws sns/sqs 등
+        kafka:
+          binder:
+            brokers: localhost:9092
 
 
 
@@ -123,4 +125,4 @@ feign:
   client:
     config:
       default:
-        loggerLevel: BASIC
+        loggerLevel: FULL
