@@ -56,18 +56,11 @@ spring:
   cloud:
     stream:
       bindings:
-        function:
-          destination: sampleUpdated;sampleDeleted;
-        # 수신 채널명: <빈 이름> + in + index
-        sampleUpdated-in-0:
-          destination: topic-sample-updated
-        sampleDeleted-in-0:
-          destination: topic-sample-deleted
-        # 송신 채널명:
-        sampleUpdated:
-          destination: topic-sample-updated
-        sampleDeleted:
-          destination: topic-sample-deleted
+        sample-consumer:
+          destination: topic-sample
+          group: group-sample
+        sample-producer:
+          destination: topic-sample
         # kafka, rabbitmq, aws sns/sqs 등
         kafka:
           binder:

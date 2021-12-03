@@ -31,6 +31,7 @@ public class SubscriberDomainService {
      */
     @Cacheable(cacheNames = CacheNameType.TTS_60
             , key="'SubscriberDomainService.findSubscriber::' + #saId + '::' + #stbMac"
+            , unless = "#result == null"
     )
     public SubscriberInfoDto getSubscriberOrCache(String saId, String stbMac) {
         InnerResponseResultDto<SubscriberInfoDto> result;
