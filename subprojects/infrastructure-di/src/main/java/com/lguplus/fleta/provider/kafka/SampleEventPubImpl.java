@@ -29,7 +29,6 @@ public class SampleEventPubImpl implements SampleEventPub {
                 .setHeader("event-type", "inserted")
                 .build();
         this.sampleTopic.output().send(message);
-
     }
 
     @Override
