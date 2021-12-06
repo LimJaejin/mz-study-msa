@@ -1,8 +1,8 @@
-package com.lguplus.fleta.service.sample.message;
+package com.lguplus.fleta.message;
 
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
 
-public interface SampleEventPub {
+public interface SampleProducer {
 
     void onInserted(SampleMemberDto dto);
 

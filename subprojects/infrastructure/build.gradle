@@ -10,4 +10,8 @@ dependencies {
     implementation 'io.github.openfeign:feign-httpclient:11.7'
     // https://log4jdbc.brunorozendo.com/
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    // cloud stream
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:3.1.5'
+    implementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.1.5'
 }

@@ -1,8 +1,6 @@
-package com.lguplus.fleta.config;
+package com.lguplus.fleta.data.message;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

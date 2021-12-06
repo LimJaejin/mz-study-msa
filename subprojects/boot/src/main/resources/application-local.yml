@@ -56,10 +56,13 @@ spring:
   cloud:
     stream:
       bindings:
-        sample-consumer:
+        # inbound
+        sample-in:
+          # 토픽
           destination: topic-sample
           group: group-sample
-        sample-producer:
+        # outbound
+        sample-out:
           destination: topic-sample
         # kafka, rabbitmq, aws sns/sqs 등
         kafka:

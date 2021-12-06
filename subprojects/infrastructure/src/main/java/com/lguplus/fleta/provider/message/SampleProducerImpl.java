@@ -1,14 +1,16 @@
-package com.lguplus.fleta.provider.kafka;
+package com.lguplus.fleta.provider.message;
 
-import com.lguplus.fleta.config.CustomMessage;
-import com.lguplus.fleta.config.SampleTopic;
+import com.lguplus.fleta.data.message.CustomMessage;
+import com.lguplus.fleta.config.ProducerTopic;
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
-import com.lguplus.fleta.service.sample.message.SampleEventPub;
+import com.lguplus.fleta.message.SampleProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Component;
 
 /**
  * 이벤트 발행
@@ -16,19 +18,20 @@ import org.springframework.messaging.support.MessageBuilder;
 @SuppressWarnings("deprecation")
 @Slf4j
 @RequiredArgsConstructor
-@EnableBinding(SampleTopic.class)
-public class SampleEventPubImpl implements SampleEventPub {
+@EnableBinding(ProducerTopic.class)
+public class SampleProducerImpl implements SampleProducer {
 
-    private final SampleTopic sampleTopic;
+    private final ProducerTopic producerTopic;
 
     @Override
+    @SendTo(ProducerTopic.SAMPLE_OUT)
     public void onInserted(SampleMemberDto dto) {
         log.debug(">>> event pub, payload: {}", dto.toString());
 
         Message<CustomMessage<SampleMemberDto>> message = MessageBuilder.withPayload(new CustomMessage<>(dto))
-                .setHeader("event-type", "inserted")
+                .setHeader("x-event-type", "sample-inserted")
                 .build();
-        this.sampleTopic.output().send(message);
+        this.producerTopic.sampleOut().send(message);
     }
 
     @Override

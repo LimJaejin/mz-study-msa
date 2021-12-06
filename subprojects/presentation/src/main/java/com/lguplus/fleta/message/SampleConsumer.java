@@ -1,7 +1,7 @@
-package com.lguplus.fleta.provider.kafka;
+package com.lguplus.fleta.message;
 
-import com.lguplus.fleta.config.CustomMessage;
-import com.lguplus.fleta.config.SampleTopic;
+import com.lguplus.fleta.data.message.CustomMessage;
+import com.lguplus.fleta.config.ConsumerTopic;
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +15,13 @@ import org.springframework.messaging.handler.annotation.Payload;
 @SuppressWarnings("deprecation")
 @Slf4j
 @RequiredArgsConstructor
-@EnableBinding(SampleTopic.class)
-public class SampleEventSub {
+@EnableBinding(ConsumerTopic.class)
+public class SampleConsumer {
 
-    @StreamListener(value = SampleTopic.INPUT, condition = "headers['event-type']=='inserted'")
-    public void subSampleInserted(@Payload CustomMessage<SampleMemberDto> message) {
+    @StreamListener(value = ConsumerTopic.SAMPLE_IN, condition = "headers['x-event-type']=='sample-inserted'")
+    public void sampleInserted(@Payload CustomMessage<SampleMemberDto> message) {
         log.info(">>> event sub, message: {}", message.toString());
+        // application layer의 usecase 호출
     }
 
 }
