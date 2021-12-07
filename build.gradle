@@ -196,14 +196,12 @@ project(':presentation') {
     dependencies {
         implementation project(':application')
         implementation project(':domain')
-        //implementation project(':infrastructure-di')
     }
 }
 
 project(':application') {
     dependencies {
         implementation project(':domain')
-        implementation project(':infrastructure-di')
     }
 }
 
@@ -215,13 +213,8 @@ project(':domain') {
 
 project(':infrastructure') {
     dependencies {
+        implementation project(':presentation')
         implementation project(':domain')
-        implementation project(':infrastructure-di')
-    }
-}
-
-project(':infrastructure-di') {
-    dependencies {
     }
 }
 

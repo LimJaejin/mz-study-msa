@@ -1,4 +1,4 @@
-package com.lguplus.fleta.service;
+package com.lguplus.fleta.listener;
 
 public interface MessageStreamListener {
 

@@ -15,11 +15,11 @@ public class KafkaMessageProducer {
 
     public void send(String message) {
         log.debug(">>> message : {}", message);
-        this.kafkaTemplate.send(TOPIC, "", message);
+        send(message, "");
     }
 
     public void send(String message, String key) {
         log.debug(">>> message : {} : {}", message, key);
-        this.kafkaTemplate.send(TOPIC, key, message);
+        kafkaTemplate.send(TOPIC, key, message);
     }
 }

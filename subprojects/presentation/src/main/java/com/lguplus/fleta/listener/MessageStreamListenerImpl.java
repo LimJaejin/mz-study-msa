@@ -1,6 +1,5 @@
-package com.lguplus.fleta.service.sample.message;
+package com.lguplus.fleta.listener;
 
-import com.lguplus.fleta.service.MessageStreamListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
