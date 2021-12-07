@@ -22,7 +22,8 @@ public class LogInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String method = request.getMethod();
         String requestUri = request.getRequestURI();
-        String queryString = request.getQueryString();
+        String queryString = Optional.ofNullable(request.getQueryString())
+            .orElse("");
 
         log.info("[{}][{}][{}] Request", method, requestUri, queryString);
         return true;

@@ -1,6 +1,6 @@
 package com.lguplus.fleta.provider.kafka;
 
-import com.lguplus.fleta.service.MessageStreamListener;
+import com.lguplus.fleta.listener.MessageStreamListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

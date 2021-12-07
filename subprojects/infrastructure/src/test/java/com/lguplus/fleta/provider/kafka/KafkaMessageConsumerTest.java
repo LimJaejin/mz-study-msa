@@ -1,6 +1,6 @@
 package com.lguplus.fleta.provider.kafka;
 
-import com.lguplus.fleta.service.MessageStreamListener;
+import com.lguplus.fleta.listener.MessageStreamListener;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
