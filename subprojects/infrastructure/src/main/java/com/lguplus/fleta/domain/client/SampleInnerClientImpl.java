@@ -1,9 +1,10 @@
-package com.lguplus.fleta.provider.rest;
+package com.lguplus.fleta.domain.client;
 
 import com.lguplus.fleta.client.SampleInnerClient;
 import com.lguplus.fleta.data.dto.response.InnerResponseDto;
 import com.lguplus.fleta.data.dto.response.InnerResponseResultDto;
 import com.lguplus.fleta.data.dto.sample.SampleInnerDto;
+import com.lguplus.fleta.provider.rest.SampleFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
