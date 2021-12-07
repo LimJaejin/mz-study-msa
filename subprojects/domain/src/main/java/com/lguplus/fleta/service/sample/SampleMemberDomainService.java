@@ -1,5 +1,6 @@
 package com.lguplus.fleta.service.sample;
 
+import com.lguplus.fleta.client.SampleInnerClient;
 import com.lguplus.fleta.data.dto.sample.SampleCustomMemberDto;
 import com.lguplus.fleta.data.entity.SampleMember;
 import com.lguplus.fleta.data.entity.SampleTeam;
@@ -23,6 +24,7 @@ public class SampleMemberDomainService {
 
     private final SampleTeamRepository teamRepository;
     private final SampleMemberRepository memberRepository;
+    private final SampleInnerClient innerClient;
     private final SampleCustomMemberMapper customMemberMapper;
 
     public void initData() {
@@ -81,5 +83,9 @@ public class SampleMemberDomainService {
     @Cacheable(cacheNames = CacheNameType.TTL_1, key = "'SUB_LOGIC_04'")
     public String doSubLogic04() {
         return "SubLogic04";
+    }
+
+    public String getInnerHttpTest() {
+        return innerClient.getInnerHttpTest();
     }
 }

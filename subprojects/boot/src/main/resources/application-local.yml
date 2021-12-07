@@ -77,6 +77,8 @@ logging:
 ############################################
 #### Other Domain Application Service
 service:
+  msa-boilerplate:
+    url: http://localhost:8080
   vodlookup:
     url: http://vodlookup.fleta.com
   programming:
