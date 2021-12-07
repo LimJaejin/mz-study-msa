@@ -1,4 +1,4 @@
-package com.lguplus.fleta.provider.kafka;
+package com.lguplus.fleta.provider.message;
 
 import com.lguplus.fleta.message.MessageStreamSender;
 import lombok.RequiredArgsConstructor;

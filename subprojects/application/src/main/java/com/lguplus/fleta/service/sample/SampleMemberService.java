@@ -41,4 +41,8 @@ public class SampleMemberService {
         String subLogic03And04 = memberServiceStep.doSubLogic03And04();
         return subLogic01 + subLogic02 + subLogic03And04;
     }
+
+    public String getOuterTest() {
+        return memberDomainService.getInnerHttpTest();
+    }
 }

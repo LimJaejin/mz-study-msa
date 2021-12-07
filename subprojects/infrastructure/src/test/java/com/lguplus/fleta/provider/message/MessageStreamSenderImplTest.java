@@ -1,4 +1,4 @@
-package com.lguplus.fleta.provider.kafka;
+package com.lguplus.fleta.provider.message;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

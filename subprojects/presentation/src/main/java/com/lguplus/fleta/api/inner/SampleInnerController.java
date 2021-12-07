@@ -1,8 +1,10 @@
 package com.lguplus.fleta.api.inner;
 
+import com.lguplus.fleta.data.dto.response.InnerResponseDto;
 import com.lguplus.fleta.data.dto.sample.SampleCustomMemberDto;
+import com.lguplus.fleta.data.dto.sample.SampleInnerDto;
+import com.lguplus.fleta.message.SampleMessageStreamService;
 import com.lguplus.fleta.service.sample.SampleMemberService;
-import com.lguplus.fleta.service.sample.message.SampleMessageStreamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +45,20 @@ public class SampleInnerController {
     @GetMapping("/main-logic")
     public String doMainLogic() {
         return memberService.doMainLogic();
+    }
+
+    @GetMapping("/outer/test")
+    public String getOuterTest() {
+        return memberService.getOuterTest();
+    }
+
+    @GetMapping("/inner/test")
+    public InnerResponseDto<SampleInnerDto> getInnerHttpTest() {
+        SampleInnerDto innerDto = SampleInnerDto.builder()
+            .name("Inner HTTP Test")
+            .email("test@abc.com")
+            .build();
+        return InnerResponseDto.of(innerDto);
     }
 
     @PostMapping("/message/send")

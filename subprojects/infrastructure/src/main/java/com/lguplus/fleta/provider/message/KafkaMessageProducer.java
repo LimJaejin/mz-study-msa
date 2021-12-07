@@ -1,4 +1,4 @@
-package com.lguplus.fleta.provider.kafka;
+package com.lguplus.fleta.provider.message;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
