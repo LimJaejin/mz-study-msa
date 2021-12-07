@@ -1,16 +1,14 @@
 package com.lguplus.fleta.provider.message;
 
 import com.lguplus.fleta.data.message.CustomMessage;
-import com.lguplus.fleta.config.ProducerTopic;
+import com.lguplus.fleta.config.ProducerChannel;
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
-import com.lguplus.fleta.message.SampleProducer;
+import com.lguplus.fleta.message.Producer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.stereotype.Component;
 
 /**
  * 이벤트 발행
@@ -18,30 +16,22 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("deprecation")
 @Slf4j
 @RequiredArgsConstructor
-@EnableBinding(ProducerTopic.class)
-public class SampleProducerImpl implements SampleProducer {
+@EnableBinding(ProducerChannel.class)
+public class SampleProducerImpl implements Producer<SampleMemberDto> {
 
-    private final ProducerTopic producerTopic;
+    private final ProducerChannel producerChannel;
 
-    @Override
-    @SendTo(ProducerTopic.SAMPLE_OUT)
-    public void onInserted(SampleMemberDto dto) {
-        log.debug(">>> event pub, payload: {}", dto.toString());
-
-        Message<CustomMessage<SampleMemberDto>> message = MessageBuilder.withPayload(new CustomMessage<>(dto))
-                .setHeader("x-event-type", "sample-inserted")
+    private Message<CustomMessage<SampleMemberDto>> buildMessage(String headerValue, SampleMemberDto dto) {
+        return MessageBuilder.withPayload(new CustomMessage<>(dto))
+                .setHeader(HEADER_NAME, headerValue)
                 .build();
-        this.producerTopic.sampleOut().send(message);
     }
 
     @Override
-    public void onUpdated(SampleMemberDto dto) {
+    public void sendMessage(String headerValue, SampleMemberDto dto) {
+        log.debug(">>> message pub, header: {}, payload: {}", headerValue, dto.toString());
 
-    }
-
-    @Override
-    public void onDeleted(SampleMemberDto dto) {
-
+        this.producerChannel.sampleOut().send(this.buildMessage(headerValue, dto));
     }
 
 }

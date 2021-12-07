@@ -56,18 +56,29 @@ spring:
   cloud:
     stream:
       bindings:
-        # inbound
+        # inbound 채널
         sample-in:
           # 토픽
           destination: topic-sample
+          content-type: application/json
           group: group-sample
-        # outbound
+          consumer:
+            max-attempts: 3
+        # outbound 채널
         sample-out:
           destination: topic-sample
-        # kafka, rabbitmq, aws sns/sqs 등
-        kafka:
-          binder:
-            brokers: localhost:9092
+          content-type: application/json
+      # kafka, rabbitmq, aws sns/sqs 등
+      kafka:
+        binder:
+          brokers: localhost:9092
+          auto-create-topics: true
+        bindings:
+          sample-in:
+            # Dead Letter Processing, auto-bind-dlq는 dlq이름을 error.<topic>.<group>으로 생성
+            consumer:
+              enableDlq: true
+              auto-bind-dlq: true
 
 
 
