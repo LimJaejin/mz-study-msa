@@ -56,23 +56,29 @@ spring:
   cloud:
     stream:
       bindings:
-        # inbound 채널
+        # inbound 채널, 메시지 수신 설정
         sample-in:
-          # 토픽
+          # kafka는 topic, rabbitmq는 exchange
           destination: topic-sample
           content-type: application/json
+          # fail-over & 중복 수신 방지
+          # kafka topic으로 부터 consumer group 별로 하나의 메시지를 풀한다.
           group: group-sample
           consumer:
             max-attempts: 3
-        # outbound 채널
+        # outbound 채널, 메시지 발송 설정
+        # 보통 내부 MSA 서비스와 통신할 topic을 정의하기 때문에 송/수신용의 동일한 토픽을 사용할 일은 거의 없으나 테스트를 위해 발송 채널 정의
         sample-out:
           destination: topic-sample
           content-type: application/json
-      # kafka, rabbitmq, aws sns/sqs 등
+      # kafka, rabbitmq, aws sns/sqs 등의 설정, 메시지큐 변경 시 아래 부분만 수정하면 연동 및 비즈니스 로직은 수정할 필요가 없다.
       kafka:
         binder:
           brokers: localhost:9092
-          auto-create-topics: true
+          # auto-create-topics: true
+          auto-add-partitions: true
+          configuration:
+            retries: 5
         bindings:
           sample-in:
             # Dead Letter Processing, auto-bind-dlq는 dlq이름을 error.<topic>.<group>으로 생성

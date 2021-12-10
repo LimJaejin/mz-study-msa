@@ -57,7 +57,7 @@ public class SampleDomainService {
             // entity -> dto 변환
             SampleMemberDto newDto = this.sampleMemberMapper.toDto(entity);
 
-            // 이벤트 발행
+            // 메시지 발행
             this.sampleProducer.sendMessage("sample-inserted", newDto);
 
             return newDto;

@@ -3,7 +3,7 @@ package com.lguplus.fleta.message;
 import com.lguplus.fleta.BootConfig;
 import com.lguplus.fleta.config.ConsumerChannel;
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
-import com.lguplus.fleta.data.message.CustomMessage;
+import com.lguplus.fleta.data.message.Payload;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +25,8 @@ class SampleConsumerTest {
 
     private SampleMemberDto dto;
 
-    private Message<CustomMessage<SampleMemberDto>> buildMessage(String headerValue, SampleMemberDto dto) {
-        return MessageBuilder.withPayload(new CustomMessage<>(dto))
+    private Message<Payload<SampleMemberDto>> buildMessage(String headerValue, SampleMemberDto dto) {
+        return MessageBuilder.withPayload(new Payload<>(dto))
                 .setHeader(Producer.HEADER_NAME, headerValue)
                 .build();
     }
@@ -42,7 +42,7 @@ class SampleConsumerTest {
         boolean runResult = true;
 
         try {
-            Message<CustomMessage<SampleMemberDto>> testMessage = this.buildMessage("sample-inserted", this.dto);
+            Message<Payload<SampleMemberDto>> testMessage = this.buildMessage("sample-inserted", this.dto);
             this.consumerChannel.sampleIn().send(testMessage);
         }
         catch (Exception e) {

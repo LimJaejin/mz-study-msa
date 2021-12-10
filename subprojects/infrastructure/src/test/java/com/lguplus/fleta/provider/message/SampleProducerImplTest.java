@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lguplus.fleta.BootConfig;
 import com.lguplus.fleta.config.ProducerChannel;
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
-import com.lguplus.fleta.data.message.CustomMessage;
+import com.lguplus.fleta.data.message.Payload;
 import com.lguplus.fleta.message.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 @SpringBootTest(classes = { BootConfig.class })
-@DisplayName("샘플 메시지 프로듀서 테스트")
+@DisplayName("샘플 메시지 발송 테스트")
 class SampleProducerImplTest {
 
     @Autowired
@@ -57,12 +57,12 @@ class SampleProducerImplTest {
         log.debug(">>> message header: {}", headerName);
 
         Object o = message.getPayload();
-        log.debug(">>> message payload: {}", o);
+        log.debug(">>> payload: {}", o);
 
-        CustomMessage customMessage = this.objectMapper.readValue(o.toString(), new TypeReference<CustomMessage<SampleMemberDto>>() {});
-        log.debug(">>> sampleMemberDto: {}", customMessage.getPayload());
+        Payload payload = this.objectMapper.readValue(o.toString(), new TypeReference<Payload<SampleMemberDto>>() {});
+        log.debug(">>> sampleMemberDto: {}", payload.getMessageBody());
 
-        SampleMemberDto smd = (SampleMemberDto) customMessage.getPayload();
+        SampleMemberDto smd = (SampleMemberDto) payload.getMessageBody();
 
         assertAll(
             () -> assertEquals(dto.getName(), smd.getName()),
