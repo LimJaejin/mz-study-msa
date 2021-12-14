@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+//@NoArgsConstructor
+//@AllArgsConstructor
 @ToString
 public class Payload<T> implements Serializable {
 

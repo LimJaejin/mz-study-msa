@@ -7,8 +7,12 @@ import org.springframework.messaging.SubscribableChannel;
 public interface ConsumerChannel {
 
     String SAMPLE_IN = "sample-in";
+    String DLQ_SAMPLE_IN = "dlq-sample-in";
 
     @Input(SAMPLE_IN)
     SubscribableChannel sampleIn();
+
+    @Input(DLQ_SAMPLE_IN)
+    SubscribableChannel dlqSampleIn();
 
 }
