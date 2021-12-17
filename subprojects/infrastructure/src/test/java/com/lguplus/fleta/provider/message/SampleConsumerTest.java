@@ -1,4 +1,4 @@
-package com.lguplus.fleta.message;
+package com.lguplus.fleta.provider.message;
 
 import com.lguplus.fleta.BootConfig;
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,20 +17,24 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("샘플 메시지 컨슈머 테스트")
 class SampleConsumerTest {
 
+//    @Autowired
+//    private ConsumerChannel consumerChannel;
+
     @Autowired
-    private ConsumerChannel consumerChannel;
+    private SampleConsumer sampleConsumer;
 
-    private SampleMemberDto dto;
+    private Payload<SampleMemberDto> payload;
 
-    private Message<Payload<SampleMemberDto>> buildMessage(String headerValue, SampleMemberDto dto) {
-        return MessageBuilder.withPayload(new Payload<>(dto))
-                .setHeader(Producer.HEADER_NAME, headerValue)
-                .build();
-    }
+//    private Message<Payload<SampleMemberDto>> buildMessage(String headerValue, SampleMemberDto dto) {
+//        return MessageBuilder.withPayload(new Payload<>(dto))
+//                .setHeader(Producer.HEADER_NAME, headerValue)
+//                .build();
+//    }
     
     @BeforeEach
     void setup() {
-        this.dto = new SampleMemberDto("전강욱", "realsnake1975@gmail.com");
+        SampleMemberDto dto = new SampleMemberDto("전강욱", "realsnake1975@gmail.com");
+        this.payload = new Payload<>(dto);
     }
 
     @Test
@@ -41,8 +43,9 @@ class SampleConsumerTest {
         boolean runResult = true;
 
         try {
-            Message<Payload<SampleMemberDto>> testMessage = this.buildMessage("sample-inserted", this.dto);
-            this.consumerChannel.sampleIn().send(testMessage);
+//            Message<Payload<SampleMemberDto>> testMessage = this.buildMessage("sample-inserted", this.dto);
+//            this.consumerChannel.sampleIn().send(testMessage);
+            this.sampleConsumer.sampleInserted(this.payload);
         }
         catch (Exception e) {
             log.error(">>> 샘플 등록 메시지 수신 테스트 오류", e);

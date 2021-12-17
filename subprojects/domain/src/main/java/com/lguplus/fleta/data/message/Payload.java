@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+// dead letter를 발생시키기 위해 주석 처리
 //@NoArgsConstructor
 //@AllArgsConstructor
 @ToString

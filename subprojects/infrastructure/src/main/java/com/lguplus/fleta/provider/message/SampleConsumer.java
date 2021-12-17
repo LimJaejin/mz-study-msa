@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.messaging.Message;
 
 /**
- * 이벤트 수신
+ * 메시지 구독
  */
 @SuppressWarnings("deprecation")
 @Slf4j
@@ -18,20 +17,17 @@ import org.springframework.messaging.Message;
 @EnableBinding(ConsumerChannel.class)
 public class SampleConsumer {
 
+    // presentation 레이어의 클래스 주입
+
+    /**
+     * 메시지 타입이 'sample-inserted'인 메시지 구독
+     *
+     * @param message payload
+     */
     @StreamListener(value = ConsumerChannel.SAMPLE_IN, condition = "headers['x-message-type']=='sample-inserted'")
     public void sampleInserted(@org.springframework.messaging.handler.annotation.Payload Payload<SampleMemberDto> message) {
         log.info(">>> message sub, message: {}", message.toString());
-        // application layer의 usecase 호출
-    }
-
-    /**
-     * dead letter 로깅
-     *
-     * @param deadLetter
-     */
-    @StreamListener(value = ConsumerChannel.DLQ_SAMPLE_IN)
-    public void handleDlq(Message<?> deadLetter) {
-        log.error(">>> sample dlq, header: {}\npayload: {}", deadLetter.getHeaders(), deadLetter.getPayload());
+        // 위에서 주입한 presentation 레이어 클래스의 메소드 호출
     }
 
 }
