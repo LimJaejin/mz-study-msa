@@ -2,12 +2,14 @@ package com.lguplus.fleta.service;
 
 import com.lguplus.fleta.data.dto.sample.*;
 import com.lguplus.fleta.data.type.response.OuterResponseType;
+import com.lguplus.fleta.dto.InnerEvent;
 import com.lguplus.fleta.dto.sample.SampleResponseDto;
 import com.lguplus.fleta.exception.ServiceException;
 import com.lguplus.fleta.service.common.SubscriberDomainService;
 import com.lguplus.fleta.service.sample.SampleDomainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,8 @@ public class SampleService {
     private final SubscriberDomainService subscriberDomainService;
     private final SampleDomainService sampleDomainService;
 
+    private final ApplicationEventPublisher eventPublisher;
+
     /**
      * 샘플 멤버 & 샘플 멤버 매핑 데이터를 등록한다.
      *
@@ -40,12 +44,7 @@ public class SampleService {
             SampleMemberDto sampleMemberDto = this.sampleDomainService.create(dto);
             this.sampleDomainService.create(sampleMemberDto.getId(), mappDto);
 
-//            // EntityManager 사용
-//            SampleQueryConditonDto queryConditonDto = new SampleQueryConditonDto();
-//            queryConditonDto.setName("전강욱");
-//            List<SampleDto> samples = this.sampleDomainService.getSamplesByCondition(queryConditonDto);
-//
-//            return SampleResponseDto.serialize(OuterResponseType.SUCCESS, samples);
+            this.eventPublisher.publishEvent(new InnerEvent<>("sample-inserted", sampleMemberDto));
 
             return SampleResponseDto.serialize(OuterResponseType.SUCCESS);
         }

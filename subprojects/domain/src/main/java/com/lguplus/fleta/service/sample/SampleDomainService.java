@@ -12,7 +12,6 @@ import com.lguplus.fleta.data.mapper.sample.SampleMemberMapper;
 import com.lguplus.fleta.data.type.response.OuterResponseType;
 import com.lguplus.fleta.exception.ServiceException;
 import com.lguplus.fleta.repository.sample.SampleRepository;
-import com.lguplus.fleta.message.Producer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +35,6 @@ public class SampleDomainService {
     private final SampleMemberMapper sampleMemberMapper;
     private final SampleMemberMappMapper sampleMemberMappMapper;
     private final SampleRepository sampleRepository;
-    private final Producer<SampleMemberDto> sampleProducer;
 
     /**
      * 샘플 멤버를 등록한다.
@@ -55,12 +53,7 @@ public class SampleDomainService {
             this.sampleRepository.create(entity);
 
             // entity -> dto 변환
-            SampleMemberDto newDto = this.sampleMemberMapper.toDto(entity);
-
-            // 메시지 발행
-            this.sampleProducer.sendMessage("sample-inserted", newDto);
-
-            return newDto;
+            return this.sampleMemberMapper.toDto(entity);
         }
         catch (Exception e) {
             throw new ServiceException(OuterResponseType.FAIL_002, e);
