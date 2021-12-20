@@ -39,13 +39,13 @@ class SampleConsumerTest {
 
     @Test
     @DisplayName("#1. 샘플 등록 메시지 수신 테스트")
-    void testSampleInserted() {
+    void testReceiveSampleInserted() {
         boolean runResult = true;
 
         try {
 //            Message<Payload<SampleMemberDto>> testMessage = this.buildMessage("sample-inserted", this.dto);
 //            this.consumerChannel.sampleIn().send(testMessage);
-            this.sampleConsumer.sampleInserted(this.payload);
+            this.sampleConsumer.receiveSampleInserted(this.payload);
         }
         catch (Exception e) {
             log.error(">>> 샘플 등록 메시지 수신 테스트 오류", e);

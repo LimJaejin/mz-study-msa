@@ -15,6 +15,7 @@ dependencyManagement {
     }
 }
 
+bootJar.enabled = false
 
 allprojects {
     apply plugin: 'java'

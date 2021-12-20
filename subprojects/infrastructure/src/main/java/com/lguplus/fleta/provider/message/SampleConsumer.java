@@ -25,7 +25,7 @@ public class SampleConsumer {
      * @param message payload
      */
     @StreamListener(value = ConsumerChannel.SAMPLE_IN, condition = "headers['x-message-type']=='sample-inserted'")
-    public void sampleInserted(@org.springframework.messaging.handler.annotation.Payload Payload<SampleMemberDto> message) {
+    public void receiveSampleInserted(@org.springframework.messaging.handler.annotation.Payload Payload<SampleMemberDto> message) {
         log.info(">>> message sub, message: {}", message.toString());
         // 위에서 주입한 presentation 레이어 클래스의 메소드 호출
     }
