@@ -15,7 +15,7 @@ dependencyManagement {
     }
 }
 
-bootJar.enabled = false
+bootJar { enabled = false }
 
 allprojects {
     apply plugin: 'java'
@@ -188,8 +188,6 @@ project(':boot') {
         implementation project(':domain')
         implementation project(':infrastructure')
     }
-    bootJar { enabled = true }
-    jar { enabled = true }
 
     test {
         exclude '**/*'
@@ -204,7 +202,6 @@ project(':presentation') {
         testImplementation project(':boot')
     }
     bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 project(':application') {
@@ -212,7 +209,6 @@ project(':application') {
         implementation project(':domain')
     }
     bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 project(':domain') {
@@ -220,7 +216,6 @@ project(':domain') {
         testImplementation project(':boot')
     }
     bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 project(':infrastructure') {
@@ -229,7 +224,6 @@ project(':infrastructure') {
         testImplementation project(':boot')
     }
     bootJar { enabled = false }
-    jar { enabled = true }
 }
 
 task printVersion {
