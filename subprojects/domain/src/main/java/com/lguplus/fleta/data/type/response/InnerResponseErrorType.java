@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.EnumSet;
+import java.util.Locale;
 
 /**
  * HTTP API 표준 응답 Error 코드
  * (응답 코드, 메시지는 MessageSource에 정의 : messages/response*.yml)
- * @version 0.1.0
+ * @version 0.2.0
  */
 public enum InnerResponseErrorType {
     PARAMETER_ERROR,
@@ -19,11 +20,6 @@ public enum InnerResponseErrorType {
 
     private String code;
     private String message;
-
-    private void setProperties(String code, String message) {
-        this.code = code;
-        this.message = message;
-    }
 
     public String code() {
         return code;
@@ -41,9 +37,9 @@ public enum InnerResponseErrorType {
     @Slf4j
     @RequiredArgsConstructor
     @Component
-    private static class ResponseErrorTypePropertySetter {
+    static class ResponseErrorTypePropertySetter {
 
-        private final static String MESSAGE_CODE_PREFIX = "responseErrorType";
+        private static final String MESSAGE_CODE_PREFIX = "responseErrorType";
 
         private final MessageSource messageSource;
 
@@ -54,13 +50,19 @@ public enum InnerResponseErrorType {
                 String message = getMessage("message", type.name());
                 log.trace(">>> MessageSource : {}.{} : {}, {}",
                     MESSAGE_CODE_PREFIX, type.name(), code, message);
-                type.setProperties(code, message);
+                setProperty(type, code, message);
             }
+        }
+
+        private void setProperty(InnerResponseErrorType type, String code, String message) {
+            type.code = code;
+            type.message = message;
         }
 
         private String getMessage(String propName, String name) {
             String msgCode = MESSAGE_CODE_PREFIX + "." + name + "." + propName;
-            return messageSource.getMessage(msgCode, null, name, null);
+            Locale locale = Locale.KOREA;
+            return messageSource.getMessage(msgCode, null, name, locale);
         }
     }
 }

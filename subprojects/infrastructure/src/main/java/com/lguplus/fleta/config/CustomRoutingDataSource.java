@@ -9,8 +9,6 @@ public class CustomRoutingDataSource extends AbstractRoutingDataSource {
 
     @Override
     protected Object determineCurrentLookupKey() {
-        // return (TransactionSynchronizationManager.isCurrentTransactionReadOnly()) ? "reader" : "writer";
-
         if (TransactionSynchronizationManager.isCurrentTransactionReadOnly()) {
             log.debug(">>> Reader");
             return "reader";
