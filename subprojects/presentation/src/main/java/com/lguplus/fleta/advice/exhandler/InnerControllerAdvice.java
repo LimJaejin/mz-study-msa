@@ -35,7 +35,6 @@ public class InnerControllerAdvice {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             for (FieldError fieldError: fieldErrors) {
                 String field = fieldError.getField();
-                // String code = fieldError.getCode();
                 String defaultMessage = fieldError.getDefaultMessage();
                 String detailMessage = "[" + field + "] " + defaultMessage;
                 responseDto.addResponseError(InnerResponseErrorDto.of(InnerResponseErrorType.PARAMETER_ERROR, detailMessage));

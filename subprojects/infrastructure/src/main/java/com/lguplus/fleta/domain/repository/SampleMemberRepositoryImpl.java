@@ -22,8 +22,9 @@ public class SampleMemberRepositoryImpl implements SampleMemberRepository {
     @Override
     public Optional<SampleMember> getMember(int memberId) {
         Optional<SampleMember> member = memberJpaRepository.findById(memberId);
-        // Optional<SampleMember> member = memberJpaEmRepository.findById(memberId);
+        Optional<SampleMember> member2 = memberJpaEmRepository.findMemberById(memberId);
         member.ifPresent(m -> log.debug(">>> member : {}", m));
+        member2.ifPresent(m -> log.debug(">>> member2 : {}", m));
         return member;
     }
 
