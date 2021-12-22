@@ -1,12 +1,12 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.6.1'
+    id 'org.springframework.boot' version '2.5.8'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.adarshr.test-logger' version '3.0.0'
 }
 
 ext {
-    set('springCloudVersion', "2021.0.0")
+    set('springCloudVersion', "2020.0.4")
 }
 
 dependencyManagement {
@@ -14,6 +14,8 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
+bootJar { enabled = false }
 
 allprojects {
     apply plugin: 'java'
@@ -42,8 +44,11 @@ subprojects {
         implementation 'org.apache.commons:commons-lang3:3.11'
         implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
 
-        implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.0'
-        implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin:3.1.0'
+        implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.0.5'
+        implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin:3.0.5'
+
+        implementation 'io.springfox:springfox-swagger2:2.9.2'
+        implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
@@ -184,7 +189,6 @@ project(':boot') {
         implementation project(':domain')
         implementation project(':infrastructure')
     }
-    jar { enabled = false }
 
     test {
         exclude '**/*'
@@ -197,18 +201,21 @@ project(':presentation') {
         implementation project(':application')
         implementation project(':domain')
     }
+    bootJar { enabled = false }
 }
 
 project(':application') {
     dependencies {
         implementation project(':domain')
     }
+    bootJar { enabled = false }
 }
 
 project(':domain') {
     dependencies {
         testImplementation project(':boot')
     }
+    bootJar { enabled = false }
 }
 
 project(':infrastructure') {
@@ -216,11 +223,11 @@ project(':infrastructure') {
         implementation project(':presentation')
         implementation project(':domain')
     }
+    bootJar { enabled = false }
 }
 
 task printVersion {
     doLast {
-        // println subprojects[0].version
         println project(':boot').version
     }
 }
