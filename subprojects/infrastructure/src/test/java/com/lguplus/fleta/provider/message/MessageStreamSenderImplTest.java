@@ -1,5 +1,6 @@
 package com.lguplus.fleta.provider.message;
 
+import com.lguplus.fleta.domain.message.MessageStreamSenderImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

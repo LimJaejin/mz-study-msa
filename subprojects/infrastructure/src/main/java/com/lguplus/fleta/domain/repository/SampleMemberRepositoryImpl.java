@@ -1,6 +1,8 @@
-package com.lguplus.fleta.provider.jpa.sample;
+package com.lguplus.fleta.domain.repository;
 
 import com.lguplus.fleta.data.entity.SampleMember;
+import com.lguplus.fleta.provider.jpa.sample.SampleMemberJpaEmRepository;
+import com.lguplus.fleta.provider.jpa.sample.SampleMemberJpaRepository;
 import com.lguplus.fleta.repository.SampleMemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
