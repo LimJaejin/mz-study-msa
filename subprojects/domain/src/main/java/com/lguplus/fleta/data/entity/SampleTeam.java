@@ -30,7 +30,7 @@ public class SampleTeam {
     private String name;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
-    private List<SampleMember> members;
+    private List<SampleMember2> members;
 
     public SampleTeam(String name) {
         this.name = name;

@@ -8,10 +8,4 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class SampleMessageStreamService {
-
-    private final MessageStreamSender messageStreamSender;
-
-    public void sendMessage(String message) {
-        messageStreamSender.send(message);
-    }
 }

@@ -44,7 +44,22 @@ public class HikariConfigProperties {
     @Value("${spring.datasource.reader.maximum-pool-size:10}")
     private Integer readerMaxPoolSize;
 
-    public HikariDataSource getWriterDataSource() {
+    private HikariDataSource getHikariDataSource(String username, String password) {
+        HikariDataSource hds = DataSourceBuilder.create()
+                .type(HikariDataSource.class)
+                .username(username)
+                .password(password)
+                .build();
+
+        hds.setConnectionTimeout(this.connectionTimeout);
+        hds.setValidationTimeout(this.validationTimeout);
+        hds.setLeakDetectionThreshold(this.leakDetectionThreshold);
+        hds.setDataSourceProperties(dataSourceProperties);
+
+        return hds;
+    }
+
+    public HikariDataSource getWriteDataSource() {
         HikariDataSource hds = this.getHikariDataSource(this.writerUsername, this.writerPassword);
         hds.setJdbcUrl(this.writerJdbcUrl);
         hds.setMinimumIdle(this.writerMinIdle);
@@ -52,7 +67,7 @@ public class HikariConfigProperties {
         return hds;
     }
 
-    public HikariDataSource getReaderDataSource() {
+    public HikariDataSource getReadDataSource() {
         if (StringUtils.isBlank(this.readerJdbcUrl)) {
             this.readerJdbcUrl = this.writerJdbcUrl;
             this.readerUsername = this.writerUsername;
@@ -66,17 +81,4 @@ public class HikariConfigProperties {
         return hds;
     }
 
-    private HikariDataSource getHikariDataSource(String username, String password) {
-        HikariDataSource hds = DataSourceBuilder.create()
-            .type(HikariDataSource.class)
-            .username(username)
-            .password(password)
-            .build();
-
-        hds.setConnectionTimeout(this.connectionTimeout);
-        hds.setValidationTimeout(this.validationTimeout);
-        hds.setLeakDetectionThreshold(this.leakDetectionThreshold);
-        hds.setDataSourceProperties(dataSourceProperties);
-        return hds;
-    }
 }

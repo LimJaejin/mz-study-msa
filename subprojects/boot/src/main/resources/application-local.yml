@@ -6,7 +6,7 @@ server:
 
 
 ############################################
-####  Spring
+#### Spring
 spring:
   #### Open Tracing
   zipkin:
@@ -14,6 +14,7 @@ spring:
 
   #### Data Source
   datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     writer:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
       username: postgres
@@ -24,15 +25,15 @@ spring:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
       username: postgres
       password: postgres
-      minimum-idle: 10
-      maximum-pool-size: 10
+      minimum-idle: 5
+      maximum-pool-size: 5
 
   #### JPA
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: create-drop # FIXME : 반드시 제거
-      use-new-id-generator-mappings: true # FIXME : false로 변경
+      #ddl-auto: create-drop # FIXME : 반드시 제거
+      use-new-id-generator-mappings: true
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -44,7 +45,6 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-    #show-sql: true
 
   ## Cache - Redis
   cache:
@@ -52,23 +52,58 @@ spring:
   redis:
     host: localhost
     port: 6379
-    database: 0
 
-  ## Message Stream - Kafka
-  kafka:
-    bootstrap-servers: [ localhost:9092 ]
+  #### Spring Cloud Stream
+  cloud:
+    stream:
+      bindings:
+        ## Inbound 채널 (메시지 수신 설정)
+        sample-in:
+          # Consumer Group
+          group: group.${spring.application.name}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
+          # Topic
+          destination: inbound-topic-${spring.application.name}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
+
+        # Outbound 채널 (메시지 발송 설정)
+        sample-out:
+          destination: outbound-topic-${spring.application.name}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
+
+      # Kafka 설정
+      kafka:
+        binder:
+          #brokers: [b-1.msk-dev-iptv-msa.66adcz.c2.kafka.ap-northeast-2.amazonaws.com:9092,b-2.msk-dev-iptv-msa.66adcz.c2.kafka.ap-northeast-2.amazonaws.com:9092,b-3.msk-dev-iptv-msa.66adcz.c2.kafka.ap-northeast-2.amazonaws.com:9092,b-4.msk-dev-iptv-msa.66adcz.c2.kafka.ap-northeast-2.amazonaws.com:9092,b-5.msk-dev-iptv-msa.66adcz.c2.kafka.ap-northeast-2.amazonaws.com:9092,b-6.msk-dev-iptv-msa.66adcz.c2.kafka.ap-northeast-2.amazonaws.com:9092]
+          brokers: [localhost:9092]
 
 
 
 ############################################
-####  Logging
+#### Logging
 logging:
   level:
-    com.lguplus.fleta: DEBUG
-    org.hibernate:
-      SQL: DEBUG
-      #type: DEBUG
-      #type.descriptor.sql: DEBUG
+    com:
+      lguplus:
+        fleta: DEBUG
+      zaxxer:
+        hikari: DEBUG
+      #      hibernate:
+      #        SQL: DEBUG
+      #        type: TRACE
+      springframework:
+        cache: TRACE
+        cloud: DEBUG
+        integration: DEBUG
+        kafka: DEBUG
+        orm:
+          jpa: DEBUG
+        transaction:
+          interceptor: TRACE
+    jdbc:
+      audit: OFF
+      sqltiming: DEBUG
+      resultsettable: DEBUG
+      connection: DEBUG
+      resultset: OFF
+      sqlonly: OFF
   pattern:
     level: "%5p [${spring.application.name}][%X{saId:-}][%X{stbMac:-}]"
 
@@ -79,6 +114,8 @@ logging:
 service:
   msa-boilerplate:
     url: http://localhost:8080
+  subscriber:
+    url: http://subscriber.fleta.com
   vodlookup:
     url: http://vodlookup.fleta.com
   programming:
@@ -92,4 +129,4 @@ feign:
   client:
     config:
       default:
-        loggerLevel: BASIC
+        loggerLevel: FULL

@@ -10,4 +10,3 @@ def subProjectDir = "subprojects";
 for (project in rootProject.children) {
     project.projectDir = file("${subProjectDir}/${project.name}")
 }
-

@@ -1,6 +1,6 @@
 package com.lguplus.fleta.provider.jpa.sample;
 
-import com.lguplus.fleta.data.entity.SampleMember;
+import com.lguplus.fleta.data.entity.SampleMember2;
 import com.lguplus.fleta.data.entity.SampleTeam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +18,9 @@ public class SampleMemberJpaEmRepository {
     @PersistenceContext
     private final EntityManager em;
 
-    public Optional<SampleMember> findMemberById(int memberId) {
+    public Optional<SampleMember2> findMemberById(int memberId) {
         String jpql = "select m from SampleMember m where m.id = :memberId";
-        SampleMember member = em.createQuery(jpql, SampleMember.class)
+        SampleMember2 member = em.createQuery(jpql, SampleMember2.class)
             .setParameter("memberId", memberId)
             .getSingleResult();
         return Optional.ofNullable(member);
@@ -30,7 +30,7 @@ public class SampleMemberJpaEmRepository {
         em.persist(team);
     }
 
-    public void saveMember(SampleMember member) {
+    public void saveMember(SampleMember2 member) {
         em.persist(member);
     }
 }

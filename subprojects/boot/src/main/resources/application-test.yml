@@ -14,23 +14,23 @@ spring:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>/<<postgres.msa-template.write.db.mylgdb>>
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
-      minimum-idle: 10
-      maximum-pool-size: 10
+      minimum-idle: 5
+      maximum-pool-size: 5
     reader:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.read.db.mylgdb>>
       username: <<postgres.msa-template.read.username>>
       password: <<postgres.msa-template.read.password>>
-      minimum-idle: 20
-      maximum-pool-size: 20
+      minimum-idle: 5
+      maximum-pool-size: 5
 
   #### JPA
   jpa:
     database: postgresql
     hibernate:
+      use-new-id-generator-mappings: false
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      use-new-id-generator-mappings: false
     properties:
       hibernate:
         temp:
@@ -43,9 +43,12 @@ spring:
   cache:
     type: none
 
-  ## Message Stream - Kafka
-  kafka:
-    bootstrap-servers: [<<kafka.msa.plaintext.bootstrapservers>>]
+  #### Spring Cloud Stream
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: [<<kafka.msa.plaintext.bootstrapservers>>]
 
 
 
@@ -56,14 +59,14 @@ logging:
     com.lguplus.fleta: DEBUG
     org.hibernate:
       SQL: DEBUG
-#      type: DEBUG
-#      type.descriptor.sql: DEBUG
 
 
 
 ############################################
 #### Other Domain Application Service
 service:
+  subscriber:
+    url: http://subscriber.fleta.com
   vodlookup:
     url: http://vodlookup.fleta.com
   programming:

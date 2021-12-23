@@ -1,12 +1,12 @@
 package com.lguplus.fleta.data.type;
 
 public enum RedisTtsType {
-    TTS_1(1),
-    TTS_5(5),
-    TTS_10(10),
-    TTS_15(15),
-    TTS_30(30),
-    TTS_60(60);
+    TTL_1(1),
+    TTL_5(5),
+    TTL_10(10),
+    TTL_15(15),
+    TTL_30(30),
+    TTL_60(60);
 
     private final long value;
 

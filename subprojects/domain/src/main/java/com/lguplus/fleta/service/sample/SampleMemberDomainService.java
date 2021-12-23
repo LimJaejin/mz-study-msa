@@ -2,7 +2,7 @@ package com.lguplus.fleta.service.sample;
 
 import com.lguplus.fleta.client.SampleInnerClient;
 import com.lguplus.fleta.data.dto.sample.SampleCustomMemberDto;
-import com.lguplus.fleta.data.entity.SampleMember;
+import com.lguplus.fleta.data.entity.SampleMember2;
 import com.lguplus.fleta.data.entity.SampleTeam;
 import com.lguplus.fleta.data.mapper.SampleCustomMemberMapper;
 import com.lguplus.fleta.data.type.CacheNameType;
@@ -33,11 +33,11 @@ public class SampleMemberDomainService {
         teamRepository.create(team1);
         teamRepository.create(team2);
 
-        SampleMember member1 = new SampleMember("name01", "name01@uplus.com");
+        SampleMember2 member1 = new SampleMember2("name01", "name01@uplus.com");
         member1.setTeam(team1);
-        SampleMember member2 = new SampleMember("name02", "name02@uplus.com");
+        SampleMember2 member2 = new SampleMember2("name02", "name02@uplus.com");
         member2.setTeam(team1);
-        SampleMember member3 = new SampleMember("name03", "name03@uplus.com");
+        SampleMember2 member3 = new SampleMember2("name03", "name03@uplus.com");
         member3.setTeam(team2);
         memberRepository.join(member1);
         memberRepository.join(member2);
@@ -49,7 +49,7 @@ public class SampleMemberDomainService {
         key = "'MEMBER::' + #memberId"
     )
     public SampleCustomMemberDto getMember(int memberId) {
-        Optional<SampleMember> member = memberRepository.getMember(memberId);
+        Optional<SampleMember2> member = memberRepository.getMember(memberId);
         return member.map(customMemberMapper::toDto)
             .orElse(null);
     }
@@ -60,7 +60,7 @@ public class SampleMemberDomainService {
         unless = "#result == null || #result.size() == 0"
     )
     public List<SampleCustomMemberDto> getAllMemberList() {
-        List<SampleMember> members = memberRepository.getAllMemberList();
+        List<SampleMember2> members = memberRepository.getAllMemberList();
         return members.stream().map(customMemberMapper::toDto)
             .collect(Collectors.toList());
     }

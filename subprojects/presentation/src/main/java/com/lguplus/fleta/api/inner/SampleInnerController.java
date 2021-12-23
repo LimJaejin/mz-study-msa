@@ -63,7 +63,6 @@ public class SampleInnerController {
 
     @PostMapping("/message/send")
     public String sendMessage(@RequestBody String message) {
-        messageStreamService.sendMessage(message);
         return "Ok!";
     }
 }

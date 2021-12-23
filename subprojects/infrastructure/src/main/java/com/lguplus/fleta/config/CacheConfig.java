@@ -55,11 +55,11 @@ public class CacheConfig extends CachingConfigurerSupport {
         Map<String, RedisCacheConfiguration> redisCacheConfigMap = new HashMap<>();
 
         // 만료시간 15분, 30분, 60분
-        redisCacheConfigMap.put(CacheNameType.TTL_1, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTS_1.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_10, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTS_10.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_15, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTS_15.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_30, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTS_30.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_60, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTS_60.getValue())));
+        redisCacheConfigMap.put(CacheNameType.TTL_1, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_1.getValue())));
+        redisCacheConfigMap.put(CacheNameType.TTL_10, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_10.getValue())));
+        redisCacheConfigMap.put(CacheNameType.TTL_15, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_15.getValue())));
+        redisCacheConfigMap.put(CacheNameType.TTL_30, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_30.getValue())));
+        redisCacheConfigMap.put(CacheNameType.TTL_60, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_60.getValue())));
 
         log.debug(">>> Redis Cache 구성");
 

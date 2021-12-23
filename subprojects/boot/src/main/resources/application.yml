@@ -4,25 +4,26 @@ server:
   port: 8080
   shutdown: graceful
   tomcat:
+    connection-timeout: 2800
     threads:
-      max: 300
-      min-spare: 150
+      max: 250
+      min-spare: 250
 
 
 
 ############################################
-####  Spring
+#### Spring
 spring:
   application:
-    name: msa-boilerplate  # TODO : 이 부분 수정 후, 이 주석은 삭제하세요!
+    name: msa-boilerplate  # TODO : 수정 후, 이 주석은 삭제하세요!
   lifecycle:
     timeout-per-shutdown-phase: 1m
   profiles:
     active: local
 
   #### Open Tracing
-  #  zipkin:
-  #    baseUrl: http://localhost:9411/
+  zipkin:
+    enabled: false
 
   #### Message Source
   messages:
@@ -32,12 +33,12 @@ spring:
   #### Data Source
   datasource:
     hikari:
-      connection-timeout: 5000
+      connection-timeout: 2500
       validation-timeout: 20000
       leak-detection-threshold: 10000
       data-source-properties:
         cachePrepStmts: true
-        prepStmtCacheSize: 250
+        prepStmtCacheSize: 500
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
 
@@ -48,21 +49,52 @@ spring:
   #### Redis
   redis:
     timeout: 500  # Redis read timeout
-    connect-timeout: 50
+    connect-timeout: 100
 
-  ## Message Stream - Kafka
-  kafka:
-    consumer:
-      # ACK 자동 전송 여부 (true-자동, false-별도 코드 구성)
-      enable-auto-commit: true
-      # Consumer Offset이 없는 경우 처리 (latest-가장 마지막 offset부터, earliest-가장 처음 offset부터, none-에러 발생)
-      auto-offset-reset: latest
-      #max-poll-records: 1000
+  #### Spring Cloud Stream
+  cloud:
+    stream:
+      bindings:
+        ## Inbound 채널 (메시지 수신 설정)
+        sample-in:
+          # Consumer Group
+          group: group.${spring.application.name}
+          # Topic
+          destination: inbound-topic-${spring.application.name} # TODO : 수정 후, 이 주석은 삭제하세요!
+          content-type: application/json
+          consumer:
+            max-attempts: 3
+
+        # DLQ Inbound 채널 설정
+        dlq-sample-in:
+          # Consumer Group
+          group: dlq.group.${spring.application.name}
+          # Topic
+          destination: dlq.inbound-topic-${spring.application.name} # TODO : 수정 후, 이 주석은 삭제하세요!
+
+        # Outbound 채널 (메시지 발송 설정)
+        # (보통 내부 MSA 서비스와 통신할 Topic을 정의하기 때문에 송/수신용의 동일한 토픽을 사용할 일은 거의 없으나 테스트를 위해 발송 채널 정의)
+        sample-out:
+          destination: outbound-topic-${spring.application.name} # TODO : 수정 후, 이 주석은 삭제하세요!
+
+      # Kafka 설정
+      # (Kafka, RabbitMQ, AWS SNS/SQS 등의 설정, 메시지 큐 변경 시 아래 부분만 수정하면 연동 및 비즈니스 로직은 수정할 필요가 없음)
+      kafka:
+        binder:
+          auto-create-topics: true
+          #auto-add-partitions: true
+        bindings:
+          sample-in:
+            # Dead Letter Processing
+            consumer:
+              enableDlq: true
+              # DLQ Topic
+              dlqName: dlq.outbound-topic-${spring.application.name}
 
 
 
 ############################################
-####  Logging
+#### Logging
 logging:
   level:
     root: INFO
@@ -72,11 +104,11 @@ logging:
 
 
 ############################################
-## FeignClient
+#### FeignClient
 feign:
   client:
     config:
-      default:  # @FeignClient의 value/name 속성 (default는 전체 적용)
+      default: # @FeignClient의 value/name 속성 (default는 전체 적용)
         connectTimeout: 2000
         readTimeout: 2000
         #### Logging Level
@@ -85,3 +117,7 @@ feign:
         # HEADERS : Request, Response Header, 기본정보 로깅
         # FULL    : Request, Response Header, Response Body, 메타정보 로깅
         loggerLevel: NONE
+  httpclient:
+    enabled: true
+    connection-timeout: 2900
+    max-connections: 100

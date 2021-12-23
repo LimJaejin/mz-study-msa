@@ -6,7 +6,7 @@ server:
 
 
 ############################################
-####  Spring
+#### Spring
 spring:
   #### Open Tracing
   zipkin:
@@ -19,23 +19,23 @@ spring:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>/<<postgres.msa-template.write.db.mylgdb>>
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
-      minimum-idle: 10
-      maximum-pool-size: 10
+      minimum-idle: 25
+      maximum-pool-size: 25
     reader:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.read.db.mylgdb>>
       username: <<postgres.msa-template.read.username>>
       password: <<postgres.msa-template.read.password>>
-      minimum-idle: 20
-      maximum-pool-size: 20
+      minimum-idle: 25
+      maximum-pool-size: 25
 
   #### JPA
   jpa:
     database: postgresql
     hibernate:
+      use-new-id-generator-mappings: false
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      use-new-id-generator-mappings: false
     properties:
       hibernate:
         temp:
@@ -51,27 +51,51 @@ spring:
     cluster:
       nodes: [<<redis.cluster.nodes>>]
 
-  ## Message Stream - Kafka
-  kafka:
-    bootstrap-servers: [<<kafka.msa.plaintext.bootstrapservers>>]
+  #### Spring Cloud Stream
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: [<<kafka.msa.plaintext.bootstrapservers>>]
 
 
 
 ############################################
-####  Logging
+#### Logging
 logging:
   level:
-    com.lguplus.fleta: DEBUG
-    org.hibernate:
-      SQL: DEBUG
-#      type: DEBUG
-#      type.descriptor.sql: DEBUG
+    com:
+      lguplus:
+        fleta: DEBUG
+      zaxxer:
+        hikari: DEBUG
+      #      hibernate:
+      #        SQL: DEBUG
+      #        type: TRACE
+      springframework:
+        cache: TRACE
+        cloud: DEBUG
+        integration: DEBUG
+        kafka: DEBUG
+        orm:
+          jpa: DEBUG
+        transaction:
+          interceptor: TRACE
+    jdbc:
+      audit: OFF
+      sqltiming: DEBUG
+      resultsettable: DEBUG
+      connection: DEBUG
+      resultset: OFF
+      sqlonly: OFF
 
 
 
 ############################################
 #### Other Domain Application Service
 service:
+  subscriber:
+    url: http://subscriber:8080
   vodlookup:
     url: http://vodlookup:8080
   programming:
