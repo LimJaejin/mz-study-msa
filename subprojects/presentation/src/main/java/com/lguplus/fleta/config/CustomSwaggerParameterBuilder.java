@@ -1,7 +1,6 @@
 package com.lguplus.fleta.config;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,8 +23,8 @@ import springfox.documentation.swagger.schema.ApiModelProperties;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Strings.emptyToNull;
 import static springfox.documentation.swagger.common.SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER;
 import static springfox.documentation.swagger.readers.parameter.Examples.examples;
@@ -41,28 +40,21 @@ public class CustomSwaggerParameterBuilder implements ExpandedParameterBuilderPl
 
     /**
      * Implement this method to override the Parameter using ParameterBuilder available in the context
-     *
      * @param context - context that can be used to override the parameter attributes
      * @see Parameter
      * @see ParameterBuilder
      */
     @Override
     public void apply(ParameterExpansionContext context) {
-        Optional<ApiModelProperty> maybeApiModelProperty = context.findAnnotation(ApiModelProperty.class);
-        if (maybeApiModelProperty.isPresent()) {
-            this.fromApiModelProperty(context, maybeApiModelProperty.get());
-        }
+        Optional<ApiModelProperty> maybeApiModelProperty = ParameterExpansionContextWrapper.findAnnotation(context, ApiModelProperty.class);
+        maybeApiModelProperty.ifPresent(apiModelProperty -> this.fromApiModelProperty(context, apiModelProperty));
 
-        Optional<ApiParam> maybeApiParam = context.findAnnotation(ApiParam.class);
-        if (maybeApiParam.isPresent()) {
-            this.fromApiParam(context, maybeApiParam.get());
-        }
+        Optional<ApiParam> maybeApiParam = ParameterExpansionContextWrapper.findAnnotation(context, ApiParam.class);
+        maybeApiParam.ifPresent(apiParam -> this.fromApiParam(context, apiParam));
     }
 
     /**
      * Returns if a plugin should be invoked according to the given delimiter.
-     *
-     * @param delimiter
      * @return if the plugin should be invoked
      */
     @Override
@@ -73,38 +65,38 @@ public class CustomSwaggerParameterBuilder implements ExpandedParameterBuilderPl
     private void fromApiModelProperty(ParameterExpansionContext context, ApiModelProperty apiModelProperty) {
         String allowableProperty = emptyToNull(apiModelProperty.allowableValues());
         AllowableValues allowable = allowableValues(
-                fromNullable(allowableProperty),
-                context.getFieldType().getErasedType());
+            Optional.ofNullable(allowableProperty),
+            context.getFieldType().getErasedType());
 
         maybeSetParameterName(context, apiModelProperty.name())
-                .description(this.descriptions.resolve(apiModelProperty.value()))
-                .required(apiModelProperty.required())
-                .allowableValues(allowable)
-                .parameterAccess(apiModelProperty.access())
-                .hidden(apiModelProperty.hidden())
-                .scalarExample(apiModelProperty.example())
-                .order(apiModelProperty.position())
-                .build();
+            .description(this.descriptions.resolve(apiModelProperty.value()))
+            .required(apiModelProperty.required())
+            .allowableValues(allowable)
+            .parameterAccess(apiModelProperty.access())
+            .hidden(apiModelProperty.hidden())
+            .scalarExample(apiModelProperty.example())
+            .order(apiModelProperty.position())
+            .build();
     }
 
     private void fromApiParam(ParameterExpansionContext context, ApiParam apiParam) {
         String allowableProperty = emptyToNull(apiParam.allowableValues());
         AllowableValues allowable = allowableValues(
-                fromNullable(allowableProperty),
-                context.getFieldType().getErasedType());
+            Optional.ofNullable(allowableProperty),
+            context.getFieldType().getErasedType());
 
         maybeSetParameterName(context, apiParam.name())
-                .description(this.descriptions.resolve(apiParam.value()))
-                .defaultValue(apiParam.defaultValue())
-                .required(apiParam.required())
-                .allowMultiple(apiParam.allowMultiple())
-                .allowableValues(allowable)
-                .parameterAccess(apiParam.access())
-                .hidden(apiParam.hidden())
-                .scalarExample(apiParam.example())
-                .complexExamples(examples(apiParam.examples()))
-                .order(SWAGGER_PLUGIN_ORDER)
-                .build();
+            .description(this.descriptions.resolve(apiParam.value()))
+            .defaultValue(apiParam.defaultValue())
+            .required(apiParam.required())
+            .allowMultiple(apiParam.allowMultiple())
+            .allowableValues(allowable)
+            .parameterAccess(apiParam.access())
+            .hidden(apiParam.hidden())
+            .scalarExample(apiParam.example())
+            .complexExamples(examples(apiParam.examples()))
+            .order(SWAGGER_PLUGIN_ORDER)
+            .build();
     }
 
     private ParameterBuilder maybeSetParameterName(ParameterExpansionContext context, String parameterName) {
@@ -115,18 +107,13 @@ public class CustomSwaggerParameterBuilder implements ExpandedParameterBuilderPl
     }
 
     private AllowableValues allowableValues(final Optional<String> optionalAllowable, Class<?> fieldType) {
-        AllowableValues allowable = null;
         if (this.enumTypeDeterminer.isEnum(fieldType)) {
-            allowable = new AllowableListValues(getEnumValues(fieldType), "LIST");
+            return new AllowableListValues(getEnumValues(fieldType), "LIST");
         }
-        else if (optionalAllowable.isPresent()) {
-            allowable = ApiModelProperties.allowableValueFromString(optionalAllowable.get());
-        }
-        return allowable;
+        return optionalAllowable.map(ApiModelProperties::allowableValueFromString).orElse(null);
     }
 
     private List<String> getEnumValues(final Class<?> subject) {
         return Lists.transform(Arrays.asList(subject.getEnumConstants()), (Function<Object, String>) Object::toString);
     }
-
 }

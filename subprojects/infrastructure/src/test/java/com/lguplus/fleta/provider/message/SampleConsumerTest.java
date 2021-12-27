@@ -2,7 +2,6 @@ package com.lguplus.fleta.provider.message;
 
 import com.lguplus.fleta.BootConfig;
 import com.lguplus.fleta.data.dto.sample.SampleMemberDto;
-import com.lguplus.fleta.data.message.Payload;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

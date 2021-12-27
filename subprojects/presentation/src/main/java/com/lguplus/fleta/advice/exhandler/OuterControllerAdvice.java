@@ -37,18 +37,6 @@ public class OuterControllerAdvice {
         return ResponseEntity.ok().body("");
     }
 
-    /*
-    @ExceptionHandler({BindException.class})
-    public ResponseEntity<String> handleMethodArgumentNotValidException(HttpServletRequest req, final BindException ex) {
-        log.error(req.getRequestURL() + " BindException: ", ex);
-
-        ex.getBindingResult().getAllErrors()
-                .forEach(c -> log.info("{}, {}", ((FieldError) c).getField(), c.getDefaultMessage()));
-
-        return ResponseEntity.ok().body("1|REQUEST PARAMETER ERROR|0|||||||||||||||||||||||||||\f");
-    }
-     */
-
     // application 레이어에서 throw한 오류는 controller를 거쳐 여기서 처리된다.
     @ExceptionHandler({ServiceException.class})
     public ResponseEntity<?> handleServiceException(HttpServletRequest req, final ServiceException ex) {
