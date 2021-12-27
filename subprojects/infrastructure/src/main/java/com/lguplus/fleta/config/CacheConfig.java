@@ -1,7 +1,6 @@
 package com.lguplus.fleta.config;
 
 import com.lguplus.fleta.data.type.CacheNameType;
-import com.lguplus.fleta.data.type.RedisTtsType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -18,7 +17,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,12 +52,10 @@ public class CacheConfig extends CachingConfigurerSupport {
         // 리소스 유형에 따라 만료 시간을 다르게 지정
         Map<String, RedisCacheConfiguration> redisCacheConfigMap = new HashMap<>();
 
-        // 만료시간 15분, 30분, 60분
-        redisCacheConfigMap.put(CacheNameType.TTL_1, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_1.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_10, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_10.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_15, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_15.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_30, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_30.getValue())));
-        redisCacheConfigMap.put(CacheNameType.TTL_60, redisCacheConfiguration.entryTtl(Duration.ofMinutes(RedisTtsType.TTL_60.getValue())));
+        // TTL 캐시이름 설정
+        for (CacheNameType cacheNameType: CacheNameType.values()) {
+            redisCacheConfigMap.put(cacheNameType.getCacheName(), redisCacheConfiguration.entryTtl(cacheNameType.getDuration()));
+        }
 
         log.debug(">>> Redis Cache 구성");
 

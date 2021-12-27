@@ -8,6 +8,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2MapperImpl;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,14 +22,13 @@ public class CustomModelToSwaggerMapper extends ServiceModelToSwagger2MapperImpl
     @Override
     protected List<Parameter> parameterListToParameterList(List<springfox.documentation.service.Parameter> list) {
         if (list == null) {
-            return null;
+            return Collections.emptyList();
         }
 
         return super.parameterListToParameterList(
-                list.stream()
-                        .sorted(Comparator.comparingInt(springfox.documentation.service.Parameter::getOrder))
-//                        .peek(p -> log.debug(p.toString())) // 4 test
-                        .collect(Collectors.toList())
+            list.stream()
+                .sorted(Comparator.comparingInt(springfox.documentation.service.Parameter::getOrder))
+                .collect(Collectors.toList())
         );
     }
 
