@@ -39,9 +39,8 @@ public class OuterControllerAdvice {
 
     // application 레이어에서 throw한 오류는 controller를 거쳐 여기서 처리된다.
     @ExceptionHandler({ServiceException.class})
-    public ResponseEntity<?> handleServiceException(HttpServletRequest req, final ServiceException ex) {
+    public ResponseEntity<String> handleServiceException(HttpServletRequest req, final ServiceException ex) {
         log.error(req.getRequestURL() + " ServiceException: ", ex);
-        // return ResponseEntity.ok().body(ex.getResponseDto().serializeErrorMessage());
         return ResponseEntity.ok().body(ex.getMessage());
     }
 
