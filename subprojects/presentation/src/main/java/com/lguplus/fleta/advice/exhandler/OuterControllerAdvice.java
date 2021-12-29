@@ -41,7 +41,8 @@ public class OuterControllerAdvice {
     @ExceptionHandler({ServiceException.class})
     public ResponseEntity<?> handleServiceException(HttpServletRequest req, final ServiceException ex) {
         log.error(req.getRequestURL() + " ServiceException: ", ex);
-        return ResponseEntity.ok().body(ex.getResponseDto().serializeErrorMessage());
+        // return ResponseEntity.ok().body(ex.getResponseDto().serializeErrorMessage());
+        return ResponseEntity.ok().body(ex.getMessage());
     }
 
 }
