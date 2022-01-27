@@ -16,17 +16,20 @@ public enum CacheNameType {
     TTL_1_DAY(Constant.TTL_1_DAY, Duration.ofDays(1)),
     TTL_2_DAY(Constant.TTL_2_DAY, Duration.ofDays(2));
 
-    @Getter
-    private final String cacheName;
-    @Getter
-    private final Duration duration;
+    private final String code;
+    @Getter private final Duration duration;
 
-    CacheNameType(String cacheName, Duration duration) {
-        this.cacheName = cacheName;
+    CacheNameType(String code, Duration duration) {
+        this.code = code;
         this.duration = duration;
     }
 
-    @Override public String toString() {
+    public String code() {
+        return code;
+    }
+
+    @Override
+    public String toString() {
         return super.toString();
     }
 

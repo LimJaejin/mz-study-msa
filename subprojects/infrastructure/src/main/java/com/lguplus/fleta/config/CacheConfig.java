@@ -54,7 +54,7 @@ public class CacheConfig extends CachingConfigurerSupport {
 
         // TTL 캐시이름 설정
         for (CacheNameType cacheNameType: CacheNameType.values()) {
-            redisCacheConfigMap.put(cacheNameType.getCacheName(), redisCacheConfiguration.entryTtl(cacheNameType.getDuration()));
+            redisCacheConfigMap.put(cacheNameType.code(), redisCacheConfiguration.entryTtl(cacheNameType.getDuration()));
         }
 
         log.debug(">>> Redis Cache 구성");
