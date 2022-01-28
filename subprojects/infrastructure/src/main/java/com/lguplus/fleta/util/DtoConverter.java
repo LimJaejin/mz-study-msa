@@ -118,10 +118,7 @@ public class DtoConverter {
             if (setterMethodMap.containsKey(alias)) {
                 Method method = setterMethodMap.get(alias);
                 Optional<?> castValue = VariableCastUtils.castValue(value, method.getParameterTypes()[0]);
-
-                if (castValue.isPresent()) {
-                    method.invoke(model, castValue.get());
-                }
+                method.invoke(model, castValue.orElse(null));
             }
         }
     }

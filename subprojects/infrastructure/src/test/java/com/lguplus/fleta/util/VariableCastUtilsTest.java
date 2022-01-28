@@ -124,6 +124,16 @@ class VariableCastUtilsTest {
     }
 
     @Test
+    void castValue_intOfOtherObject() {
+        // Given
+        Object testParam = new TestDto(); // Invalid Type
+        // When
+        Optional<Object> actual = VariableCastUtils.castValue(testParam, Integer.class);
+        // Then
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
     void castValue_long() {
         // Given
         Object testParam = 10L;
@@ -152,15 +162,25 @@ class VariableCastUtilsTest {
     }
 
     @Test
+    void castValue_longOfOtherObject() {
+        // Given
+        Object testParam = new TestDto(); // Invalid Type
+        // When
+        Optional<Object> actual = VariableCastUtils.castValue(testParam, Long.class);
+        // Then
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
     void castValue_float() {
         // Given
-        Object testParam = 10;
+        Object testParam = 12.3;
         // When
         Optional<Object> actual = VariableCastUtils.castValue(testParam, Float.class);
         // Then
         assertThat(actual).isPresent();
         actual.ifPresent(a -> {
-            assertThat(a).isEqualTo(10.0F);
+            assertThat(a).isEqualTo(12.3F);
             assertThat(a).isInstanceOf(Float.class);
         });
     }
@@ -168,19 +188,19 @@ class VariableCastUtilsTest {
     @Test
     void castValue_floatOfString() {
         // Given
-        Object testParam = "10";
+        Object testParam = "12.3";
         // When
         Optional<Object> actual = VariableCastUtils.castValue(testParam, Float.class);
         // Then
         assertThat(actual).isPresent();
         actual.ifPresent(a -> {
-            assertThat(a).isEqualTo(10.0F);
+            assertThat(a).isEqualTo(12.3F);
             assertThat(a).isInstanceOf(Float.class);
         });
     }
 
     @Test
-    void castValue_otherType() {
+    void castValue_floatOfOtherObject() {
         // Given
         TestDto testParam = new TestDto();
         // When
@@ -192,13 +212,13 @@ class VariableCastUtilsTest {
     @Test
     void castValue_double() {
         // Given
-        Object testParam = 10;
+        Object testParam = 12.3;
         // When
         Optional<Object> actual = VariableCastUtils.castValue(testParam, Double.class);
         // Then
         assertThat(actual).isPresent();
         actual.ifPresent(a -> {
-            assertThat(a).isEqualTo(10.0D);
+            assertThat(a).isEqualTo(12.3D);
             assertThat(a).isInstanceOf(Double.class);
         });
     }
@@ -206,15 +226,25 @@ class VariableCastUtilsTest {
     @Test
     void castValue_doubleOfString() {
         // Given
-        Object testParam = "10";
+        Object testParam = "12.3";
         // When
         Optional<Object> actual = VariableCastUtils.castValue(testParam, Double.class);
         // Then
         assertThat(actual).isPresent();
         actual.ifPresent(a -> {
-            assertThat(a).isEqualTo(10.0D);
+            assertThat(a).isEqualTo(12.3D);
             assertThat(a).isInstanceOf(Double.class);
         });
+    }
+
+    @Test
+    void castValue_douleOfOtherObject() {
+        // Given
+        TestDto testParam = new TestDto();
+        // When
+        Optional<Object> actual = VariableCastUtils.castValue(testParam, Double.class);
+        // Then
+        assertThat(actual).isEmpty();
     }
 
     @Test
@@ -247,6 +277,16 @@ class VariableCastUtilsTest {
     }
 
     @Test
+    void castValue_localDateOfOtherObject() {
+        // Given
+        TestDto testParam = new TestDto();
+        // When
+        Optional<Object> actual = VariableCastUtils.castValue(testParam, LocalDate.class);
+        // Then
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
     void castValue_localDateTime() {
         // Given
         Object testParam = LocalDateTime.of(2022, 1, 26, 20, 46, 7);
@@ -273,5 +313,15 @@ class VariableCastUtilsTest {
             assertThat(a).isEqualTo(localDateTime);
             assertThat(a).isInstanceOf(LocalDateTime.class);
         });
+    }
+
+    @Test
+    void castValue_localDateTimeOfOtherObject() {
+        // Given
+        TestDto testParam = new TestDto();
+        // When
+        Optional<Object> actual = VariableCastUtils.castValue(testParam, LocalDateTime.class);
+        // Then
+        assertThat(actual).isEmpty();
     }
 }

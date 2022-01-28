@@ -30,7 +30,6 @@ public class StringCaseUtils {
         return camelCaseToPascalCase(snakeCaseToCamelCase(snakeCase));
     }
 
-
     /**
      * input_snake_case 형식을 inputSnakeCase 로 변경합니다.
      */

@@ -20,9 +20,7 @@ class DtoConverterTest {
 
     @BeforeEach
     void beforeEach() {
-        expected = new TestDto();
-        expected.setId(1);
-        expected.setName("Megazone");
+        expected = new TestDto(1, "Megazone");
     }
 
     @Test
@@ -50,7 +48,15 @@ class DtoConverterTest {
         List<TestDto> actual = DtoConverter.convertList(expectedListMap, TestDto.class);
         // Then
         assertThat(actual.size()).isEqualTo(expectedListMap.size());
-        assertThat(actual.get(0).getName()).isEqualTo(expected.getName());
+        assertThat(actual.get(0).getId()).isEqualTo(expected.getId());
+    }
+
+    @Test
+    void convertList_null() {
+        // When
+        List<TestDto> actual = DtoConverter.convertList(null, TestDto.class);
+        // Then
+        assertThat(actual).isEmpty();
     }
 
     @Test
