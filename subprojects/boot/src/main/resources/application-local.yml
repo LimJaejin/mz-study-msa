@@ -34,9 +34,6 @@ spring:
     hibernate:
       #ddl-auto: create-drop # FIXME : 반드시 제거
       use-new-id-generator-mappings: true
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         temp:
