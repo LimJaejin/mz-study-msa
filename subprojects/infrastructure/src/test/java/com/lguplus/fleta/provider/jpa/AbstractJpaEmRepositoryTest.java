@@ -28,15 +28,14 @@ class AbstractJpaEmRepositoryTest {
     @Mock NativeQuery<?> nativeQuery;
     @Mock org.hibernate.query.Query hibernateQuery;
 
-    AbstractJpaEmRepository jpaEmRepository;
+    @Spy @InjectMocks TestConcreteJpaEmRepository jpaEmRepository;
     TestDto expectedDto;
+
+    private static class TestConcreteJpaEmRepository extends AbstractJpaEmRepository { }
 
     @BeforeEach
     void beforeEach() {
-        jpaEmRepository = Mockito.mock(AbstractJpaEmRepository.class);
-        expectedDto = new TestDto();
-        expectedDto.setId(1);
-        expectedDto.setName("Megazone");
+        expectedDto = new TestDto(1, "Megazone");
     }
 
     @Test
@@ -61,6 +60,17 @@ class AbstractJpaEmRepositoryTest {
         // Then
         assertThat(actual).isPresent();
         actual.ifPresent(s -> assertThat(s).isEqualTo(expectedDto.getName()));
+    }
+
+    @Test
+    void convertSingle_nullQuery() {
+        // Given
+        query = null;
+        doCallRealMethod().when(jpaEmRepository).convertSingle(this.query, String.class);
+        // When
+        ThrowableAssert.ThrowingCallable callable = () -> this.jpaEmRepository.convertSingle(this.query, String.class);
+        // Then
+        assertThatThrownBy(callable).isInstanceOf(NullPointerException.class);
     }
 
     @Test
@@ -144,7 +154,7 @@ class AbstractJpaEmRepositoryTest {
         // Given
         doCallRealMethod().when(jpaEmRepository).convertList(query, String.class);
         List<String> expected = List.of(expectedDto.getName(), expectedDto.getName());
-        when(jpaEmRepository.convertList(query, String.class)).thenReturn(expected);
+        when(query.getResultList()).thenReturn(expected);
         // When
         List<String> actual = jpaEmRepository.convertList(query, String.class);
         // Then
@@ -165,5 +175,16 @@ class AbstractJpaEmRepositoryTest {
         // Then
         assertThat(actual.size()).isEqualTo(expected.size());
         assertThat(actual.get(0)).isEqualTo(expected.get(0));
+    }
+
+    @Test
+    void convertList_nullQuery() {
+        // Given
+        query = null;
+        doCallRealMethod().when(jpaEmRepository).convertList(query, TestDto.class);
+        // When
+        ThrowableAssert.ThrowingCallable callable = () -> jpaEmRepository.convertList(query, TestDto.class);
+        // Then
+        assertThatThrownBy(callable).isInstanceOf(NullPointerException.class);
     }
 }

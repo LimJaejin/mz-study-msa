@@ -30,6 +30,7 @@ class StringCaseUtilsTest {
     @ParameterizedTest
     @CsvSource({
         "aBc_DeF, AbcDef",
+        "aBc_DeF_ghI, AbcDefGhi",
         "aBcDeF, ABcDeF",
         "ABCDEF, Abcdef",
         "abcdef, Abcdef",
@@ -42,16 +43,6 @@ class StringCaseUtilsTest {
     }
 
     @Test
-    void camelCaseToSnakeCase() {
-        // Given
-        String str = "AbcDef";
-        // When
-        String actual = StringCaseUtils.camelCaseToSnakeCase(str);
-        // Then
-        assertThat(actual).isEqualTo("ABC_DEF");
-    }
-
-    @Test
     void camelCaseToSnakeCase_lowerCase() {
         // Given
         String str = "AbcDef";
@@ -59,5 +50,29 @@ class StringCaseUtilsTest {
         String actual = StringCaseUtils.toLowerCamelCaseToSnakeCase(str);
         // Then
         assertThat(actual).isEqualTo("abc_def");
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "AbcDef, ABC_DEF",
+        "aBc_DeF_ghI, A_BC_DE_F_GH_I",
+    })
+    void camelCaseToSnakeCase(String given, String expected) {
+        // When
+        String actual = StringCaseUtils.camelCaseToSnakeCase(given);
+        // Then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "ABC_DEF, AbcDef",
+        "A_BC_DE_F_GH_I, ABcDeFGhI",
+    })
+    void snakeCaseToCamelCase(String given, String expected) {
+        // When
+        String actual = StringCaseUtils.snakeCaseToCamelCase(given);
+        // Then
+        assertThat(actual).isEqualTo(expected);
     }
 }
