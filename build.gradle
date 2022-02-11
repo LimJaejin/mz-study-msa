@@ -4,6 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.adarshr.test-logger' version '3.0.0'
     id "org.sonarqube" version "3.3"
+    id 'checkstyle'
 }
 
 ext {
@@ -36,6 +37,7 @@ allprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'jacoco'
+    apply plugin: 'checkstyle'
 
     group = 'com.lguplus.fleta'
     version = '0.1.0'
@@ -194,6 +196,28 @@ subprojects {
         showSkippedStandardStreams true
         showFailedStandardStreams true
         logLevel 'info'
+    }
+
+    // checkstyle 설정 추가
+    checkstyle {
+        toolVersion = '9.3'
+        maxWarnings = 0
+        maxErrors = 0
+        showViolations = true
+        ignoreFailures = true // checkstyle 경고/에러 발생 시 빌드 실패 제외
+
+        configFile = rootProject.file('config/checkstyle/google-uplus-checks.xml')
+    }
+
+    checkstyleTest {
+        enabled = false
+    }
+
+    tasks.withType(Checkstyle) {
+        reports { // build/reports/checkstyle
+            xml.required = false
+            html.required = true
+        }
     }
 }
 
