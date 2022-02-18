@@ -616,10 +616,10 @@
     </option> -->
     <option name="IMPORT_LAYOUT_TABLE">
         <value>
-            <emptyLine/>
             <package name="javax" static="false" withSubpackages="false"/>
             <package name="" static="false" withSubpackages="true"/>
             <package name="java" static="false" withSubpackages="false"/>
+            <emptyLine/>
             <package name="" static="true" withSubpackages="true"/>
         </value>
     </option>
