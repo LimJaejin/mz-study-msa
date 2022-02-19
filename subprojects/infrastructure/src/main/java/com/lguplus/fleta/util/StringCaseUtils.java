@@ -35,7 +35,7 @@ public class StringCaseUtils {
      */
     public static String snakeCaseToCamelCase(String snakeCase) {
         StringBuilder sb = new StringBuilder();
-        for (String s: snakeCase.toLowerCase().split("_")) {
+        for (String s : snakeCase.toLowerCase().split("_")) {
             sb.append(Character.toUpperCase(s.charAt(0)));
             if (s.length() > 1) {
                 sb.append(s.substring(1));

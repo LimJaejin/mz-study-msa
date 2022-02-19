@@ -1,9 +1,17 @@
 package com.lguplus.fleta.util;
 
 import com.lguplus.fleta.exception.ServiceException;
-
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +47,7 @@ public class DtoConverter {
         List<T> resultModels = new ArrayList<>();
 
         try {
-            for (Map<String, Object> element: aliasResults) {
+            for (Map<String, Object> element : aliasResults) {
                 Constructor<T> constructor = classType.getConstructor();
                 T model = constructor.newInstance();
                 executeReflection(element, setterMethod, model);
@@ -92,7 +100,7 @@ public class DtoConverter {
     private static <T> Map<String, Method> getSetterMethod(Set<String> aliasSet, Class<T> classType) {
         Map<String, Method> map = new HashMap<>();
 
-        for (String alias: aliasSet) {
+        for (String alias : aliasSet) {
             String setterMethodName = "set" + StringCaseUtils.autoPascalCase(alias);
 
             Arrays.stream(classType.getMethods())
@@ -110,7 +118,7 @@ public class DtoConverter {
      * @param model           dto
      */
     private static <T> void executeReflection(Map<String, Object> element, Map<String, Method> setterMethodMap, T model) throws InvocationTargetException, IllegalAccessException {
-        for (Map.Entry<String, Object> entry: element.entrySet()) {
+        for (Map.Entry<String, Object> entry : element.entrySet()) {
             String alias = entry.getKey();
             Object value = entry.getValue();
 
@@ -142,7 +150,7 @@ public class DtoConverter {
 
         Map<String, Object> resultMap = new TreeMap<>();
 
-        for (Map.Entry<?, ?> entry: map.entrySet()) {
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
             String key = (String) entry.getKey(); // 칼럼 알리아스
             Object value = entry.getValue(); // 칼럼 값
 

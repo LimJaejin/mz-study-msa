@@ -1,17 +1,20 @@
 package com.lguplus.fleta.config;
 
+import java.util.HashMap;
+import java.util.Map;
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ import java.util.Map;
 @ComponentScan(basePackages = "com.lguplus.fleta")
 @EnableFeignClients(basePackages = "com.lguplus.fleta")
 public class InfrastructureConfig {
-    
+
     private static final String WDS = "writeDataSource";
     private static final String RDS = "readDataSource";
 
@@ -37,7 +40,7 @@ public class InfrastructureConfig {
     }
 
     @Bean
-    @DependsOn({ WDS, RDS })
+    @DependsOn({WDS, RDS})
     public DataSource routingDataSource(@Qualifier(WDS) DataSource writeDataSource, @Qualifier(RDS) DataSource readDataSource) {
         Map<Object, Object> datasourceMap = new HashMap<>();
         datasourceMap.put("write", writeDataSource);
@@ -53,7 +56,7 @@ public class InfrastructureConfig {
     @Primary
     @Bean
     @DependsOn("routingDataSource")
-    public DataSource lazyConnectionDataSource(@Qualifier("routingDataSource") DataSource routingDataSource){
+    public DataSource lazyConnectionDataSource(@Qualifier("routingDataSource") DataSource routingDataSource) {
         return new LazyConnectionDataSourceProxy(routingDataSource);
     }
 

@@ -1,8 +1,7 @@
 package com.lguplus.fleta.data.type;
 
-import lombok.Getter;
-
 import java.time.Duration;
+import lombok.Getter;
 
 public enum CacheNameType {
 
@@ -46,6 +45,7 @@ public enum CacheNameType {
         public static final String TTL_1_DAY = "TTL1D";
         public static final String TTL_2_DAY = "TTL2D";
 
-        private Constant() { }
+        private Constant() {
+        }
     }
 }

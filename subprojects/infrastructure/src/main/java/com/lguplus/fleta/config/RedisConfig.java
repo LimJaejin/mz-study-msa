@@ -11,6 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Slf4j
 @Configuration
 public class RedisConfig {
+
     /**
      * 레디스 RedisTemplate 방식
      */

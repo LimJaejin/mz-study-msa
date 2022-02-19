@@ -1,7 +1,8 @@
 package com.lguplus.fleta.testutil;
 
 import com.lguplus.fleta.util.DtoConverter;
-import org.mockito.*;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -39,6 +40,7 @@ public class DtoConverterTestUtil {
     }
 
     public interface TestCallback {
+
         void call();
     }
 }

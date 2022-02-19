@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lguplus.fleta.BootConfig;
 import com.lguplus.fleta.data.type.response.InnerResponseCodeType;
 import com.lguplus.fleta.data.type.response.InnerResponseErrorType;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,8 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -223,7 +222,8 @@ class InnerResponseDtoTest {
         InnerResponseDto<List<TestDto>> responseDtoMapping = null;
         try {
             String json = objectMapper.writeValueAsString(responseDto);
-            responseDtoMapping = objectMapper.readValue(json, new TypeReference<>() { });
+            responseDtoMapping = objectMapper.readValue(json, new TypeReference<>() {
+            });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -285,7 +285,8 @@ class InnerResponseDtoTest {
         InnerResponseDto<Object> responseDtoMapping = null;
         try {
             String json = objectMapper.writeValueAsString(responseDto);
-            responseDtoMapping = objectMapper.readValue(json, new TypeReference<>() { });
+            responseDtoMapping = objectMapper.readValue(json, new TypeReference<>() {
+            });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -397,7 +398,8 @@ class InnerResponseDtoTest {
         InnerResponseDto<List<TestDto>> responseDtoMapping = null;
         try {
             String json = objectMapper.writeValueAsString(responseDto);
-            responseDtoMapping = objectMapper.readValue(json, new TypeReference<>() { });
+            responseDtoMapping = objectMapper.readValue(json, new TypeReference<>() {
+            });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

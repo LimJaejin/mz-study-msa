@@ -1,17 +1,16 @@
 package com.lguplus.fleta.config;
 
 import io.swagger.models.parameters.Parameter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2MapperImpl;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Primary

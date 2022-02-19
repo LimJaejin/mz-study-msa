@@ -1,14 +1,13 @@
 package com.lguplus.fleta.data.type.response;
 
+import java.util.EnumSet;
+import java.util.Locale;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.EnumSet;
-import java.util.Locale;
 
 /**
  * HTTP API 표준 응답 코드
@@ -58,7 +57,7 @@ public enum InnerResponseCodeType {
 
         @PostConstruct
         private void postConstruct() {
-            for (InnerResponseCodeType type: EnumSet.allOf(InnerResponseCodeType.class)) {
+            for (InnerResponseCodeType type : EnumSet.allOf(InnerResponseCodeType.class)) {
                 String code = getMessage("code", type.name());
                 String message = getMessage("message", type.name());
                 String httpStatus = getMessage("httpStatus", type.name());

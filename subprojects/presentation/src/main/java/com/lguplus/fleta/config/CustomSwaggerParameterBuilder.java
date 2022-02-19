@@ -5,6 +5,9 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -20,10 +23,6 @@ import springfox.documentation.spi.service.contexts.ParameterExpansionContext;
 import springfox.documentation.spring.web.DescriptionResolver;
 import springfox.documentation.swagger.common.SwaggerPluginSupport;
 import springfox.documentation.swagger.schema.ApiModelProperties;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 import static com.google.common.base.Strings.emptyToNull;
 import static springfox.documentation.swagger.common.SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER;

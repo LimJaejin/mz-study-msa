@@ -1,6 +1,8 @@
 package com.lguplus.fleta.config;
 
 import com.lguplus.fleta.data.type.CacheNameType;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -16,9 +18,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Configuration
@@ -53,7 +52,7 @@ public class CacheConfig extends CachingConfigurerSupport {
         Map<String, RedisCacheConfiguration> redisCacheConfigMap = new HashMap<>();
 
         // TTL 캐시이름 설정
-        for (CacheNameType cacheNameType: CacheNameType.values()) {
+        for (CacheNameType cacheNameType : CacheNameType.values()) {
             redisCacheConfigMap.put(cacheNameType.code(), redisCacheConfiguration.entryTtl(cacheNameType.getDuration()));
         }
 

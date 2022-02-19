@@ -4,6 +4,7 @@ import com.lguplus.fleta.data.dto.response.InnerResponseDto;
 import com.lguplus.fleta.data.dto.response.InnerResponseErrorDto;
 import com.lguplus.fleta.data.type.response.InnerResponseCodeType;
 import com.lguplus.fleta.data.type.response.InnerResponseErrorType;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -11,8 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.List;
 
 /**
  * MSA간 통신 Controller Advice
@@ -33,7 +32,7 @@ public class InnerControllerAdvice {
         BindingResult bindingResult = e.getBindingResult();
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-            for (FieldError fieldError: fieldErrors) {
+            for (FieldError fieldError : fieldErrors) {
                 String field = fieldError.getField();
                 String defaultMessage = fieldError.getDefaultMessage();
                 String detailMessage = "[" + field + "] " + defaultMessage;

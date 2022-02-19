@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lguplus.fleta.data.type.response.InnerResponseCodeType;
 import com.lguplus.fleta.data.type.response.InnerResponseDataType;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * HTTP API 표준 응답
