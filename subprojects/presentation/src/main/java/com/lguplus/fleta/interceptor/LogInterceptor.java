@@ -1,6 +1,5 @@
 package com.lguplus.fleta.interceptor;
 
-import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,25 +23,32 @@ public class LogInterceptor implements HandlerInterceptor {
         String queryString = request.getQueryString();
         MDC.put("saId", getSaIdParameter(request));
         MDC.put("stbMac", getStbMacParameter(request));
-
         log.info("[{}][{}][{}] Request", method, requestUri, queryString);
         return true;
     }
 
     private String getSaIdParameter(HttpServletRequest request) {
-        String saId = request.getParameter("saId");
+        String saId = request.getParameter("sa_id");
         if (StringUtils.hasText(saId)) {
             return saId;
         }
-        return request.getParameter("SA_ID");
+        saId = request.getParameter("SA_ID");
+        if (StringUtils.hasText(saId)) {
+            return saId;
+        }
+        return request.getParameter("saId");
     }
 
     private String getStbMacParameter(HttpServletRequest request) {
-        String stbMac = request.getParameter("stbMac");
+        String stbMac = request.getParameter("stb_mac");
         if (StringUtils.hasText(stbMac)) {
             return stbMac;
         }
-        return request.getParameter("STB_MAC");
+        stbMac = request.getParameter("STB_MAC");
+        if (StringUtils.hasText(stbMac)) {
+            return stbMac;
+        }
+        return request.getParameter("stbMac");
     }
 
     @Override
@@ -51,9 +57,6 @@ public class LogInterceptor implements HandlerInterceptor {
         String requestUri = request.getRequestURI();
         Long responseTime = (Long) request.getAttribute(RESPONSE_TIME);
         log.info("[{}][{}] Response {}ms", method, requestUri, responseTime);
-
         MDC.clear();
-
-        Optional.ofNullable(ex).ifPresent(e -> log.error("AfterCompletion ex: ", e));
     }
 }
