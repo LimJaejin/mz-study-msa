@@ -17,14 +17,14 @@
         <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999"/>
         <option name="IMPORT_LAYOUT_TABLE">
             <value>
-                <emptyLine/>
-                <emptyLine/>
-                <package name="java" static="false" withSubpackages="false"/>
                 <package name="javax" static="false" withSubpackages="false"/>
                 <package name="" static="false" withSubpackages="true"/>
+                <package name="java" static="false" withSubpackages="false"/>
+                <emptyLine/>
                 <package name="" static="true" withSubpackages="true"/>
             </value>
         </option>
+        <option name="ENABLE_JAVADOC_FORMATTING" value="false"/>
     </JavaCodeStyleSettings>
     <Objective-C>
         <option name="INDENT_NAMESPACE_MEMBERS" value="0"/>
@@ -606,4 +606,5 @@
             <package name="" static="true" withSubpackages="true"/>
         </value>
     </option>
+    <option name="ENABLE_JAVADOC_FORMATTING" value="false"/>
 </code_scheme>
