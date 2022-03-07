@@ -33,9 +33,10 @@ spring:
   #### Data Source
   datasource:
     hikari:
-      connection-timeout: 2500
-      validation-timeout: 20000
+      connection-timeout: 2700
+      validation-timeout: 2100
       leak-detection-threshold: 10000
+      max-lifetime: 540000
       data-source-properties:
         cachePrepStmts: true
         prepStmtCacheSize: 500
