@@ -4,6 +4,7 @@ import com.lguplus.fleta.data.type.CacheNameType;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -22,6 +23,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Slf4j
 @Configuration
 public class CacheConfig extends CachingConfigurerSupport {
+
+    @Value("${spring.application.name-abbr}")
+    private String serviceNameAbbr;
 
     /**
      * No CacheManager Bean
@@ -42,9 +46,7 @@ public class CacheConfig extends CachingConfigurerSupport {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
             .defaultCacheConfig()
             .disableCachingNullValues()
-            // 서비스 도메인 약어: https://lguplus-msa-dev.atlassian.net/wiki/spaces/LGUPLUSMSA/pages/888045703/RDBMS+Object+PostgreSQL
-            // Redis CacheName Prefix : 서비스 도메인 약어 + "::"
-            .prefixCacheNameWith("MB::")
+            .prefixCacheNameWith(serviceNameAbbr + "::")  // Redis CacheName Prefix : 서비스명 약어 + "::"
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
