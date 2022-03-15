@@ -17,14 +17,14 @@ spring:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     writer:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
-      username: postgres
-      password: postgres
+      username: ENC(QMpSgUuJ5VCHA08hhI8pLA==) #-> postgre
+      password: ENC(c0q2E7rL3PogXgnaxKGuy3Nt+SJ7a1dF) #-> postgres
       minimum-idle: 5
       maximum-pool-size: 5
     reader:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
-      username: postgres
-      password: postgres
+      username: ENC(QMpSgUuJ5VCHA08hhI8pLA==) #-> postgre
+      password: ENC(c0q2E7rL3PogXgnaxKGuy3Nt+SJ7a1dF) #-> postgres
       minimum-idle: 5
       maximum-pool-size: 5
 
