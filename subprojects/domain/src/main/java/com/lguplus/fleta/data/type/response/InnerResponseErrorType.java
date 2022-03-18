@@ -39,6 +39,7 @@ public enum InnerResponseErrorType {
     static class ResponseErrorTypePropertySetter {
 
         private static final String MESSAGE_CODE_PREFIX = "responseErrorType";
+        private static final Locale DEFAULT_LOCALE = Locale.getDefault();
 
         private final MessageSource messageSource;
 
@@ -60,8 +61,7 @@ public enum InnerResponseErrorType {
 
         private String getMessage(String propName, String name) {
             String msgCode = MESSAGE_CODE_PREFIX + "." + name + "." + propName;
-            Locale locale = Locale.KOREA;
-            return messageSource.getMessage(msgCode, null, name, locale);
+            return messageSource.getMessage(msgCode, null, name, DEFAULT_LOCALE);
         }
     }
 }
