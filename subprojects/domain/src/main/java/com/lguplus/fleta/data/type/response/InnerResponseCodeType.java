@@ -52,6 +52,7 @@ public enum InnerResponseCodeType {
 
         private static final String MESSAGE_CODE_PREFIX = "responseCodeType";
         private static final String DEFAULT_HTTP_STATUS = "500";
+        private static final Locale DEFAULT_LOCALE = Locale.getDefault();
 
         private final MessageSource messageSource;
 
@@ -76,8 +77,7 @@ public enum InnerResponseCodeType {
         private String getMessage(String propName, String name) {
             String msgCode = MESSAGE_CODE_PREFIX + "." + name + "." + propName;
             String defaultMsg = propName.equals("httpStatus") ? DEFAULT_HTTP_STATUS : name;
-            Locale locale = Locale.KOREA;
-            return messageSource.getMessage(msgCode, null, defaultMsg, locale);
+            return messageSource.getMessage(msgCode, null, defaultMsg, DEFAULT_LOCALE);
         }
     }
 }
