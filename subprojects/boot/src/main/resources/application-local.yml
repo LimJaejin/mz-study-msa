@@ -16,15 +16,15 @@ spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     writer:
-      jdbc-url: jdbc:postgresql://localhost:5432/postgres
-      username: ENC(QMpSgUuJ5VCHA08hhI8pLA==) #-> postgre
-      password: ENC(c0q2E7rL3PogXgnaxKGuy3Nt+SJ7a1dF) #-> postgres
+      jdbc-url: jdbc:postgresql://rds-dev-iptv-dev-iptvrs-01.cluster-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com/msa_mylgdb?targetServerType=primary&ApplicationName=${spring.application.name}
+      username: ENC(dZ4Kgqe0kCiYJDnhdsIq3A==)
+      password: ENC(YYXWcESizOBBT7SfZrUDOpMR+5lasGTL)
       minimum-idle: 5
       maximum-pool-size: 5
     reader:
-      jdbc-url: jdbc:postgresql://localhost:5432/postgres
-      username: ENC(QMpSgUuJ5VCHA08hhI8pLA==) #-> postgre
-      password: ENC(c0q2E7rL3PogXgnaxKGuy3Nt+SJ7a1dF) #-> postgres
+      jdbc-url: jdbc:postgresql://rds-dev-iptv-dev-iptvrs-01.cluster-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com/msa_mylgdb?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
+      username: ENC(MnL8EYbZNuCgWzE/kkBK2w==)
+      password: ENC(Qn96wg0a6P+FDLb5pcjrM8gY6s0zYaJD)
       minimum-idle: 5
       maximum-pool-size: 5
 

@@ -15,13 +15,13 @@ spring:
   #### Data Source
   datasource:
     writer:
-      jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>/<<postgres.msa-template.write.db.mylgdb>>
+      jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=primary&ApplicationName=${spring.application.name}
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
       minimum-idle: 25
       maximum-pool-size: 25
     reader:
-      jdbc-url: jdbc:postgresql://<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.read.db.mylgdb>>
+      jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
       username: <<postgres.msa-template.read.username>>
       password: <<postgres.msa-template.read.password>>
       minimum-idle: 25
