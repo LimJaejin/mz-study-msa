@@ -128,3 +128,12 @@ feign:
     enabled: true
     connection-timeout: 2900
     max-connections: 100
+
+
+
+############################################
+## Actuator
+management:
+  endpoint:
+    health:
+      enabled: true
