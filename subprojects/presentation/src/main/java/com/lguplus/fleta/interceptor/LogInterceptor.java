@@ -18,13 +18,15 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String method = request.getMethod();
-        String requestUri = request.getRequestURI();
-        String queryString = request.getQueryString();
+        putCommonDataToMdc(request);
+        logRequestBasicInfo(request);
+        logRequestHeaderInfo(request);
+        return true;
+    }
+
+    private void putCommonDataToMdc(HttpServletRequest request) {
         MDC.put("saId", getSaIdParameter(request));
         MDC.put("stbMac", getStbMacParameter(request));
-        log.info("[{}][{}][{}] Request", method, requestUri, queryString);
-        return true;
     }
 
     private String getSaIdParameter(HttpServletRequest request) {
@@ -49,6 +51,19 @@ public class LogInterceptor implements HandlerInterceptor {
             return stbMac;
         }
         return request.getParameter("stbMac");
+    }
+
+    private void logRequestBasicInfo(HttpServletRequest request) {
+        String method = request.getMethod();
+        String requestUri = request.getRequestURI();
+        String queryString = request.getQueryString();
+        log.info("[{}][{}][{}] Request", method, requestUri, queryString);
+    }
+
+    private void logRequestHeaderInfo(HttpServletRequest request) {
+        String accept = request.getHeader("accept");
+        String userAgent = request.getHeader("user-agent");
+        log.info("[Request Headers] [Accept: {}][UserAgent: {}]", accept, userAgent);
     }
 
     @Override
