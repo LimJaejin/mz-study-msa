@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * HTTP API 표준 응답 코드
  * (응답 코드, 메시지, HttpStatus는 MessageSource에 정의 : messages/response*.yml)
- * @version 0.2.0
+ * @version 0.3.0
  */
 public enum InnerResponseCodeType {
     OK,
@@ -40,6 +40,27 @@ public enum InnerResponseCodeType {
         return httpStatus;
     }
 
+    /**
+     * HttpStatus 파라미터로 InnerResponseCodeType 타입 조회
+     * (파라미터 값이 유효하지 않는 경우 기본 타입 조회)
+     * @since 0.3.0
+     */
+    public static InnerResponseCodeType valueOfHttpStatusOrDefault(HttpStatus httpStatus) {
+        for (InnerResponseCodeType value : values()) {
+            if (value.getHttpStatus() == httpStatus) {
+                return value;
+            }
+        }
+        return getDefaultValue();
+    }
+
+    /**
+     * 기본 타입 조회
+     * @since 0.3.0
+     */
+    public static InnerResponseCodeType getDefaultValue() {
+        return InnerResponseCodeType.INTERNAL_SERVER_ERROR;
+    }
 
     /**
      * ResponseCodeType의 프로퍼티 설정

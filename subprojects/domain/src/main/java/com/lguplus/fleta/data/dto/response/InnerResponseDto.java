@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 /**
  * HTTP API 표준 응답
- * @version 0.1.0
+ * @version 0.2.0
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -44,8 +44,20 @@ public class InnerResponseDto<T> {
         this.result = InnerResponseResultDto.of(data);
     }
 
+    /**
+     * InnerResponseCodeType 파라미터로 InnerResponseDto 객체 생성
+     * @since 0.2.0
+     */
     public static <T> InnerResponseDto<T> of(InnerResponseCodeType responseCodeType) {
         return new InnerResponseDto<>(responseCodeType);
+    }
+
+    /**
+     * HttpStatus 파라미터로 InnerResponseDto 객체 생성
+     * @since 0.2.0
+     */
+    public static <T> InnerResponseDto<T> of(HttpStatus httpStatus) {
+        return new InnerResponseDto<>(InnerResponseCodeType.valueOfHttpStatusOrDefault(httpStatus));
     }
 
     public static <T> InnerResponseDto<T> of(InnerResponseCodeType responseCodeType, T data) {
