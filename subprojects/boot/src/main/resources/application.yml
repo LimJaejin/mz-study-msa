@@ -19,6 +19,7 @@ spring:
     # TODO : 서비스 도메인 약어 수정 후, 이 라인과 다음 라인은 삭제하세요!
     # TODO : https://lgu-cto.atlassian.net/wiki/spaces/LGUPLUSMSA/pages/888045703/ -> 4-2) 도메인 약어 항목 참고
     name-abbr: MB  # 서비스 도메인 약어
+    name-env: ${spring.application.name-abbr}  # 서비스명 + 실행환경 (캐시 키 등에 사용)
   lifecycle:
     timeout-per-shutdown-phase: 1m
   profiles:
@@ -35,6 +36,12 @@ spring:
 
   #### Data Source
   datasource:
+    writer:
+      minimum-idle: 25
+      maximum-pool-size: 25
+    reader:
+      minimum-idle: 25
+      maximum-pool-size: 25
     hikari:
       connection-timeout: 2700
       validation-timeout: 2100
@@ -48,9 +55,16 @@ spring:
 
   #### JPA
   jpa:
+    database: postgresql
     open-in-view: false
+    hibernate:
+      use-new-id-generator-mappings: false
     properties:
       hibernate:
+        temp.use_jdbc_metadata_defaults: false
+        jdbc:
+          lob.non_contextual_creation: true
+          batch_size: 100
         default_batch_fetch_size: 100
 
   #### Redis
@@ -65,7 +79,7 @@ spring:
         ## Inbound 채널 (메시지 수신 설정)
         sample-in:
           # Consumer Group
-          group: group.${spring.application.name}
+          group: group.${spring.application.name-env}
           # Topic
           destination: inbound-topic-${spring.application.name} # TODO : 수정 후, 이 주석은 삭제하세요!
           content-type: application/json
@@ -111,6 +125,18 @@ logging:
 
 
 ############################################
+#### Other Domain Application Service
+service:
+  subscriber:
+    url: http://subscriber:8080
+  vodlookup:
+    url: http://vodlookup:8080
+  programming:
+    url: http://programming:8080
+
+
+
+############################################
 #### FeignClient
 feign:
   client:
@@ -132,8 +158,13 @@ feign:
 
 
 ############################################
-## Actuator
+#### Actuator
 management:
   endpoint:
     health:
       enabled: true
+  health:
+    db:
+      enabled: false
+    redis:
+      enabled: false

@@ -8,9 +8,15 @@ server:
 ############################################
 #### Spring
 spring:
-  #### Open Tracing
-  zipkin:
-    baseUrl: http://localhost:9411/
+  application:
+    name-env: ${spring.application.name-abbr}-LOCAL  # 서비스 Prefix (캐시 키 등에 사용)
+
+  #### Auto Configuration
+  autoconfigure:
+    exclude:
+      # Spring Cloud Stream 자동 구성 제외
+      - org.springframework.cloud.stream.config.BindingServiceConfiguration
+      - org.springframework.cloud.stream.function.FunctionConfiguration
 
   #### Data Source
   datasource:
@@ -30,18 +36,8 @@ spring:
 
   #### JPA
   jpa:
-    database: postgresql
     hibernate:
-      #ddl-auto: create-drop # FIXME : 반드시 제거
-      use-new-id-generator-mappings: true
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-        format_sql: true
-        jdbc:
-          lob:
-            non_contextual_creation: true
+      ddl-auto: none # FIXME : 반드시 none으로 사용
 
   ## Cache - Redis
   cache:
@@ -77,23 +73,19 @@ spring:
 #### Logging
 logging:
   level:
-    com:
-      lguplus:
-        fleta: DEBUG
-      zaxxer:
-        hikari: DEBUG
-      #      hibernate:
-      #        SQL: DEBUG
-      #        type: TRACE
-      springframework:
-        cache: TRACE
-        cloud: DEBUG
-        integration: DEBUG
-        kafka: DEBUG
-        orm:
-          jpa: DEBUG
-        transaction:
-          interceptor: TRACE
+    com.lguplus.fleta: DEBUG
+    #com.zaxxer.hikari: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      #type: TRACE
+    org.springframework:
+      cache: TRACE
+      cloud: DEBUG
+      integration: DEBUG
+      kafka: DEBUG
+      orm.jpa: DEBUG
+      transaction:
+        interceptor: TRACE
     jdbc:
       audit: OFF
       sqltiming: DEBUG
