@@ -1,18 +1,9 @@
 ############################################
-#### Server
-server:
-  port: 8080
-
-
-
-############################################
 #### Spring
 spring:
   #### Open Tracing
   zipkin:
-    enabled: true
-    baseUrl: http://a86263e3b2fd34e2f839a47ee774aef8-8d8459fc78776e1e.elb.ap-northeast-2.amazonaws.com:9411/
-    #baseUrl: <<zipkin.host>>
+    baseUrl: <<zipkin.host>>
 
   #### Data Source
   datasource:
@@ -20,31 +11,12 @@ spring:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=primary&ApplicationName=${spring.application.name}
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
-      minimum-idle: 25
-      maximum-pool-size: 25
     reader:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
       username: <<postgres.msa-template.read.username>>
       password: <<postgres.msa-template.read.password>>
-      minimum-idle: 25
-      maximum-pool-size: 25
 
-  #### JPA
-  jpa:
-    database: postgresql
-    hibernate:
-      use-new-id-generator-mappings: false
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-        jdbc:
-          lob:
-            non_contextual_creation: true
-
-  ## Cache - Redis
-  cache:
-    type: redis
+  #### Cache - Redis
   redis:
     cluster:
       nodes: [<<redis.cluster.nodes>>]
@@ -62,42 +34,9 @@ spring:
 #### Logging
 logging:
   level:
-    com:
-      lguplus:
-        fleta: DEBUG
-      zaxxer:
-        hikari: DEBUG
-      #      hibernate:
-      #        SQL: DEBUG
-      #        type: TRACE
-      springframework:
-        cache: TRACE
-        cloud: DEBUG
-        integration: DEBUG
-        kafka: DEBUG
-        orm:
-          jpa: DEBUG
-        transaction:
-          interceptor: TRACE
-    jdbc:
-      audit: OFF
-      sqltiming: DEBUG
-      resultsettable: DEBUG
-      connection: DEBUG
-      resultset: OFF
-      sqlonly: OFF
-
-
-
-############################################
-#### Other Domain Application Service
-service:
-  subscriber:
-    url: http://subscriber:8080
-  vodlookup:
-    url: http://vodlookup:8080
-  programming:
-    url: http://programming:8080
+    com.lguplus.fleta: DEBUG
+    org.hibernate:
+      SQL: DEBUG
 
 
 

@@ -1,11 +1,4 @@
 ############################################
-#### Server
-server:
-  port: 8080
-
-
-
-############################################
 #### Spring
 spring:
   #### Data Source
@@ -23,20 +16,7 @@ spring:
       minimum-idle: 5
       maximum-pool-size: 5
 
-  #### JPA
-  jpa:
-    database: postgresql
-    hibernate:
-      use-new-id-generator-mappings: false
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-        jdbc:
-          lob:
-            non_contextual_creation: true
-
-  ## Cache - Redis
+  #### Cache - Redis
   cache:
     type: none
 
@@ -50,7 +30,7 @@ spring:
 
 
 ############################################
-####  Logging
+#### Logging
 logging:
   level:
     com.lguplus.fleta: DEBUG
@@ -68,13 +48,3 @@ service:
     url: http://vodlookup.fleta.com
   programming:
     url: http://programming.fleta.com
-
-
-
-############################################
-## FeignClient
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: BASIC

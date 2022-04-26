@@ -1,11 +1,4 @@
 ############################################
-#### Server
-server:
-  port: 8080
-
-
-
-############################################
 #### Spring
 spring:
   #### Open Tracing
@@ -18,31 +11,12 @@ spring:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=primary&ApplicationName=${spring.application.name}
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
-      minimum-idle: 25
-      maximum-pool-size: 25
     reader:
       jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
       username: <<postgres.msa-template.read.username>>
       password: <<postgres.msa-template.read.password>>
-      minimum-idle: 25
-      maximum-pool-size: 25
 
-  #### JPA
-  jpa:
-    database: postgresql
-    hibernate:
-      use-new-id-generator-mappings: false
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-        jdbc:
-          lob:
-            non_contextual_creation: true
-
-  ## Cache - Redis
-  cache:
-    type: redis
+  #### Cache - Redis
   redis:
     cluster:
       nodes: [<<redis.cluster.nodes>>]
@@ -57,24 +31,12 @@ spring:
 
 
 ############################################
-####  Logging
+#### Logging
 logging:
   level:
     com.lguplus.fleta: DEBUG
     org.hibernate:
       SQL: DEBUG
-
-
-
-############################################
-#### Other Domain Application Service
-service:
-  subscriber:
-    url: http://subscriber:8080
-  vodlookup:
-    url: http://vodlookup:8080
-  programming:
-    url: http://programming:8080
 
 
 

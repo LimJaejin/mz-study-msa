@@ -14,7 +14,6 @@ spring:
 
   #### Data Source
   datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     writer:
       jdbc-url: jdbc:postgresql://rds-dev-iptv-dev-iptvrs-01.cluster-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com/msa_mylgdb?targetServerType=primary&ApplicationName=${spring.application.name}
       username: ENC(dZ4Kgqe0kCiYJDnhdsIq3A==)
@@ -27,25 +26,13 @@ spring:
       password: ENC(Qn96wg0a6P+FDLb5pcjrM8gY6s0zYaJD)
       minimum-idle: 5
       maximum-pool-size: 5
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 
   #### JPA
   jpa:
-    database: postgresql
-    hibernate:
-      #ddl-auto: create-drop # FIXME : 반드시 제거
-      use-new-id-generator-mappings: true
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-        format_sql: true
-        jdbc:
-          lob:
-            non_contextual_creation: true
+  #hibernate.ddl-auto: create-drop # FIXME : 반드시 제거
 
-  ## Cache - Redis
-  cache:
-    type: redis
+  #### Cache - Redis
   redis:
     host: localhost
     port: 6379
@@ -77,23 +64,17 @@ spring:
 #### Logging
 logging:
   level:
-    com:
-      lguplus:
-        fleta: DEBUG
-      zaxxer:
-        hikari: DEBUG
-      #      hibernate:
-      #        SQL: DEBUG
-      #        type: TRACE
-      springframework:
-        cache: TRACE
-        cloud: DEBUG
-        integration: DEBUG
-        kafka: DEBUG
-        orm:
-          jpa: DEBUG
-        transaction:
-          interceptor: TRACE
+    com.lguplus.fleta: DEBUG
+    #com.zaxxer.hikari: DEBUG
+    org.springframework:
+      cache: TRACE
+      cloud: DEBUG
+      integration: DEBUG
+      kafka: DEBUG
+      orm:
+        jpa: DEBUG
+      transaction:
+        interceptor: TRACE
     jdbc:
       audit: OFF
       sqltiming: DEBUG

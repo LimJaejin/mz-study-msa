@@ -24,6 +24,12 @@ spring:
   profiles:
     active: local
 
+  #### Auto Configuration
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.stream.config.BindingServiceConfiguration
+      - org.springframework.cloud.stream.function.FunctionConfiguration
+
   #### Open Tracing
   zipkin:
     enabled: false
@@ -33,13 +39,25 @@ spring:
     basename: messages/response
     encoding: utf-8
 
+  #### Spring Data
+  data:
+    redis:
+      repositories:
+        enabled: false
+
   #### Data Source
   datasource:
+    writer:
+      minimum-idle: 25
+      maximum-pool-size: 25
+    reader:
+      minimum-idle: 25
+      maximum-pool-size: 25
     hikari:
       connection-timeout: 2700
       validation-timeout: 2100
-      leak-detection-threshold: 10000
-      max-lifetime: 540000
+      leak-detection-threshold: 59000
+      max-lifetime: 60000
       data-source-properties:
         cachePrepStmts: true
         prepStmtCacheSize: 500
@@ -48,12 +66,18 @@ spring:
 
   #### JPA
   jpa:
+    database: postgresql
     open-in-view: false
     properties:
       hibernate:
         default_batch_fetch_size: 100
+        jdbc.batch_size: 100
+        temp.use_jdbc_metadata_defaults: false
+        jdbc.lob.non_contextual_creation: true
 
-  #### Redis
+  #### Cache - Redis
+  cache:
+    type: redis
   redis:
     timeout: 500  # Redis read timeout
     connect-timeout: 100
@@ -111,13 +135,25 @@ logging:
 
 
 ############################################
+#### Other Domain Application Service
+service:
+  subscriber:
+    url: http://subscriber:8080
+  vodlookup:
+    url: http://vodlookup:8080
+  programming:
+    url: http://programming:8080
+
+
+
+############################################
 #### FeignClient
 feign:
   client:
     config:
       default: # @FeignClient의 value/name 속성 (default는 전체 적용)
-        connectTimeout: 2000
-        readTimeout: 2000
+        connectTimeout: 3000
+        readTimeout: 3000
         #### Logging Level
         # NONE    : 미로깅 (Default)
         # BASIC   : Request Method, URL, Response 상태 코드, 실행 시간 로깅
@@ -126,7 +162,7 @@ feign:
         loggerLevel: NONE
   httpclient:
     enabled: true
-    connection-timeout: 2900
+    connection-timeout: 2700
     max-connections: 100
 
 
