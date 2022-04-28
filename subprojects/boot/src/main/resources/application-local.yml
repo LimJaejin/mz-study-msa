@@ -12,7 +12,7 @@ spring:
   autoconfigure:
     exclude:
       # Spring Cloud Stream 자동 구성 제외
-      - org.springframework.cloud.stream.config.BindingServiceConfiguration
+      #- org.springframework.cloud.stream.config.BindingServiceConfiguration
       - org.springframework.cloud.stream.function.FunctionConfiguration
 
   #### Data Source
@@ -20,13 +20,13 @@ spring:
     writer:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
       username: postgre
-      password: postgre
+      password: postgres
       minimum-idle: 5
       maximum-pool-size: 5
     reader:
       jdbc-url: jdbc:postgresql://localhost:5432/postgres
       username: postgre
-      password: postgre
+      password: postgres
       minimum-idle: 5
       maximum-pool-size: 5
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
@@ -72,22 +72,11 @@ logging:
     #com.zaxxer.hikari: DEBUG
     org.hibernate:
       SQL: DEBUG
-      #type: TRACE
+      type: TRACE
+      type.BasicTypeRegistry: INFO
     org.springframework:
-      cache: TRACE
-      cloud: DEBUG
-      integration: DEBUG
-      kafka: DEBUG
-      orm.jpa: DEBUG
-      transaction:
-        interceptor: TRACE
-    jdbc:
-      audit: OFF
-      sqltiming: DEBUG
-      resultsettable: DEBUG
-      connection: DEBUG
-      resultset: OFF
-      sqlonly: OFF
+      orm:
+        jpa: DEBUG
   pattern:
     level: "%5p [${spring.application.name}][%X{saId:-}][%X{stbMac:-}]"
 

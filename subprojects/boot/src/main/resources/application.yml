@@ -29,7 +29,8 @@ spring:
   #### Auto Configuration
   autoconfigure:
     exclude:
-      - org.springframework.cloud.stream.config.BindingServiceConfiguration
+      # Spring Cloud Stream 자동 구성 제외
+      #- org.springframework.cloud.stream.config.BindingServiceConfiguration
       - org.springframework.cloud.stream.function.FunctionConfiguration
 
   #### Open Tracing
