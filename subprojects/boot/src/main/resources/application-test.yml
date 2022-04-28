@@ -30,16 +30,6 @@ spring:
 
 
 ############################################
-#### Logging
-logging:
-  level:
-    com.lguplus.fleta: DEBUG
-    org.hibernate:
-      SQL: DEBUG
-
-
-
-############################################
 #### Other Domain Application Service
 service:
   subscriber:

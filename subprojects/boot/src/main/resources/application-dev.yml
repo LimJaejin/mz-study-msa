@@ -3,7 +3,8 @@
 spring:
   #### Open Tracing
   zipkin:
-    baseUrl: <<zipkin.host>>
+    enabled: true
+    baseUrl: http://a86263e3b2fd34e2f839a47ee774aef8-8d8459fc78776e1e.elb.ap-northeast-2.amazonaws.com:9411/
 
   #### Data Source
   datasource:

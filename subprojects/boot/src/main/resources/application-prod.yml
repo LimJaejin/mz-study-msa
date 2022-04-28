@@ -1,6 +1,10 @@
 ############################################
 #### Spring
 spring:
+  application:
+    name-env: ${spring.application.name}
+    name-abbr-env: ${spring.application.name-abbr}
+
   #### Open Tracing
   zipkin:
     baseUrl: <<zipkin.host>>

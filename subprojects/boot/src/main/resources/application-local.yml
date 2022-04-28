@@ -8,9 +8,12 @@ server:
 ############################################
 #### Spring
 spring:
-  #### Open Tracing
-  zipkin:
-    baseUrl: http://localhost:9411/
+  #### Auto Configuration
+  autoconfigure:
+    exclude:
+      # Spring Cloud Stream 자동 구성 제외
+      - org.springframework.cloud.stream.config.BindingServiceConfiguration
+      - org.springframework.cloud.stream.function.FunctionConfiguration
 
   #### Data Source
   datasource:
@@ -30,9 +33,12 @@ spring:
 
   #### JPA
   jpa:
-  #hibernate.ddl-auto: create-drop # FIXME : 반드시 제거
+    hibernate:
+      ddl-auto: none # FIXME : 반드시 none으로 사용
 
   #### Cache - Redis
+  cache:
+    type: redis
   redis:
     host: localhost
     port: 6379
@@ -66,13 +72,15 @@ logging:
   level:
     com.lguplus.fleta: DEBUG
     #com.zaxxer.hikari: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      #type: TRACE
     org.springframework:
       cache: TRACE
       cloud: DEBUG
       integration: DEBUG
       kafka: DEBUG
-      orm:
-        jpa: DEBUG
+      orm.jpa: DEBUG
       transaction:
         interceptor: TRACE
     jdbc:

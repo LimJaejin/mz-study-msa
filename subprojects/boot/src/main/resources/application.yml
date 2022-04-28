@@ -19,6 +19,8 @@ spring:
     # TODO : 서비스 도메인 약어 수정 후, 이 라인과 다음 라인은 삭제하세요!
     # TODO : https://lgu-cto.atlassian.net/wiki/spaces/LGUPLUSMSA/pages/888045703/ -> 4-2) 도메인 약어 항목 참고
     name-abbr: MB  # 서비스 도메인 약어
+    name-env: ${spring.application.name}-${spring.profiles.active}  # 서비스명 + 실행환경
+    name-abbr-env: ${spring.application.name-abbr}-${spring.profiles.active}  # 서비스명 약어 + 실행환경
   lifecycle:
     timeout-per-shutdown-phase: 1m
   profiles:
@@ -68,12 +70,15 @@ spring:
   jpa:
     database: postgresql
     open-in-view: false
+    hibernate:
+      use-new-id-generator-mappings: false
     properties:
       hibernate:
-        default_batch_fetch_size: 100
-        jdbc.batch_size: 100
         temp.use_jdbc_metadata_defaults: false
-        jdbc.lob.non_contextual_creation: true
+        jdbc:
+          lob.non_contextual_creation: true
+          batch_size: 100
+        default_batch_fetch_size: 100
 
   #### Cache - Redis
   cache:
@@ -89,9 +94,9 @@ spring:
         ## Inbound 채널 (메시지 수신 설정)
         sample-in:
           # Consumer Group
-          group: group.${spring.application.name}
+          group: group.${spring.application.name-env}
           # Topic
-          destination: inbound-topic-${spring.application.name} # TODO : 수정 후, 이 주석은 삭제하세요!
+          destination: inbound-topic-${spring.application.name-env} # TODO : 수정 후, 이 주석은 삭제하세요!
           content-type: application/json
           consumer:
             max-attempts: 3
@@ -99,14 +104,14 @@ spring:
         # DLQ Inbound 채널 설정
         dlq-sample-in:
           # Consumer Group
-          group: dlq.group.${spring.application.name}
+          group: dlq.group.${spring.application.name-env}
           # Topic
-          destination: dlq.inbound-topic-${spring.application.name} # TODO : 수정 후, 이 주석은 삭제하세요!
+          destination: dlq.inbound-topic-${spring.application.name-env} # TODO : 수정 후, 이 주석은 삭제하세요!
 
         # Outbound 채널 (메시지 발송 설정)
         # (보통 내부 MSA 서비스와 통신할 Topic을 정의하기 때문에 송/수신용의 동일한 토픽을 사용할 일은 거의 없으나 테스트를 위해 발송 채널 정의)
         sample-out:
-          destination: outbound-topic-${spring.application.name} # TODO : 수정 후, 이 주석은 삭제하세요!
+          destination: outbound-topic-${spring.application.name-env} # TODO : 수정 후, 이 주석은 삭제하세요!
 
       # Kafka 설정
       # (Kafka, RabbitMQ, AWS SNS/SQS 등의 설정, 메시지 큐 변경 시 아래 부분만 수정하면 연동 및 비즈니스 로직은 수정할 필요가 없음)
@@ -120,7 +125,7 @@ spring:
             consumer:
               enableDlq: true
               # DLQ Topic
-              dlqName: dlq.outbound-topic-${spring.application.name}
+              dlqName: dlq.outbound-topic-${spring.application.name-env}
 
 
 
@@ -168,8 +173,13 @@ feign:
 
 
 ############################################
-## Actuator
+#### Actuator
 management:
   endpoint:
     health:
       enabled: true
+  health:
+    db:
+      enabled: false
+    redis:
+      enabled: false
