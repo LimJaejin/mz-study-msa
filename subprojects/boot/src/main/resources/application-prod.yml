@@ -1,6 +1,10 @@
 ############################################
 #### Spring
 spring:
+  application:
+    name-env: ${spring.application.name}
+    name-abbr-env: ${spring.application.name-abbr}
+
   #### Open Tracing
   zipkin:
     baseUrl: <<zipkin.host>>
@@ -8,11 +12,11 @@ spring:
   #### Data Source
   datasource:
     writer:
-      jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=primary&ApplicationName=${spring.application.name}
+      jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=primary&ApplicationName=${spring.application.name-env}
       username: <<postgres.msa-template.write.username>>
       password: <<postgres.msa-template.write.password>>
     reader:
-      jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
+      jdbc-url: jdbc:postgresql://<<postgres.msa-template.write.host>>:<<postgres.msa-template.write.port>>,<<postgres.msa-template.read.host>>:<<postgres.msa-template.read.port>>/<<postgres.msa-template.write.db.mylgdb>>?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name-env}
       username: <<postgres.msa-template.read.username>>
       password: <<postgres.msa-template.read.password>>
 

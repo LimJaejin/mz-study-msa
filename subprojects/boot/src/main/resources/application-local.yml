@@ -8,29 +8,33 @@ server:
 ############################################
 #### Spring
 spring:
-  #### Open Tracing
-  zipkin:
-    baseUrl: http://localhost:9411/
+  #### Auto Configuration
+  autoconfigure:
+    exclude:
+      # Spring Cloud Stream 자동 구성 제외
+      - org.springframework.cloud.stream.config.BindingServiceConfiguration
+      - org.springframework.cloud.stream.function.FunctionConfiguration
 
   #### Data Source
   datasource:
     writer:
-      jdbc-url: jdbc:postgresql://rds-dev-iptv-dev-iptvrs-01.cluster-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com/msa_mylgdb?targetServerType=primary&ApplicationName=${spring.application.name}
-      username: ENC(dZ4Kgqe0kCiYJDnhdsIq3A==)
-      password: ENC(YYXWcESizOBBT7SfZrUDOpMR+5lasGTL)
+      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      username: postgre
+      password: postgre
       minimum-idle: 5
       maximum-pool-size: 5
     reader:
-      jdbc-url: jdbc:postgresql://rds-dev-iptv-dev-iptvrs-01.cluster-c2as9ee4bg3m.ap-northeast-2.rds.amazonaws.com/msa_mylgdb?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
-      username: ENC(MnL8EYbZNuCgWzE/kkBK2w==)
-      password: ENC(Qn96wg0a6P+FDLb5pcjrM8gY6s0zYaJD)
+      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      username: postgre
+      password: postgre
       minimum-idle: 5
       maximum-pool-size: 5
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 
   #### JPA
   jpa:
-  #hibernate.ddl-auto: create-drop # FIXME : 반드시 제거
+    hibernate:
+      ddl-auto: none # FIXME : 반드시 none으로 사용
 
   #### Cache - Redis
   redis:
@@ -44,13 +48,13 @@ spring:
         ## Inbound 채널 (메시지 수신 설정)
         sample-in:
           # Consumer Group
-          group: group.${spring.application.name}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
+          group: group.${spring.application.name-env}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
           # Topic
-          destination: inbound-topic-${spring.application.name}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
+          destination: inbound-topic-${spring.application.name-env}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
 
         # Outbound 채널 (메시지 발송 설정)
         sample-out:
-          destination: outbound-topic-${spring.application.name}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
+          destination: outbound-topic-${spring.application.name-env}.YOUR-ID  # TODO : 개발자 아이디를 포함하여 중복 방지
 
       # Kafka 설정
       kafka:
@@ -66,13 +70,15 @@ logging:
   level:
     com.lguplus.fleta: DEBUG
     #com.zaxxer.hikari: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      #type: TRACE
     org.springframework:
       cache: TRACE
       cloud: DEBUG
       integration: DEBUG
       kafka: DEBUG
-      orm:
-        jpa: DEBUG
+      orm.jpa: DEBUG
       transaction:
         interceptor: TRACE
     jdbc:

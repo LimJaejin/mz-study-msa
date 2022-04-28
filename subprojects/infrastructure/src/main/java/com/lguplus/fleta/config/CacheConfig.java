@@ -24,7 +24,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class CacheConfig extends CachingConfigurerSupport {
 
-    @Value("${spring.application.name-abbr}")
+    @Value("${spring.application.name-abbr-env}")
     private String serviceNameAbbr;
 
     /**
