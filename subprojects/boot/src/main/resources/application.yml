@@ -18,8 +18,9 @@ spring:
     name: msa-boilerplate  # TODO : 수정 후, 이 주석은 삭제하세요!
     # TODO : 서비스 도메인 약어 수정 후, 이 라인과 다음 라인은 삭제하세요!
     # TODO : https://lgu-cto.atlassian.net/wiki/spaces/LGUPLUSMSA/pages/888045703/ -> 4-2) 도메인 약어 항목 참고
-    name-abbr: MB  # 서비스 도메인 약어
+    name-abbr: MB  # 서비스명 약어
     name-env: ${spring.application.name}-${spring.profiles.active}  # 서비스명 + 실행환경
+    name-abbr-env: ${spring.application.name-abbr}  # 서비스명 약어 + 실행환경(Local,DEV,TEST에만 적용)
   lifecycle:
     timeout-per-shutdown-phase: 1m
   profiles:

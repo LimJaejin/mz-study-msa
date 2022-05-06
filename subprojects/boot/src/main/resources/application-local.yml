@@ -8,6 +8,9 @@ server:
 ############################################
 #### Spring
 spring:
+  application:
+    name-abbr-env: ${spring.application.name-abbr}-${spring.profiles.active}  # 서비스명 약어 + 실행환경
+
   #### Auto Configuration
   autoconfigure:
     exclude:
