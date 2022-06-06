@@ -35,18 +35,6 @@ class InnerResponseErrorTypeTest {
         }
     }
 
-    @Test
-    @DisplayName("개별 요소 확인 - PARAMETER_ERROR")
-    void parameterError() {
-        //given & when
-        InnerResponseErrorType type = InnerResponseErrorType.PARAMETER_ERROR;
-
-        //then
-        assertThat(type.name()).isEqualTo("PARAMETER_ERROR");
-        assertThat(type.code()).isEqualTo("1400");
-        assertResponseErrorTypeWithMessageSource(type);
-    }
-
     private void assertResponseErrorTypeWithMessageSource(InnerResponseErrorType type) {
         String typeName = type.name();
         String codeName = MESSAGE_SOURCE_PREFIX + typeName + MESSAGE_SOURCE_SUFFIX_CODE;
@@ -57,5 +45,17 @@ class InnerResponseErrorTypeTest {
 
         assertThat(type.code()).isEqualTo(code);
         assertThat(type.message()).isEqualTo(message);
+    }
+
+    @Test
+    @DisplayName("개별 요소 확인 - PARAMETER_ERROR")
+    void parameterError() {
+        //given & when
+        InnerResponseErrorType type = InnerResponseErrorType.PARAMETER_ERROR;
+
+        //then
+        assertThat(type.name()).isEqualTo("PARAMETER_ERROR");
+        assertThat(type.code()).isEqualTo("1400");
+        assertResponseErrorTypeWithMessageSource(type);
     }
 }
