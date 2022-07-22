@@ -9,9 +9,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 /**
- * HTTP API 표준 응답 Error 코드
- * (응답 코드, 메시지는 MessageSource에 정의 : messages/response*.yml)
- * @version 0.2.0
+ * HTTP API 표준 응답 Error 코드 (응답 코드, 메시지는 MessageSource에 정의 : messages/response*.yml)
+ * @version 0.2.1
  */
 public enum InnerResponseErrorType {
     PARAMETER_ERROR,
@@ -30,8 +29,7 @@ public enum InnerResponseErrorType {
 
 
     /**
-     * ResponseErrorType의 프로퍼티 설정
-     * (MessageSource 이용)
+     * ResponseErrorType의 프로퍼티 설정 (MessageSource 이용)
      */
     @Slf4j
     @RequiredArgsConstructor
@@ -48,8 +46,10 @@ public enum InnerResponseErrorType {
             for (InnerResponseErrorType type : EnumSet.allOf(InnerResponseErrorType.class)) {
                 String code = getMessage("code", type.name());
                 String message = getMessage("message", type.name());
-                log.trace(">>> MessageSource : {}.{} : {}, {}",
-                    MESSAGE_CODE_PREFIX, type.name(), code, message);
+                if (log.isTraceEnabled()) {
+                    log.trace(">>> MessageSource : {}.{} : {}, {}",
+                        MESSAGE_CODE_PREFIX, type.name(), code, message);
+                }
                 setProperty(type, code, message);
             }
         }
