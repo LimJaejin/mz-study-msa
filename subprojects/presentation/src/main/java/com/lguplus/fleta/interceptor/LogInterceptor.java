@@ -2,16 +2,16 @@ package com.lguplus.fleta.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+/**
+ * 공통 HTTP 요청/응답 로깅 Interceptor
+ * @version 1.1
+ */
 @Slf4j
-@RequiredArgsConstructor
-@Component
 public class LogInterceptor implements HandlerInterceptor {
 
     public static final String RESPONSE_TIME = "responseTime";
