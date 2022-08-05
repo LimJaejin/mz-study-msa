@@ -181,6 +181,8 @@ management:
     redis:
       enabled: false
 
+
+
 ############################################
 #### SpringDoc
 springdoc:

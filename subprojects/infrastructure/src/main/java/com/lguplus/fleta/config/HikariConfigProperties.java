@@ -4,11 +4,11 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.util.Properties;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Setter
 @ToString
@@ -67,7 +67,7 @@ public class HikariConfigProperties {
     }
 
     public HikariDataSource getReadDataSource() {
-        if (StringUtils.isBlank(this.readerJdbcUrl)) {
+        if (StringUtils.hasText(this.readerJdbcUrl)) {
             this.readerJdbcUrl = this.writerJdbcUrl;
             this.readerUsername = this.writerUsername;
             this.readerPassword = this.writerPassword;
