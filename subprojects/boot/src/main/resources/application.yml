@@ -33,10 +33,6 @@ spring:
       - org.springframework.cloud.stream.config.BindingServiceConfiguration
       - org.springframework.cloud.stream.function.FunctionConfiguration
 
-  #### Open Tracing
-  zipkin:
-    enabled: false
-
   #### Message Source
   messages:
     basename: messages/response
@@ -184,3 +180,22 @@ management:
       enabled: false
     redis:
       enabled: false
+
+############################################
+#### SpringDoc
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: swagger-ui.html
+    displayRequestDuration: true
+    doc-expansion: none
+    operations-sorter: method
+    config-url: /api-docs/swagger-config
+    disable-swagger-default-url: true
+    url: /api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

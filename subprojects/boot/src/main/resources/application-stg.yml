@@ -1,10 +1,6 @@
 ############################################
 #### Spring
 spring:
-  #### Open Tracing
-  zipkin:
-    baseUrl: <<zipkin.host>>
-
   #### Data Source
   datasource:
     writer:
