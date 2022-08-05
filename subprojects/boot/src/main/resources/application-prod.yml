@@ -3,11 +3,6 @@
 spring:
   application:
     name-env: ${spring.application.name}
-
-  #### Open Tracing
-  zipkin:
-    baseUrl: <<zipkin.host>>
-
   #### Data Source
   datasource:
     writer:
