@@ -7,7 +7,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-configuration-processor:2.7.2'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:2.7.2"
 
-    implementation 'io.github.openfeign:feign-httpclient:11.9'
+    implementation 'io.github.openfeign:feign-httpclient:11.9.1'
     // https://log4jdbc.brunorozendo.com/
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
