@@ -9,7 +9,7 @@ ___
 ## 주요 클래스
 ### DomainService
 + 비즈니스 로직을 처리합니다.
-```
+```java
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -120,7 +120,7 @@ ___
 + DB 테이블과 1:1로 매칭되는 클래스입니다.
 + getter, 기본 생성자, @Id 가 기본적으로 포함되어 있어야 합니다.
 + setter는 필요 시, 필드 레벨에 선택적으로 추가합니다. 클래스 레벨에는 추가하지 않습니다.
-```
+```java
 @Getter
 @Entity
 @Table(name = "imcsuser.sample_member")
@@ -148,7 +148,7 @@ public class SampleMember implements Serializable {
 ___
 ### Mapper(dto ↔︎ entity)
 + MapStruct를 이용한 인터페이스를 생성하여 dto와 entity간 데이터를 변환합니다.
-```
+```java
 @Mapper(config = MapstructConfig.class)
 public interface SampleMemberMapper {
 
@@ -160,7 +160,7 @@ public interface SampleMemberMapper {
 ___
 ### CustomException
 + application 레이어로 특정 객체나 값이 아닌 오류를 로깅 후 던져야 할 때, 오류를 catch하여 RuntimeException을 상속한 CustomException을 throw합니다.
-```
+```java
 public class ServiceException extends RuntimeException {
 
     @Getter
@@ -199,7 +199,7 @@ public class ServiceException extends RuntimeException {
 ### Repository(인터페이스)
 + 해당 MSA 서비스의 DB 데이터 처리를 담당합니다.
 + 구현체는 infrastructure 레이어에서 작성합니다.
-```
+```java
 public interface SampleRepository {
     SampleMember create(SampleMember entity);
     SampleMemberMapp create(SampleMemberMapp entity);
@@ -209,7 +209,7 @@ ___
 ### Client(인터페이스)
 + 외부 시스템(내부 MSA 서비스)과의 연동을 처리합니다.
 + 구현체는 infrastructure 레이어에 작성합니다.
-```
+```java
 public interface SubscriberInfoClient {
     InnerResponseDto<SubscriberInfoDto> findBySaIdAndStbMac(String saId, String stbMac);
 }

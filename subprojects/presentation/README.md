@@ -14,7 +14,7 @@ ___
 + 스웨거 어노테이션을 선언하여 API 스펙을 작성합니다.
 ### Controller 클래스 샘플 코드
 
-```
+```java
 package com.lguplus.fleta.api.outer;
 
 import com.lguplus.fleta.data.vo.sample.SampleParamsVo;
@@ -73,7 +73,7 @@ ___
 + 클라이언트에서 전송한 요청 파라미터를 정의하고 검증 어노테이션을 선언합니다.
 + application 레이어에 전송할 Dto로 변환 처리합니다.
 
-```
+```java
 package com.lguplus.fleta.data.vo.sample;
 
 import com.lguplus.fleta.data.annotation.AlphabetAndNumberPattern;
@@ -122,7 +122,7 @@ public class SampleParamsVo implements Serializable {
 ___
 ### ExceptionHandler
 + controller 내부에서 호출한 application 레이어의 메소드가 오류를 throw할 경우 그에 대한 처리를 담당합니다.
-```
+```java
 package com.lguplus.fleta.advice.exhandler;
 
 import com.lguplus.fleta.exception.ServiceException;

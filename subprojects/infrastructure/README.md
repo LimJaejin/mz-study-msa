@@ -9,7 +9,7 @@ ___
 ### RepositoryImpl
 + domain 레이어에서 DB 데이터 핸들링을 위해 선언한 인터페이스를 구현합니다.
 + JpaRepository 인터페이스 및 JpaEmRepository 클래스를 주입하여 사용합니다.
-```
+```java
 package com.lguplus.fleta.provider.jpa.sample;
 
 import com.lguplus.fleta.data.entity.custom.sample.SampleEntityDto;
@@ -57,7 +57,7 @@ ___
 + domain 레이어에서 작성한 DB 테이블과 1:1로 매칭되는 entity를 처리하는 spring data JPA의 repository 인터페이스를 선언합니다.
 + org.springframework.data.jpa.repository.JpaRepository를 상속합니다.
   + entity에 대한 cud 처리시 spring data JPA의 JpaRepository에서 제공하는 save, deleteById 등을 사용합니다.
-```
+```java
 package com.lguplus.fleta.provider.jpa.sample;
 
 import com.lguplus.fleta.data.entity.sample.SampleMember;
@@ -76,7 +76,7 @@ ___
   + 동적 query를 사용하는 경우
   + 리턴하는 칼럼이 단일 테이블과 1:1로 매칭되는 entity의 속성과 다른 경우
 + query 상단에  쿼리 아이디를 주석으로 작성합니다.
-```
+```java
 package com.lguplus.fleta.provider.jpa.sample;
 
 import com.lguplus.fleta.data.entity.custom.sample.SampleEntityDto;
@@ -195,7 +195,7 @@ ___
 ### ClientImpl
 + domain 레이어에서 다른 MSA 도메인과의 통신을 위해 선언한 인터페이스의 구현체입니다.
 + FeignClient 인터페이스를 참조합니다.
-```
+```java
 package com.lguplus.fleta.provider.rest;
 
 import com.lguplus.fleta.client.SubscriberInfoClient;

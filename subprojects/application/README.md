@@ -1,6 +1,6 @@
 Application Layer
 ===
-## 개요
+___
 + 고수준으로 추상화 된 어플리케이션 요구사항 처리
 + API별 추상화 된 비즈니스 로직 흐름 정의
 + 상세 기준
@@ -16,7 +16,7 @@ ___
 ### Service
 + 유스케이스에 해당하며, domain 레이어의 서비스(들)를 호출합니다.
 + 트랜잭션을 관리합니다.
-```
+```java
 package com.lguplus.fleta.service;
 
 import com.lguplus.fleta.data.dto.sample.SampleDto;
@@ -91,7 +91,7 @@ ___
 ### ResponseDto
 + 성공 또는 실패 시 응답 메시지를 구성합니다.
 + CommonResponseDto<T> 인터페이스를 구현합니다.
-```
+```java
 package com.lguplus.fleta.data.dto.sample;
 
 import com.lguplus.fleta.data.constant.ImcsConstants;
