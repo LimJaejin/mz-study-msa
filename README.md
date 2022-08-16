@@ -1,6 +1,7 @@
 개발 가이드
 ===
-___
+**각 레이어별 상세 가이드는, subproject 하위의 각 레이어별 README 파일 참조**
+
 [개발 가이드 컨플루언스 링크](https://lguplus-msa-dev.atlassian.net/wiki/spaces/LGUPLUSMSA/pages/1028784196)
 
 ## 레이어드 아키텍처 개요
