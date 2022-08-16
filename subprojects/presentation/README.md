@@ -6,6 +6,7 @@ Presentation Layer
 + Filter/Interceptor/MessageSource/Swagger 구성 및 Exception 핸들링
 + API URI Path 및 파라미터 변환
 + 로깅, 보안, 인코딩 처리 등
++ Springdoc 기준으로 예제가 작성됨 
 ___
 ## 주요 클래스들의 역할
 ### Controller
@@ -15,25 +16,7 @@ ___
 ### Controller 클래스 샘플 코드
 
 ```java
-package com.lguplus.fleta.api.outer;
-
-import com.lguplus.fleta.data.vo.sample.SampleParamsVo;
-import com.lguplus.fleta.data.vo.sample.SampleQueryParamsVo;
-import com.lguplus.fleta.exception.ParameterValidateException;
-import com.lguplus.fleta.service.SampleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
-@Api(tags="샘플 API")
+@Tag(name = "샘플 API", description = "샘플 API 입니다")
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping(value = "/sample")
@@ -44,10 +27,7 @@ public class SampleController {
     
     private stataic final String PARAMS_ERR_MSG = "1|REQUEST PARAMETER ERROR|0||||||\f";
 
-    @ApiOperation(value="샘플 멤버 생성", notes = "가입 여부 확인 후 샘플 멤버를 등록한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공 시 응답 메시지 문자열 반환", response = Object.class)
-    })
+    @Operation(summary="샘플 멤버 생성", description = "가입 여부 확인 후 샘플 멤버를 등록한다.")
     @PostMapping(value = "")
     public ResponseEntity<String> create(@Valid SampleParamsVo param, BindingResult bindingResult) {
         // API마다 '|'의 수는 다르므로 요청 파라미터 관련 오류는 공통 ExceptionHandler가 아닌 controller에서 처리한다.
@@ -58,10 +38,7 @@ public class SampleController {
         return ResponseEntity.ok(this.sampleService.create(param.toDto(), param.toMappDto()));
     }
 
-    @ApiOperation(value="샘플 멤버 목록 조회", notes = "샘플 멤버 & 샘플 멤버 매핑 목록을 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공 시 응답 메시지 문자열 반환", response = Object.class)
-    })
+    @Operation(summary="샘플 멤버 목록 조회", description = "샘플 멤버 & 샘플 멤버 매핑 목록을 조회한다.")
     @GetMapping(value = "")
     public ResponseEntity<String> getSamples(SampleQueryParamsVo param) {
         return ResponseEntity.ok(this.sampleService.getSamples(param.toDto()));
@@ -91,22 +68,22 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class SampleParamsVo implements Serializable {
 
-    @ApiModelProperty(value = "가입자번호", example = "M14090300006", required = true, position = 1)
+    @Schema(description = "가입자번호", example = "M14090300006", required = true)
     @NotBlank(message = "SA_ID 는 빈값을 입력할 수 없습니다")
     @AlphabetAndNumberPattern
     @Length(min = 7, max = 12)
     private String SA_ID;
 
-    @ApiModelProperty(value = "가입자 STB MAC Address", example = "9893.cc25.bc23", required = true, position = 2)
+    @Schema(description = "가입자 STB MAC Address", example = "9893.cc25.bc23", required = true)
     @NotBlank(message = "STB_MAC 는 빈값을 입력할 수 없습니다")
     @AlphabetAndNumberPattern
     @Length(min = 14, max = 14)
     private String STB_MAC;
 
-    @ApiModelProperty(value = "샘플 멤버 이름", example = "전강욱", position = 3)
+    @Schema(description = "샘플 멤버 이름", example = "전강욱")
     private String NAME;
 
-    @ApiModelProperty(value = "샘플 멤버 이메일", example = "realsnake1975@gmail.com", position = 4)
+    @Schema(description = "샘플 멤버 이메일", example = "realsnake1975@gmail.com")
     private String EMAIL;
 
     public SampleMemberDto toDto() {
