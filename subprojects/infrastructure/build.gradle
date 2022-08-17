@@ -9,4 +9,12 @@ dependencies {
     testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.2.4'
 
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '2.7.21'
+
+    // querydsl
+    implementation("com.querydsl:querydsl-core")
+    implementation("com.querydsl:querydsl-jpa")
+
+    annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa")
+    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 }
