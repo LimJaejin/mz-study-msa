@@ -1,4 +1,4 @@
-rootProject.name = 'msa-boilerplate'
+rootProject.name = 'mz-study-msa'
 
 include 'boot'
 include 'presentation'
