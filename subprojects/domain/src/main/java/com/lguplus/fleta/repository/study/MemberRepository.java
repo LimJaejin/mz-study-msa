@@ -9,9 +9,11 @@ public interface MemberRepository {
 
     Optional<Member> getMember(Integer id);
 
+    boolean existsMember(Integer id);
+
     List<Member> getMembers();
 
-    List<Member> getMembersByEmail(String email);
+    Optional<Member> getMemberByEmail(String email);
 
     List<Member> getMembersByCond(MemberSearchCond cond);
 

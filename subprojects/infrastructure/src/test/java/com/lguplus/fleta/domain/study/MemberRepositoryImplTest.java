@@ -6,9 +6,15 @@ import com.lguplus.fleta.provider.jpa.study.MemberJpaEmRepository;
 import com.lguplus.fleta.provider.jpa.study.MemberJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class MemberRepositoryImplTest {
@@ -24,6 +30,17 @@ class MemberRepositoryImplTest {
     }
 
     @Test
+    void existsMember() {
+        //given
+        BDDMockito.given(memberJpaRepository.existsById(any())).willReturn(true);
+        int memberId = 1;
+        //when
+        boolean exists = memberRepository.existsMember(memberId);
+        //then
+        assertThat(exists).isTrue();
+    }
+
+    @Test
     void getMembers() {
         memberRepository.getMembers();
     }
@@ -31,12 +48,22 @@ class MemberRepositoryImplTest {
     @Test
     void getMembersByEmail() {
         String email = "jjlim@mz.co.kr";
-        memberRepository.getMembersByEmail(email);
+        memberRepository.getMemberByEmail(email);
     }
 
-    @Test
-    void getMembersByCond() {
-        memberRepository.getMembersByCond(MemberSearchCond.builder().build());
+    @ParameterizedTest
+    @CsvSource(value = {
+        "Jaejin:jjlim01@mz.co.kr",
+        "Jaejin:",
+        ":jjlim02@mz.co.kr",
+        ":"
+    }, delimiter = ':')
+    void getMembersByCond(String name, String email) {
+        MemberSearchCond cond = MemberSearchCond.builder()
+            .name(name)
+            .email(email)
+            .build();
+        memberRepository.getMembersByCond(cond);
     }
 
     @Test
