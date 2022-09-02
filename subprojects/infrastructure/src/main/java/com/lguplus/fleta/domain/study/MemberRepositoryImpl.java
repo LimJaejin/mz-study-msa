@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,7 +35,20 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public List<Member> getMembersByCond(MemberSearchCond cond) {
-        return memberJpaEmRepository.getMembersByCond(cond);
+        //return memberJpaEmRepository.getMembersByCond(cond);
+        String name = cond.getName();
+        String email = cond.getEmail();
+
+        if (StringUtils.hasText(name) && StringUtils.hasText(email)) {
+            return memberJpaRepository.findByNameAndEmail(name, email);
+        }
+        if (StringUtils.hasText(name) && !StringUtils.hasText(email)) {
+            return memberJpaRepository.findByName(name);
+        }
+        if (!StringUtils.hasText(name) && StringUtils.hasText(email)) {
+            return memberJpaRepository.findByEmail(email);
+        }
+        return memberJpaRepository.findAll();
     }
 
     @Override

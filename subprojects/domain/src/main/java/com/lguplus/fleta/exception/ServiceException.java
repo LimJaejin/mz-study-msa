@@ -2,16 +2,15 @@ package com.lguplus.fleta.exception;
 
 public class ServiceException extends RuntimeException {
 
-    public ServiceException(Throwable e) {
-        super(e);
+    public ServiceException(String message) {
+        super(message);
     }
 
-    public ServiceException(String errorMessage) {
-        super(errorMessage);
+    public ServiceException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public ServiceException(String errorMessage, Throwable e) {
-        super(errorMessage, e);
+    public ServiceException(Throwable cause) {
+        super(cause);
     }
-
 }

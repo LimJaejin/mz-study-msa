@@ -6,6 +6,8 @@ import com.lguplus.fleta.provider.jpa.study.MemberJpaEmRepository;
 import com.lguplus.fleta.provider.jpa.study.MemberJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -34,9 +36,19 @@ class MemberRepositoryImplTest {
         memberRepository.getMembersByEmail(email);
     }
 
-    @Test
-    void getMembersByCond() {
-        memberRepository.getMembersByCond(MemberSearchCond.builder().build());
+    @ParameterizedTest
+    @CsvSource(value = {
+        "Jaejin:jjlim@mz.co.kr",
+        "Jaejin:",
+        ":jjlim@mz.co.kr",
+        ":"
+    }, delimiter = ':')
+    void getMembersByCond(String name, String email) {
+        MemberSearchCond cond = MemberSearchCond.builder()
+            .name(name)
+            .email(email)
+            .build();
+        memberRepository.getMembersByCond(cond);
     }
 
     @Test

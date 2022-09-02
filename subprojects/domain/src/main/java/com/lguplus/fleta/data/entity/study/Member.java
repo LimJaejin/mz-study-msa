@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name = "study_member", schema = "public")
@@ -26,5 +27,9 @@ public class Member {
     public Member(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public boolean validate() {
+        return StringUtils.hasText(getName()) && StringUtils.hasText(getEmail());
     }
 }
