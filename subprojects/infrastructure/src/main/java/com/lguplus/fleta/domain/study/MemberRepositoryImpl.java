@@ -7,6 +7,7 @@ import com.lguplus.fleta.provider.jpa.study.MemberJpaRepository;
 import com.lguplus.fleta.repository.study.MemberRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -29,7 +30,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public List<Member> getMembersByEmail(String email) {
+    public Optional<Member> getMemberByEmail(String email) {
         return memberJpaRepository.findByEmail(email);
     }
 
@@ -46,7 +47,8 @@ public class MemberRepositoryImpl implements MemberRepository {
             return memberJpaRepository.findByName(name);
         }
         if (!StringUtils.hasText(name) && StringUtils.hasText(email)) {
-            return memberJpaRepository.findByEmail(email);
+            return memberJpaRepository.findByEmail(email).stream()
+                .collect(Collectors.toList());
         }
         return memberJpaRepository.findAll();
     }
@@ -59,5 +61,10 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public void leaveMember(Integer id) {
         memberJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsMember(int memberId) {
+        return memberJpaRepository.existsById(memberId);
     }
 }

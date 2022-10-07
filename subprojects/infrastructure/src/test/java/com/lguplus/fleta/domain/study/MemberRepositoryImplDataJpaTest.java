@@ -59,9 +59,9 @@ class MemberRepositoryImplDataJpaTest {
         memberJpaRepository.save(member1);
         memberJpaRepository.save(member2);
         //when
-        List<Member> resultMembers = memberRepository.getMembersByEmail(member2.getEmail());
+        Optional<Member> result = memberRepository.getMemberByEmail(member2.getEmail());
         //then
-        assertThat(resultMembers).hasSize(1);
+        assertThat(result).isPresent();
     }
 
     @ParameterizedTest
@@ -114,5 +114,26 @@ class MemberRepositoryImplDataJpaTest {
         //then
         Optional<Member> resultMember = memberJpaRepository.findById(member.getId());
         assertThat(resultMember).isEmpty();
+    }
+
+    @Test
+    void existsMember() {
+        //given
+        Member member = new Member("Jaejin", "jjlim@mz.co.kr");
+        memberJpaRepository.save(member);
+        //when
+        boolean result = memberRepository.existsMember(member.getId());
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void existsMember_noExists() {
+        //given
+        int invalidMemberId = 999;
+        //when
+        boolean result = memberRepository.existsMember(invalidMemberId);
+        //then
+        assertThat(result).isFalse();
     }
 }

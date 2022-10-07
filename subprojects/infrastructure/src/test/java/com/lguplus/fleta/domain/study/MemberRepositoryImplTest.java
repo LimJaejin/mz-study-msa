@@ -33,7 +33,7 @@ class MemberRepositoryImplTest {
     @Test
     void getMembersByEmail() {
         String email = "jjlim@mz.co.kr";
-        memberRepository.getMembersByEmail(email);
+        memberRepository.getMemberByEmail(email);
     }
 
     @ParameterizedTest
@@ -61,5 +61,11 @@ class MemberRepositoryImplTest {
     void leaveMember() {
         int memberId = 1;
         memberRepository.leaveMember(memberId);
+    }
+
+    @Test
+    void existsMember() {
+        int memberId = 1;
+        memberRepository.existsMember(memberId);
     }
 }

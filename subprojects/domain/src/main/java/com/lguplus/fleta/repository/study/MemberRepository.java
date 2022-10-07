@@ -11,11 +11,13 @@ public interface MemberRepository {
 
     List<Member> getMembers();
 
-    List<Member> getMembersByEmail(String email);
+    Optional<Member> getMemberByEmail(String email);
 
     List<Member> getMembersByCond(MemberSearchCond cond);
 
     void joinMember(Member member);
 
     void leaveMember(Integer id);
+
+    boolean existsMember(int memberId);
 }
