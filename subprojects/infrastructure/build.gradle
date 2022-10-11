@@ -1,20 +1,16 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.3'
-    implementation 'org.postgresql:postgresql:42.3.6'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.postgresql:postgresql:42.5.0'
 
     // cloud stream
-    implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:3.2.4'
-    testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.2.4'
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+    testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support'
 
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '2.7.21'
 
     // querydsl
     implementation("com.querydsl:querydsl-core")
     implementation("com.querydsl:querydsl-jpa")
-
-    annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa")
-    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
-    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 }

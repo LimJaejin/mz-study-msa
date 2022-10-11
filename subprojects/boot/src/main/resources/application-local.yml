@@ -39,7 +39,9 @@ spring:
       ddl-auto: create # FIXME : 반드시 none으로 사용
     properties:
       hibernate:
+        show_sql: false
         format_sql: true
+        use_sql_comments: true
 
   #### Cache - Redis
   redis:
