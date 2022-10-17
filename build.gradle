@@ -59,6 +59,7 @@ subprojects {
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.mockito:mockito-inline:4.8.0'
 
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'

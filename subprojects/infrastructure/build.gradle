@@ -8,8 +8,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
     testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support'
 
-    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '2.7.21'
-
     // querydsl
     implementation("com.querydsl:querydsl-core")
     implementation("com.querydsl:querydsl-jpa")
